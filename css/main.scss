@@ -35,3 +35,59 @@ $on-laptop:        800px;
 //     }
 // }
 
+.nav {
+	/*display: flex;*/
+}
+
+.nav__title {
+}
+
+.nav__text {
+	clip-path: url(#shape);
+	background-color: hsl(180, 20%, 40%);
+	height: 20em;
+}
+
+.nav__text--name {
+	font-size: 2.75em;
+}
+
+.nav__text--role {
+	font-size: 1.75em;
+}
+
+.nav__tiles {
+	display: flex;
+	transform: skewY(-5deg);
+	background-color: grey;
+	height: 350px;
+	top: -400px;
+	position: relative;
+	z-index: -1;
+	flex-wrap: wrap;
+}
+
+.nav__bar {
+	width: 100%;
+	height: 300px;
+	background-color: blue;
+	clip-path: url(#shape);
+}
+
+.nav__tile {
+	animation: col 7000ms infinite; 
+	height: 100px;
+	width: 100px;
+	flex: 1 0 auto;
+	animation-direction: alternate;
+	background-color: hsl(200, 99%, 55%);
+}
+
+@keyframes col {
+	from {
+		background-color: hsl(200, 99%, 55%);
+	}
+	to {
+		background-color: hsl(220, 90%, 65%);
+	}
+}

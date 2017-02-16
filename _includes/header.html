@@ -1,10 +1,44 @@
-<header>
-	<nav>
+<svg height="0">
+	<defs>
+		<clipPath id="shape">
+			<path d="M300,0 Q300,150 0,300 L0,0">/
+		</clipPath>
+	</defs>
+</svg>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	var tiles = document.querySelector(".nav__tiles");
+
+	var tilesToMake = window.screen.width / 100 * 2;
+	for(var i = 0; i < tilesToMake; i++) {
+		var div = document.createElement("div");
+		div.className = "nav__tile";
+		div.style.animationDelay = Math.random() * 10000 + "ms";
+		
+		tiles.appendChild(div);
+	}
+});
+</script>
+
+<header class="nav">
+	<section class="nav__title">
+		<div class="nav__text">
+			<p class="nav__text--name">Patrick Lafferty</p>
+			<p class="nav__text--role">Web Developer</p>
+		</div>
+
+		<div class="nav__tiles"> 
+		</div>
+	</section>
+
+	<!--
+	<nav class="nav__bar">
 		<ul>
 			<li>Home</li>
 			<li>Work</li>
 			<li><a href="/blog/">Blog</a></li>
 			<li>Contact</li>
 		</ul>
-	</nav>
+	</nav>-->
 </header>
