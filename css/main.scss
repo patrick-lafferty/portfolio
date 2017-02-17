@@ -100,6 +100,10 @@ body {
 	}
 }
 
+a {
+	color: lightskyblue;
+}
+
 .about {
 	font-size: 2rem;
 	color: cornflowerblue;
@@ -131,6 +135,7 @@ body {
 .about__test {
 	transform: skewY(-5deg);
 	background-color: none;
+	padding: 0em 1em;
 }
 
 .about__tail {
@@ -174,4 +179,12 @@ body {
 	width: 200px;
 	height: 150px;
 	background-color: purple;
+	flex: 0 0 auto;
+}
+
+.footer {
+	height: 5rem;
+	font-size: 1.5em;
+	padding: 1em;
+	background-color: cornflowerblue;
 }
