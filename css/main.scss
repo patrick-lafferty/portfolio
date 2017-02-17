@@ -35,10 +35,113 @@ $on-laptop:        800px;
 //     }
 // }
 
+/*
+Headers
+ */
+@font-face {
+	font-family: 'TitilliumWeb';
+	font-style: normal;
+	src: url(../fonts/Titillium_Web/TitilliumWeb-Regular.ttf); 
+}
+
+.nav__text--name,
+.about--header,
+.project__name {
+	font-family: "Oswald";
+}
+
+.nav__text--role,
+.about--description,
+.project__description {
+	font-family: "Exo2";
+}
+
+
+@font-face {
+	font-family: 'Exo2';
+	font-style: normal;
+	src: url(../fonts/Exo_2/Exo2-Regular.ttf); 
+}
+
+@font-face {
+	font-family: 'Kanit';
+	font-style: normal;
+	src: url(../fonts/Kanit/Kanit-Regular.ttf); 
+}
+
+@font-face {
+	font-family: 'JosefinSans';
+	font-style: normal;
+	src: url(../fonts/Josefin_Sans/JosefinSans-Regular.ttf); 
+}
+
+@font-face {
+	font-family: 'Rokkitt';
+	font-style: normal;
+	src: url(../fonts/Rokkitt/Rokkitt-Regular.ttf); 
+}
+
+
+/*
+Body
+ */
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	src: url(../fonts/Roboto/Roboto-Regular.ttf);
+}
+
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	src: url(../fonts/Lato/Lato-Regular.ttf);
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	font-style: normal;
+	src: url(../fonts/Montserrat/Montserrat-Regular.ttf);
+}
+
+@font-face {
+	font-family: 'OpenSans';
+	font-style: normal;
+	src: url(../fonts/Open_Sans/OpenSans-Regular.ttf);
+}
+
+
+@font-face {
+	font-family: 'Oswald';
+	font-style: normal;
+	src: url(../fonts/Oswald/Oswald-Regular.ttf);
+}
+
+@font-face {
+	font-family: 'PTSans';
+	font-style: normal;
+	src: url(../fonts/PT_Sans/PT_Sans-Web-Regular.ttf);
+}
+
+@font-face {
+	font-family: 'Raleway';
+	font-style: normal;
+	src: url(../fonts/Raleway/Raleway-Regular.ttf);
+}
+
+@font-face {
+	font-family: 'Ubuntu';
+	font-style: normal;
+	src: url(../fonts/Ubuntu/Ubuntu-Regular.ttf);
+}
+
 body {
 	margin: 0px;
 	background-color: midnightblue;
 	/*indigo, mediumblue, royalblue*/
+}
+
+* {
+	line-height: 1.618em;
 }
 
 .nav {
@@ -51,16 +154,20 @@ body {
 
 .nav__text {
 	clip-path: url(#shape);
-	background-color: hsl(180, 20%, 40%);
+	background-color: midnightblue;
 	height: 20em;
+	color: cornflowerblue;
 }
 
 .nav__text--name {
 	font-size: 2.75em;
+	margin:0px;
+	/*font-family: "Rokkitt";*/
 }
 
 .nav__text--role {
 	font-size: 1.75em;
+	color: cornflowerblue;
 }
 
 .nav__tiles {
@@ -100,6 +207,26 @@ body {
 	}
 }
 
+.links-bar {
+	top: -400px;
+	position: relative;
+	transform: skewY(-5deg);
+}
+
+.links-bar__list {
+	display: flex;
+	justify-content: space-around;
+	list-style: none;
+}
+
+.link {
+	padding: 1.5rem;
+	font-size: 2em;
+	background-color: midnightblue;
+	color: cornflowerblue;
+	font-family: "Exo2";
+}
+
 a {
 	color: lightskyblue;
 }
@@ -110,6 +237,10 @@ a {
 	margin: 2em 1em;
 }
 
+.about--description {
+	/*font-family: 'Roboto';*/
+}
+
 .about--description::first-letter {
 	font-size: 1.75em;
 }
@@ -117,6 +248,7 @@ a {
 .about--header {
 	text-align: center;
 	font-size: 1.75em;
+	/*font-family: "Rokkitt";*/
 }
 
 .about__intro,
@@ -187,4 +319,6 @@ a {
 	font-size: 1.5em;
 	padding: 1em;
 	background-color: cornflowerblue;
+	color: midnightblue;
+	font-family: "Oswald";
 }
