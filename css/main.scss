@@ -138,6 +138,13 @@ body {
 	background-color: var(--secondary-colour);
 	color: var(--primary-colour);
 	font-family: "Exo2";
+	transition: font-size 0.4s, color 0.4s, background-color 0.4s;
+}
+
+.link:hover {
+	font-size: 2.5em;
+	background-color: var(--primary-colour);
+	color: var(--secondary-colour);
 }
 
 a {
@@ -234,4 +241,34 @@ a {
 	background-color: var(--primary-colour);
 	color: var(--secondary-colour);
 	font-family: "Oswald";
+}
+
+.post__header {
+	font-family: "Oswald";
+	font-size: 3.5em;
+	color: var(--primary-colour);
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.post__title,
+.post__date {
+	margin: 0em;
+}
+
+.post__date {
+	font-size: 1.5rem;
+}
+
+.post__content {
+	font-family: "Exo2";
+	font-size: 1.5em;
+	color: var(--primary-colour);
+	background-color: #202020;
+	padding: 1em;
+}
+
+.post__content > p {
+	text-indent: 2em;
 }

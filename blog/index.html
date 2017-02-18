@@ -6,12 +6,17 @@ layout: default
 	<p>Recent posts</p>
 </aside>
 
-<article>
-	<header>
-		<p>Blog post header</p>
+{% for post in paginator.posts %}
+
+<article class="post">
+	<header class="post__header">
+		<p class="post__title">{{post.title}}</p>
+		<p class="post__date">{{post.date | date: "%b %-d, %Y" }}</p>
 	</header>
 
-	<section>
-		<p>Blog post content</p>
+	<section class="post__content">
+		{{post.content}}
 	</section>
 </article>	
+
+{% endfor %}

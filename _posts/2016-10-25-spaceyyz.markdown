@@ -1,0 +1,15 @@
+---
+layout: default
+title: "SpaceYYZ is now live"
+date: 2016-10-25
+tags: portfolio 
+---
+
+[SpaceYYZ](https://patrick-lafferty.github.io/spaceyyz) is now hosted on github. SpaceYYZ is a single page application for the fictional company SpaceYYZ that they would use to manage their transportation services. I created it so I could learn about web development and apply concepts I learned. The sourcecode is hosted on [my github](https://github.com/patrick-lafferty/spaceyyz). Feel free to browse the code and post issues on the public tracker.	 
+
+I am interested in a career in web development, so I was looking for an interesting project I could continually work on to develop my skills. I also wanted something that I could apply my existing skills from different development fields. SpaceYYZ uses AngularJS along with Angular UI and Angular UI Router, with some Bootstrap to taste, and Firebase for the database and authentication. My background in WPF turned out to be useful in quickly learning Angular since I already had experience structuring apps using MVVM and using databinding.
+
+I'm currently using vanilla ECMAScript 5, with an eye on either using ES 6 via Babel, or Typescript in the future. Coming from a purely statically typed background, learning Typescript is appealing as I've noticed on a few occasions that I've made type errors where variables were assumed to be one type but were actually another. One case in particular was sneaky, where I assumed a vehicle's capacity was a number but was actually a string, and due to the numbers I used for testing they just happened to sort the same way lexicographically as they did numerically, so I didn't notice the error until later. Being used to compilers pointing out dumb mistakes spoiled me, thats something I'll have to pay attention to now.
+
+I'll be continually working on SpaceYYZ for the near future and may post some updates on the status or what I've learned on my blog here.
+
