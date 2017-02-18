@@ -8,16 +8,33 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-	var tiles = document.querySelector(".nav__tiles");
+	/*var tiles = document.querySelector(".nav__tiles");
 
 	var tilesToMake = window.screen.width / 100 * 2;
+	tilesToMake = 24;
 	for(var i = 0; i < tilesToMake; i++) {
 		var div = document.createElement("div");
 		div.className = "nav__tile";
 		div.style.animationDelay = Math.random() * 10000 + "ms";
 		
 		tiles.appendChild(div);
-	}
+	}*/
+	var addTiles = function(row, tilesPerRow) {
+
+		for(var i = 0; i < tilesPerRow; i++) {
+			var div = document.createElement("div");
+			div.className = "nav__tile";
+			div.style.animationDelay = Math.random() * 10000 + "ms";
+			row.appendChild(div);
+		}
+	};
+
+	//TODO: look up proper way to access css variables from js
+	var tilesPerRow = document.styleSheets[0].rules[0].style.getPropertyValue("--tiles-per-row");
+
+	addTiles(document.querySelector(".row0"), tilesPerRow);
+	addTiles(document.querySelector(".row1"), tilesPerRow);
+	addTiles(document.querySelector(".row2"), tilesPerRow);
 });
 </script>
 
@@ -28,7 +45,11 @@ document.addEventListener("DOMContentLoaded", function() {
 			<p class="nav__text--role">Web Developer</p>
 		</div>
 
-		<div class="nav__tiles"> 
+		<div class="nav__tiles row0"> 
+		</div>
+		<div class="nav__tiles row1"> 
+		</div>
+		<div class="nav__tiles row2"> 
 		</div>
 
 		<nav class="links-bar">
@@ -39,13 +60,4 @@ document.addEventListener("DOMContentLoaded", function() {
 		</nav>
 	</section>
 
-	<!--
-	<nav class="nav__bar">
-		<ul>
-			<li>Home</li>
-			<li>Work</li>
-			<li><a href="/blog/">Blog</a></li>
-			<li>Contact</li>
-		</ul>
-	</nav>-->
 </header>

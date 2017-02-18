@@ -3,45 +3,10 @@
 ---
 @charset "utf-8";
 
-// Our variables
-$base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-$base-font-size:   16px;
-$base-font-weight: 400;
-$small-font-size:  $base-font-size * 0.875;
-$base-line-height: 1.5;
-
-$spacing-unit:     30px;
-
-$text-color:       #111;
-$background-color: #fdfdfd;
-$brand-color:      #2a7ae2;
-
-$grey-color:       #828282;
-$grey-color-light: lighten($grey-color, 40%);
-$grey-color-dark:  darken($grey-color, 25%);
-
-// Width of the content area
-$content-width:    800px;
-
-$on-palm:          600px;
-$on-laptop:        800px;
-
-// Minima also includes a mixin for defining media queries.
-// Use media queries like this:
-// @include media-query($on-palm) {
-//     .wrapper {
-//         padding-right: $spacing-unit / 2;
-//         padding-left: $spacing-unit / 2;
-//     }
-// }
-
-/*
-Headers
- */
-@font-face {
-	font-family: 'TitilliumWeb';
-	font-style: normal;
-	src: url(../fonts/Titillium_Web/TitilliumWeb-Regular.ttf); 
+:root {
+	--primary-colour: cornflowerblue;
+	--secondary-colour: midnightblue;
+	--tiles-per-row: 7;
 }
 
 .nav__text--name,
@@ -56,7 +21,6 @@ Headers
 	font-family: "Exo2";
 }
 
-
 @font-face {
 	font-family: 'Exo2';
 	font-style: normal;
@@ -64,80 +28,33 @@ Headers
 }
 
 @font-face {
-	font-family: 'Kanit';
-	font-style: normal;
-	src: url(../fonts/Kanit/Kanit-Regular.ttf); 
-}
-
-@font-face {
-	font-family: 'JosefinSans';
-	font-style: normal;
-	src: url(../fonts/Josefin_Sans/JosefinSans-Regular.ttf); 
-}
-
-@font-face {
-	font-family: 'Rokkitt';
-	font-style: normal;
-	src: url(../fonts/Rokkitt/Rokkitt-Regular.ttf); 
-}
-
-
-/*
-Body
- */
-@font-face {
-	font-family: 'Roboto';
-	font-style: normal;
-	src: url(../fonts/Roboto/Roboto-Regular.ttf);
-}
-
-@font-face {
-	font-family: 'Lato';
-	font-style: normal;
-	src: url(../fonts/Lato/Lato-Regular.ttf);
-}
-
-@font-face {
-	font-family: 'Montserrat';
-	font-style: normal;
-	src: url(../fonts/Montserrat/Montserrat-Regular.ttf);
-}
-
-@font-face {
-	font-family: 'OpenSans';
-	font-style: normal;
-	src: url(../fonts/Open_Sans/OpenSans-Regular.ttf);
-}
-
-
-@font-face {
 	font-family: 'Oswald';
 	font-style: normal;
 	src: url(../fonts/Oswald/Oswald-Regular.ttf);
 }
 
-@font-face {
-	font-family: 'PTSans';
-	font-style: normal;
-	src: url(../fonts/PT_Sans/PT_Sans-Web-Regular.ttf);
-}
-
-@font-face {
-	font-family: 'Raleway';
-	font-style: normal;
-	src: url(../fonts/Raleway/Raleway-Regular.ttf);
-}
-
-@font-face {
-	font-family: 'Ubuntu';
-	font-style: normal;
-	src: url(../fonts/Ubuntu/Ubuntu-Regular.ttf);
-}
-
 body {
 	margin: 0px;
-	background-color: midnightblue;
-	/*indigo, mediumblue, royalblue*/
+	background-color: var(--secondary-colour);
+}
+
+@media only screen and (min-width: 800px) {
+	body {
+		max-width: 960px;
+		margin: auto;
+	}
+}
+
+@media only screen and (min-width: 640px) {
+	:root {
+		--tiles-per-row: 8;
+	}
+}
+
+@media only screen and (max-width: 639px) {
+	:root {
+		--tiles-per-row: 6;
+	}
 }
 
 * {
@@ -145,8 +62,7 @@ body {
 }
 
 .nav {
-	/*display: flex;*/
-	height: 400px;
+	height: 23rem;
 }
 
 .nav__title {
@@ -154,31 +70,28 @@ body {
 
 .nav__text {
 	clip-path: url(#shape);
-	background-color: midnightblue;
+	background-color: var(--secondary-colour);
 	height: 20em;
-	color: cornflowerblue;
+	color: var(--primary-colour);
 }
 
 .nav__text--name {
 	font-size: 2.75em;
 	margin:0px;
-	/*font-family: "Rokkitt";*/
 }
+
 
 .nav__text--role {
 	font-size: 1.75em;
-	color: cornflowerblue;
+	color: var(--primary-colour);
 }
 
 .nav__tiles {
 	display: flex;
 	transform: skewY(-5deg);
-	background-color: grey;
-	height: 350px;
-	top: -400px;
+	top: -23rem;
 	position: relative;
 	z-index: -1;
-	flex-wrap: wrap;
 	align-items: flex-end;
 }
 
@@ -193,7 +106,7 @@ body {
 	animation: col 7000ms infinite; 
 	height: 100px;
 	width: 100px;
-	flex: 1 0 auto;
+	flex: 1 1 auto;
 	animation-direction: alternate;
 	background-color: hsl(200, 99%, 55%);
 }
@@ -222,8 +135,8 @@ body {
 .link {
 	padding: 1.5rem;
 	font-size: 2em;
-	background-color: midnightblue;
-	color: cornflowerblue;
+	background-color: var(--secondary-colour);
+	color: var(--primary-colour);
 	font-family: "Exo2";
 }
 
@@ -233,7 +146,7 @@ a {
 
 .about {
 	font-size: 2rem;
-	color: cornflowerblue;
+	color: var(--primary-colour);
 	margin: 2em 1em;
 }
 
@@ -258,8 +171,8 @@ a {
 
 .about__experience {
 	transform: skewY(5deg);
-	background-color: cornflowerblue;
-	color: midnightblue;
+	background-color: var(--primary-colour);
+	color: var(--secondary-colour);
 	margin: 3em 0em;
 	padding: 0.15em 0em;
 }
@@ -272,7 +185,7 @@ a {
 
 .about__tail {
 	transform: skewY(-10deg);
-	background-color: cornflowerblue;
+	background-color: var(--primary-colour);
 	width: 100%;
 	height: 200px;
 	position: absolute;
@@ -285,7 +198,7 @@ a {
 	column-count: 3;
 	column-width: auto;
 	text-align: center;
-	column-rule: medium solid black;
+	column-rule: medium solid var(--secondary-colour);
 }
 
 .about__projects {
@@ -318,7 +231,7 @@ a {
 	height: 5rem;
 	font-size: 1.5em;
 	padding: 1em;
-	background-color: cornflowerblue;
-	color: midnightblue;
+	background-color: var(--primary-colour);
+	color: var(--secondary-colour);
 	font-family: "Oswald";
 }
