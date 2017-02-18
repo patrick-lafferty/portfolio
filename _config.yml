@@ -19,6 +19,8 @@ github_username:  patrick-lafferty
 
 # Build settings
 markdown: kramdown
+highlighter: rouge
+
 
 gems:
     - jekyll-paginate

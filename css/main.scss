@@ -21,7 +21,7 @@
 	font-family: "Exo2";
 }
 
-@font-face {
+/*@font-face {
 	font-family: 'Exo2';
 	font-style: normal;
 	src: url(../fonts/Exo_2/Exo2-Regular.ttf); 
@@ -31,7 +31,7 @@
 	font-family: 'Oswald';
 	font-style: normal;
 	src: url(../fonts/Oswald/Oswald-Regular.ttf);
-}
+}*/
 
 body {
 	margin: 0px;
@@ -109,6 +109,7 @@ body {
 	flex: 1 1 auto;
 	animation-direction: alternate;
 	background-color: hsl(200, 99%, 55%);
+	margin: -1px 0px;
 }
 
 @keyframes col {
@@ -271,4 +272,9 @@ a {
 
 .post__content > p {
 	text-indent: 2em;
+}
+
+img {
+	max-width: 100%;
+	display: block;
 }
