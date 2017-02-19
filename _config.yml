@@ -25,7 +25,7 @@ highlighter: rouge
 gems:
     - jekyll-paginate
 
-exclude: [vendor]
+exclude: [vendor, todo, fonts, Gemfile, Gemfile.lock, site.tar.gz, favicons]
 
 liquid:
     error_mode: strict
