@@ -1,24 +1,13 @@
 <svg height="0">
 	<defs>
 		<clipPath id="shape">
-			<path d="M300,0 Q300,150 0,300 L0,0">/
+		<path d="M300,0 Q300,150 0,300 L0,0"></path>
 		</clipPath>
 	</defs>
 </svg>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-	/*var tiles = document.querySelector(".nav__tiles");
-
-	var tilesToMake = window.screen.width / 100 * 2;
-	tilesToMake = 24;
-	for(var i = 0; i < tilesToMake; i++) {
-		var div = document.createElement("div");
-		div.className = "nav__tile";
-		div.style.animationDelay = Math.random() * 10000 + "ms";
-		
-		tiles.appendChild(div);
-	}*/
 	var addTiles = function(row, tilesPerRow) {
 
 		for(var i = 0; i < tilesPerRow; i++) {
@@ -29,8 +18,19 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	};
 
-	//TODO: look up proper way to access css variables from js
-	var tilesPerRow = document.styleSheets[0].rules[0].style.getPropertyValue("--tiles-per-row");
+	var tilesPerRow = 7;
+	
+	if (CSS.supports('--foo', 'blue')) {
+		tilesPerRow = window.getComputedStyle(document.documentElement).getPropertyValue("--tiles-per-row");
+	}
+	else {
+		if (window.matchMedia("(min-width: 640px")) {
+			tilesPerRow = 8;
+		}
+		else if (window.matchMedia("(max-width: 639px)")) {
+			tilesPerRow = 6;
+		}
+	}
 
 	addTiles(document.querySelector(".row0"), tilesPerRow);
 	addTiles(document.querySelector(".row1"), tilesPerRow);
