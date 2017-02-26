@@ -237,9 +237,14 @@ a {
 	flex-direction: row-reverse;
 }
 
+.project__name {
+	font-size: 2rem;
+	margin: 0rem 2rem 1rem 2rem;
+}
+
 .project__description {
 	font-size: 1.45rem;
-
+	margin: 0rem 2rem 1rem 2rem;
 }
 
 .fake-image {
