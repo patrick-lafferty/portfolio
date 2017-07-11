@@ -1,0 +1,36 @@
+---
+layout: default
+title: "Lush"
+date: 2017-07-11
+tags: dev lush
+---
+
+![Fizzbuzz screenshot](/images/blogposts/fizzbuzz.png)
+
+Lush is a new Unix shell I've been working on. It is based off using Racket as its scripting language. Currently it is basically a minimal Racket REPL with basic shell features like running and piping programs and redirecting streams. It is mostly written in Racket with a little bit of C. You can view the [source code](https://github.com/patrick-lafferty/lush) and the [documentation here](https://patrick-lafferty.github.io/lush).
+
+## Why Lush?
+
+Some time ago I read a post mentioning [Racket](http://racket-lang.org), a language which describes itself as "a general-purpose programming language as well as the world’s first ecosystem for developing and deploying new languages" . I'm interested in programming languages and the theory behind them, and am a strong believer in polygot programming - use the right language for the job, instead of using one for everything. One of my favourite projects, a game engine prototype I designed, took this to the extreme and used F#, C#, C++, C++/CLI, and IronPython all together working in harmony. So reading about a language expressly suited towards language development got me hooked.
+
+I wanted to start learning Racket and needed something to work on. At the same time I also had the desire to spend more time in the shell. The Windows 10 Creator's Update had recently come out and I wanted to make use of the improvements to the WSL. Ideally I wanted to be able to drop into Racket and write out an idea or try something at any time. So I decided to kill two birds with one stone and create a Racket environment that would also be a shell.
+
+## Goals
+
+I intend to make Lush a full Racket environment with some of the bells and whistles you'd expect of an IDE. I plan to make an ncurses-like interface where you can have dropdowns listing possible completions.
+I also want to add features that support exploring Racket, like discovering the types and expected arguments of procedures, with some sort of help system that can explain forms or link to documentation, and debugging. 
+
+On the shell side I want get to the point where one can comfortably replace their current shell with Lush. An object based piping system similar to PowerShell, possibly with an interface that allows for transitioning between text -> objects and objects -> text (eg `ls |> file-info |> (map (lambda (f) (list f-name f-date))) |> grep`). Full support for running/suspending/sequencing commands.
+
+## Whats next?
+
+The next items on the agenda are:
+
+<ul style="margin-left: 4rem">
+    <li>the ncurses-style interface</li>
+    <li>expanding the interpreter to support structs, classes, other missing forms </li>
+    <li>modify the autocompleter to support class method names</li>
+    <li>job control (fg, bg, jobs)</li>
+</ul>
+
+New releases will be posted on this blog detailing whats new in the release.
