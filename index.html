@@ -16,10 +16,13 @@ layout: default
 		<p class="about--description">I have experience with</p>
 
 		<ul class="about__experience--skills">
+			<li>PHP</li>
+			<li>MySQL</li>
 			<li>HTML5</li>
 			<li>CSS3</li>
 			<li>JavaScript</li>
 			<li>C#</li>
+			<li>Racket</li>
 			<li>ASP.NET Core</li>
 			<li>AngularJS 1</li>
 			<li>TypeScript</li>
@@ -33,6 +36,27 @@ layout: default
 	<section class="about__projects" id="projects">
 		<h1 class="about--header">Projects</h1>
 		<p class="about--description">Here are some projects I've worked on</p>
+
+		<section class="project">
+			<div>
+				<a href="https://github.com/patrick-lafferty/lush"><h1 class="project__name">Lush</h1></a>
+				<p class="project__description">A Unix shell that uses Racket as its scripting language.
+					It features a Racket interpreter, lexer that provides syntax colouring/bracket highlighting/autocompletion
+					and more.</p>
+			</div>
+			<div class="fake-image"></div>
+		</section>
+
+		<section class="project">
+			<div>
+				<h1 class="project__name">HousingDB - Diane Frankling Housing Co-operative Homes</h1>
+				<p class="project__description">An internal web application used to manage the Co-op. I worked on
+					adding role based authorization and designed the system used to push updates to a separate
+					signage app. It used PHP, MySQL, JavaScript and WordPress.
+				</p>
+			</div>
+			<div class="fake-image"></div>
+		</section>
 
 		<section class="project">
 			<div>
@@ -50,13 +74,14 @@ layout: default
 			<div class="fake-image"></div>
 		</section>
 
-		<section class="project">
+		<!--<section class="project">
 			<div>
 				<a href="https://spaceyyz.ca"><h1 class="project__name">spaceyyz.ca (temporarily offline)</h1></a> 
 				<p class="project__description">An ASP.NET Core rewrite of the above Angular project. It features a more user-centric design and has a richer identity/authentication layer that sections off site features by roles. </p>
 			</div>
 			<div class="fake-image"></div>
 		</section>
+		-->
 	</section>
 
 	<section class="about__github">
