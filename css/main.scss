@@ -9,18 +9,6 @@
 	--tiles-per-row: 7;
 }
 
-.nav__text--name,
-.about--header,
-.project__name {
-	font-family: "Oswald";
-}
-
-.nav__text--role,
-.about--description,
-.project__description {
-	font-family: "Exo 2";
-}
-
 body {
 	margin: 0px;
 	background-color: #6EC7FC;
@@ -30,18 +18,6 @@ body {
 	body {
 		max-width: 960px;
 		margin: auto;
-	}
-}
-
-@media only screen and (min-width: 640px) {
-	:root {
-		--tiles-per-row: 8;
-	}
-}
-
-@media only screen and (max-width: 639px) {
-	:root {
-		--tiles-per-row: 6;
 	}
 }
 
@@ -78,7 +54,6 @@ body {
 	/*color: var(--primary-colour);*/
 	color: cornflowerblue;
 }
-
 
 .nav__tiles {
 	display: flex;
@@ -153,25 +128,48 @@ a {
 .about {
 	font-size: 2rem;
 	/*color: var(--primary-colour);*/
-	color: cornflowerblue;
-	margin: 2em 1em;
+	color: #161A1D;
 }
 
-.about--description {
+.about__banner {
+	background: #399FDB;
+	display: flex;
+	justify-content: center;
+	height: 5rem;
 }
 
-.about--description::first-letter {
+.banner__hang {
+	background: #399FDB;
+	border-radius: 35%;
+	width: 25rem;
+	height: 6rem;
+	position: relative;
+	top: 1rem;
+}
+
+.about__description {
+	padding: 2rem;
+}
+
+.about__description::first-letter {
 	font-size: 1.75em;
+	line-height: 1;
 }
 
-.about--header {
+.about__header {
 	text-align: center;
 	font-size: 1.75em;
+	margin: 0;
+	padding: 2rem;
+	position: relative;
+	top: -2rem;
+	font-family: "Nothing you could do";
 }
 
-.about__intro,
-.about__experience {
-	margin: 2em 0em;
+.about__intro {
+	background: linear-gradient(30deg, #ffffff, #B7E4FF 70%);
+	font-family: "Raleway";
+	box-shadow: 0px 2px 5px 1px #161A1D;
 }
 
 .about__experience {
