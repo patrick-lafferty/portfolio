@@ -270,6 +270,10 @@ a {
 	padding: 0rem 1rem;
 }
 
+.see-more__banner > .about__header {
+	padding: 2rem 2rem 0rem 0rem;
+}
+
 .name__word {
 	margin: 0;
 }
@@ -330,11 +334,19 @@ a {
 	height: 22rem;
 }
 
+.project:last-child {
+	height: 21rem;
+}
+
 .project__header {
 	clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
 	background: #399FDB;
 	margin: 0;
 	padding: 0;
+}
+
+a.project__banner {
+	color: #161A1D; 
 }
 
 .project__banner {
@@ -357,20 +369,13 @@ a {
 	font-size: 1.5rem;
 }
 
-.fake-image {
-	width: 200px;
-	height: 150px;
-	background-color: purple;
-	flex: 0 0 auto;
-}
-
 .footer {
 	height: 5rem;
 	font-size: 1.5em;
 	padding: 1em;
-	background-color: cornflowerblue;
-	color: midnightblue;
-	font-family: "Oswald";
+	background-color: #399FDB;
+	color: #161A1D;
+	font-family: "Raleway";
 }
 
 .post__header {
