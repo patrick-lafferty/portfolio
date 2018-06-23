@@ -3,12 +3,6 @@
 ---
 @charset "utf-8";
 
-:root {
-	--primary-colour: midnightblue;
-	--secondary-colour: cornflowerblue; 
-	--tiles-per-row: 7;
-}
-
 body {
 	margin: 0px;
 	background-color: #6EC7FC;
@@ -22,103 +16,7 @@ body {
 }
 
 * {
-	line-height: 1.8;/*1.618em;*/
-}
-
-.nav {
-	height: 23rem;
-}
-
-.nav__title {
-}
-
-.nav__text {
-	clip-path: url(#shape);
-	/*background-color: var(--secondary-colour);*/
-	max-width: 20em;
-	height: 20em;
-	/*color: var(--primary-colour);*/
-	background-color: midnightblue;
-	color: cornflowerblue;
-}
-
-
-.nav__text--name {
-	font-size: 2.75em;
-	margin:0px;
-}
-
-
-.nav__text--role {
-	font-size: 1.75em;
-	/*color: var(--primary-colour);*/
-	color: cornflowerblue;
-}
-
-.nav__tiles {
-	display: flex;
-	transform: skewY(-5deg);
-	top: -23rem;
-	position: relative;
-	z-index: -1;
-	align-items: flex-end;
-}
-
-.nav__bar {
-	width: 100%;
-	height: 300px;
-	background-color: blue;
-	clip-path: url(#shape);
-}
-
-.nav__tile {
-	animation: col 7000ms infinite; 
-	height: 100px;
-	width: 100px;
-	flex: 1 1 auto;
-	animation-direction: alternate;
-	background-color: hsl(200, 99%, 55%);
-	margin: -1px -1px -1px 0px;
-}
-
-@keyframes col {
-	from {
-		background-color: hsl(200, 99%, 55%);
-	}
-	to {
-		background-color: hsl(220, 90%, 65%);
-	}
-}
-
-.links-bar {
-	top: -400px;
-	position: relative;
-	transform: skewY(-5deg);
-}
-
-.links-bar__list {
-	display: flex;
-	justify-content: space-around;
-	list-style: none;
-}
-
-.link {
-	padding: 1.5rem;
-	font-size: 2em;
-	/* background-color: var(--secondary-colour);
-	color: var(--primary-colour); */
-	background-color: midnightblue;
-	color: cornflowerblue;
-	font-family: "Exo 2";
-	transition: font-size 0.4s, color 0.4s, background-color 0.4s;
-}
-
-.link:hover {
-	font-size: 2.5em;
-	/*background-color: var(--primary-colour);
-	color: var(--secondary-colour);*/
-	background-color: cornflowerblue;
-	color: midnightblue;
+	line-height: 1.8;
 }
 
 a {
@@ -234,12 +132,6 @@ a {
 	border-right: 5rem solid transparent;
 }
 
-.about__test {
-	transform: skewY(-5deg);
-	background-color: none;
-	padding: 0em 1em;
-}
-
 .site__header {
 	margin: 0rem 0rem 1rem 0rem;
 	display: flex;
@@ -305,26 +197,6 @@ a {
 
 .navbar__link {
 	text-decoration: none;
-}
-
-.about__tail {
-	transform: skewY(-10deg);
-	/*background-color: var(--primary-colour);*/
-	background-color: cornflowerblue;
-	width: 100%;
-	height: 200px;
-	position: absolute;
-	top: 300px;
-	z-index: -1;
-}
-
-.about__experience--skills {
-	list-style: none;
-	column-count: 3;
-	column-width: auto;
-	text-align: center;
-	/*column-rule: medium solid var(--secondary-colour);*/
-	column-rule: medium solid midnightblue;
 }
 
 .about__projects {
@@ -455,7 +327,6 @@ img {
 	display: flex;
 	justify-content: center;
 }
-
 
 @supports not (shape-outside: none) {
 
