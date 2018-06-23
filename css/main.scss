@@ -127,24 +127,18 @@ a {
 
 .about {
 	font-size: 2rem;
-	/*color: var(--primary-colour);*/
 	color: #161A1D;
 }
 
 .about__banner {
-	background: #399FDB;
+	shape-outside: polygon(0 0, 100% 0, 20% 100%, 0 100%);
+	width: 400px;
+	height: 22rem;
+	float: left;
+	background-color: #399FDB;
+	clip-path: polygon(0 0, 100% 0, 20% 100%, 0 100%);
 	display: flex;
-	justify-content: center;
-	height: 5rem;
-}
-
-.banner__hang {
-	background: #399FDB;
-	border-radius: 35%;
-	width: 25rem;
-	height: 6rem;
-	position: relative;
-	top: 1rem;
+	padding: 1rem;
 }
 
 .about__description {
@@ -161,8 +155,6 @@ a {
 	font-size: 1.75em;
 	margin: 0;
 	padding: 2rem;
-	position: relative;
-	top: -2rem;
 	font-family: "Nothing you could do";
 }
 
@@ -170,16 +162,72 @@ a {
 	background: linear-gradient(30deg, #ffffff, #B7E4FF 70%);
 	font-family: "Raleway";
 	box-shadow: 0px 2px 5px 1px #161A1D;
+	height: 24rem;
+	margin-bottom: 3rem;
 }
 
 .about__experience {
-	transform: skewY(5deg);
-	/*background-color: var(--primary-colour);
-	color: var(--secondary-colour);*/
-	background-color: cornflowerblue;
-	color: midnightblue;
-	margin: 3em 0em;
-	padding: 0.15em 0em;
+	height: 27rem;
+}
+
+.experience__header {
+	background: #399FDB;
+	margin: 0;
+	height: 5rem;
+	padding: 0rem 0rem 1rem 0rem;
+}
+
+.experience {
+	display: flex;
+}
+
+.experience__side {
+	flex: 1 1 auto;
+}
+
+.side__shape {
+	background-color: #399FDB;
+	width: 20rem;
+	height: 21rem;
+	float: left;
+	shape-outside: polygon(0 0, 0 100%, 80% 100%);
+	clip-path: polygon(0 0, 0 100%, 80% 100%);
+	display: flex;
+	align-items: end;
+}
+
+.side__shape--right {
+	shape-outside: polygon(100% 0, 100% 100%, 0 100%);
+	clip-path: polygon(100% 0, 100% 100%, 0 100%);
+	float: right;
+}
+
+.right {
+	text-align: right;
+}
+
+.side__content {
+	margin: 0;
+	font-family: "Nothing you could do";
+	font-size: 2.8rem;
+}
+
+.side__content--right {
+	font-size: 2.4rem;
+}
+
+.experience__item {
+	margin: 1rem;
+}
+
+.experience__item:last-child {
+	margin: 0;
+}
+
+.experience__separator {
+	border-top: 21rem solid #399FDB;
+	border-left: 5rem solid transparent;
+	border-right: 5rem solid transparent;
 }
 
 .about__test {
