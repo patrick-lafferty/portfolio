@@ -5,11 +5,11 @@ date: 2018-04-03
 tags: dev saturn
 ---
 
-## The Thought
+# The Thought
 
 It all started with an interesting thought experiment. Starting with just Clang, with no standard C or C++ library, and an empty text file - and no Windows or Linux, what is the minimum amount of code one needs to write to display text on the screen? Assuming text mode with a colour monitor, you just write values to video memory (0xB8000), and voila. Alright that’s easy enough, how about user input? Well that introduces interrupt handling, but if you just want a bootable program that echoes the keys the user presses and that’s it, that’s essentially a few dozen extra lines of code.
 
-## The Rabbit Hole
+# The Rabbit Hole
 
 What about nice TTF fonts? Now things get fun. Let’s say you want to use FreeType to handle all your TrueType font rendering needs. Nice, simple, portable library that only depends on LibC - the C Standard Library, which is non-portable and depends heavily on the host operating system. Which means you need to write it now. So, you try to compile a small demo to see what it is FreeType really depends on. Here's how the process goes:
 
@@ -27,13 +27,13 @@ Okay, we need fread() (and fseek and friends), to read the font.ttf file
 
 What about colour? Styles? String handling? It quickly snowballs into a complex project. You reach for familiar functions in the standard library to help, and then realize you need to write them first. Its. All. You.
 
-## The Red Pill
+# The Red Pill
 
 Our hero journeys on to see how deep the rabbit hole goes. In your quest you seek out resources; first among them is the OSDev Wiki. You start absorbing reading material at a blistering rate – several volumes of Intel Software Developer Manuals, ATA spec sheets, Ext2 design docs, the Multiboot specification, PCI, VGA, VBE. Tens of thousands of pages of dry documentation, strict specification, and plenty of historical anecdotes about why things are the way they are.
 
 You start writing the barebones of your kernel. But once you get past the minimum point everyone else gets to, you step out of the forest into a wide-open field, and you realize just how much of an artform there is to the project. I don’t mean the visual design. There are so, so many design decisions you must make when coming up with your OS’s architecture, that the potential state-space is immense. If you don’t decide to follow in Unix’s (or other mainstream OS) footsteps, you really get a chance to explore your creative side. Technological creativity, let the source code be your canvas. By embracing it, your OS will take on and express its own personality and provide a window to show others how you think.
 
-## The Project
+# The Project
 
 My operating system is called <a href="https://github.com/patrick-lafferty/saturn">Saturn</a>. Its source code is under the BSD-3 clause license. The name comes from the Saturn V rocket, and a lot of other names are similarly space themed. I’ve been working on it for 5 months now, with currently 701 commits, 274 files, and roughly 22,000 lines of code in C++ and x86 Assembly. Currently working on version 0.3.0, I’m focusing on my own GUI framework, but I’ll write more about that when the milestone’s reached.
 
@@ -45,7 +45,7 @@ Saturn essentially brings together every important project I’ve ever written. 
 
 People question why I don’t typically finish hobby projects, and they have a good reason to. Its an important skill to see a project all the way to release and ship it, and its obvious why this would be important for prospective employers. But I contend that the breadth of topics, the diverse background of problems and solutions I’ve encountered holds value. When I encountered all those design breakpoints mentioned above, instead of having to pause for days or weeks to research, prototype, explore the status quo, I can just hit the ground running and be productive.
 
-## The Joy
+# The Joy
 
 The joy of making your own operating system is that you own the entire stack. All of it. Memory, CPU scheduler, drivers, system calls, GUIs. From top to bottom, you are in control of *everything*. When you write an app for your OS and debug it, you can step through every single line of code between the function that draws a string to the screen...
 

@@ -12,7 +12,7 @@ This post describes my current web dev environment for a friend that was curious
 
 I based the environment on running Arch Linux inside VirtualBox. I prefer Arch because I love pacman, out of all the distro package managers its the only one I feel that just.always.works, I've never got it into a critically broken state (hello aptitude, yum), and allows me to stay on the bleeding edge with new updates. Arch is also minimalistic, you pay for what you get allowing me to keep the virtual image small. A nice bonus about running a VM is that you can save the exact state of the machine before you shutdown your real one. So at night you just stop the VM and in the morning when you start up you are right back where you left off, no need to startup your editor and open the files you left off at. 
 
-### Editor
+# Editor
 
 For my editor I use Vim currently with powerline and vim-surround. I can't <strong>not</strong> use Vim anymore, I keep learning new things to improve my experience. For example: sometime after starting some HTML5 practice, I learned about the tag blocks `at` and `it`. Adding `at` to a command selects the entire element from the beginning tag to the ending, while `it` selects everything except the starting/closing tags. So with the following html:
 
@@ -31,7 +31,7 @@ and the cursor is on the beginning div line,
 
 With vim-surround you can do things like surrounding/changing/removing things around things. So if we wanted the `<p>` and `<form>` to be inside a div we could do `ysj<div>`, or if we wanted to switch the `<p>` to a `<div>` we could do `cst<div>` with the cursor inside the `<p>`. For the yank/put/delete/change ops I originally wrote them as (y)/(p) etc but then decided to switch to use highlighting so with a simple ``cs) ` `` they changed to `` `y` `` /`` `p` ``.
 
-### Shell
+# Shell
 
 I've been using bash for years, so I picked zsh to learn something new. Zsh has some cool features, like:
 
@@ -43,7 +43,7 @@ Searching "why zsh" will bring up a number of good sites with examples. Along wi
 
 ![Dev environment screenshot](/images/blogposts/dev_environment.png)
 
-## Runners up
+# Runners up
 
 Choices that didn't quite make the final cut but are still very nice are listed below.
 
