@@ -130,15 +130,17 @@ a {
 	color: #161A1D;
 }
 
-.about__banner {
-	shape-outside: polygon(0 0, 100% 0, 20% 100%, 0 100%);
-	width: 400px;
-	height: 22rem;
-	float: left;
-	background-color: #399FDB;
-	clip-path: polygon(0 0, 100% 0, 20% 100%, 0 100%);
-	display: flex;
-	padding: 1rem;
+@supports (shape-outside: none) {
+	.about__banner {
+		shape-outside: polygon(0 0, 100% 0, 20% 100%, 0 100%);
+		width: 400px;
+		height: 22rem;
+		float: left;
+		background-color: #399FDB;
+		clip-path: polygon(0 0, 100% 0, 20% 100%, 0 100%);
+		display: flex;
+		padding: 1rem;
+	}
 }
 
 .about__description {
@@ -454,3 +456,75 @@ img {
 	justify-content: center;
 }
 
+
+@supports not (shape-outside: none) {
+
+	.about__intro {
+		display: flex;
+	}
+
+	.about__banner {
+		height: 22rem;
+		padding: 1rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #399FDB;
+	}
+	
+	.about__description {
+		padding: 0.5rem;
+	}
+
+	.about__experience {
+		flex-direction: column;
+	}
+
+	.side__shape {
+		display: none;
+	}
+
+	.experience__item:last-child {
+		margin: 1rem;
+	}
+
+	.about__projects {
+		flex-direction: column;
+	}
+
+	a.project__banner {
+		width: 100%;
+	}
+
+	.about__banner {
+		float: none;
+		width: unset;
+	}
+
+	div.about__banner {
+		flex: 1 0 33%;
+	}
+
+	.project {
+		display: flex;
+		height: 25rem;
+	}
+
+	.project:last-child {
+		height: 23rem;
+	}
+
+	.project__description {
+		padding: 0rem 1rem;
+	}
+
+	.see-more {
+		height: 20rem;
+	}
+
+	.see-more__banner {
+		padding: 0;
+		height: 20rem;
+	}
+
+}
