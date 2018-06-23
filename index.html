@@ -46,63 +46,117 @@ layout: default
 
 	</section>
 
-	<section class="about__projects" id="projects">
-		<h1 class="about--header">Projects</h1>
-		<p class="about--description">Here are some projects I've worked on</p>
+	<section class="about__intro about__projects" id="projects">
+		<h1 class="about__header project__header">Projects</h1>
+		<p class="about__description">Here are some projects I've worked on</p>
 
 		<section class="project">
-			<div>
-				<a href="https://github.com/patrick-lafferty/rain"><h1 class="project__name">Rain</h1></a>
-				<p class="project__description">A Unix shell that uses Racket as its scripting language.
-					It features a Racket interpreter, lexer that provides syntax colouring/bracket highlighting/autocompletion
-					and more.</p>
-			</div>
-			<div class="fake-image"></div>
-		</section>
+			<div class="about__banner project__banner">
 
-		<section class="project">
-			<div>
-				<h1 class="project__name">HousingDB - Diane Frankling Housing Co-operative Homes</h1>
-				<p class="project__description">An internal web application used to manage the Co-op. I worked on
-					adding role based authorization and designed the system used to push updates to a separate
-					signage app. It used PHP, MySQL, JavaScript and WordPress.
-				</p>
-			</div>
-			<div class="fake-image"></div>
-		</section>
+				<a class="about__banner project__banner" href="https://github.com/patrick-lafferty/saturn">
+					<h1 class="project__name">Saturn</h1>
+				</a>
 
-		<section class="project">
-			<div>
-				<a href="https://patrick-lafferty.github.io/labs/"><h1 class="project__name">Labs</h1></a>
-				<p class="project__description">A React app I wrote in TypeScript to demonstrate some web technologies. It currently has an interactive demo for CSS Grids.</p>
+				<p class="project__brief">Brief:</p>
+				<ul class="project__brief">
+					<li>Feature A</li>
+					<li>Feature B</li>
+					<li>Feature C</li>
+				</ul>
+
 			</div>
-			<div class="fake-image"></div>
+
+			<p class="project__description">A new operating system created from scratch. 
+				It is a 32-bit microkernel with multitasking and IPC based around asynchronous message passing.</p>
 		</section>
 
 		<section class="project">
-			<div>
-				<h1 class="project__name">patricklafferty.ca</h1>
-				<p class="project__description">My personal portfolio and blog. It uses modern HTML and CSS features with a pinch of JavaScript and is built using Jekyll. Features a responsive design and has appropriate fallbacks to look good on multiple browsers.</p>
+			<div class="about__banner project__banner">
+
+				<a class="about__banner project__banner" href="https://saturn-os.org">
+					<h1 class="project__name">Saturn-os</h1>
+				</a>
+
+				<p class="project__brief">Brief:</p>
+				<ul class="project__brief">
+					<li>Feature A</li>
+					<li>Feature B</li>
+					<li>Feature C</li>
+				</ul>
+
 			</div>
-			<div class="fake-image"></div>
+
+			<p class="project__description">Homepage and documentation viewer for Saturn OS. The /documentation page
+				is a ReactJS app that uses metadata extracted from Saturn's source repo using a Python script
+				and libclang.
+			</p>
 		</section>
 
 		<section class="project">
-			<div>
-				<a href="http://patrick-lafferty.github.io/spaceyyz"><h1 class="project__name">patrick-lafferty.github.io/spaceyyz</h1></a>
-				<p class="project__description">An AngularJS SPA that uses Firebase for the database and authentication, and Karma/Mocha/Chai for testing and code coverage. It is a toy app that a fictional space transport company would use to manage its daily operations.</p>
+			<div class="about__banner project__banner">
+
+				<a class="about__banner project__banner" href="https://github.com/patrick-lafferty/rain">
+					<h1 class="project__name">Rain</h1>
+				</a>
+
+				<p class="project__brief">Brief:</p>
+				<ul class="project__brief">
+					<li>Feature A</li>
+					<li>Feature B</li>
+					<li>Feature C</li>
+				</ul>
+
 			</div>
-			<div class="fake-image"></div>
+
+			<p class="project__description">A Unix shell that uses Racket as its scripting language.
+				It features a Racket interpreter, lexer that provides syntax colouring/bracket highlighting/autocompletion
+				and more.</p>
 		</section>
 
-		<!--<section class="project">
-			<div>
-				<a href="https://spaceyyz.ca"><h1 class="project__name">spaceyyz.ca (temporarily offline)</h1></a> 
-				<p class="project__description">An ASP.NET Core rewrite of the above Angular project. It features a more user-centric design and has a richer identity/authentication layer that sections off site features by roles. </p>
+		<section class="project">
+			<div class="about__banner project__banner">
+
+				<a class="about__banner project__banner" href="http://patrick-lafferty.github.io/spaceyyz">
+					<h1 class="project__name">SpaceYYZ</h1>
+				</a>
+
+				<p class="project__brief">Brief:</p>
+				<ul class="project__brief">
+					<li>Feature A</li>
+					<li>Feature B</li>
+					<li>Feature C</li>
+				</ul>
+
 			</div>
-			<div class="fake-image"></div>
+
+			<p class="project__description">An AngularJS SPA that uses Firebase for the database and authentication, 
+				and Karma/Mocha/Chai for testing and code coverage. It is a toy app that a fictional space transport 
+				company would use to manage its daily operations.
+			</p>
 		</section>
-		-->
+
+		<section class="project">
+
+			<div class="about__banner project__banner">
+
+					<h1 class="about__banner project__banner project__name">HousingDB</h1>
+	
+					<p class="project__brief">Brief:</p>
+					<ul class="project__brief">
+						<li>Feature A</li>
+						<li>Feature B</li>
+						<li>Feature C</li>
+					</ul>
+	
+				</div>
+				
+			<p class="project__description">An internal web application used to manage the Co-op. I worked on
+				adding role based authorization and designed the system used to push updates to a separate
+				signage app. It used PHP, MySQL, JavaScript and WordPress.
+			</p>
+
+		</section>
+
 	</section>
 
 	<section class="about__github">
