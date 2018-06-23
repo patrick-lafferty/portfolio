@@ -1,64 +1,15 @@
-<svg height="0">
-	<defs>
-		<clipPath id="shape">
-		<path d="M300,0 Q300,150 0,300 L0,0"></path>
-		</clipPath>
-	</defs>
-</svg>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-	var addTiles = function(row, tilesPerRow) {
-
-		for(var i = 0; i < tilesPerRow; i++) {
-			var div = document.createElement("div");
-			div.className = "nav__tile";
-			div.style.animationDelay = Math.random() * 10000 + "ms";
-			row.appendChild(div);
-		}
-	};
-
-	var tilesPerRow = 7;
-	
-	if (CSS.supports('--foo', 'blue')) {
-		tilesPerRow = window.getComputedStyle(document.documentElement).getPropertyValue("--tiles-per-row");
-	}
-	else {
-		if (window.matchMedia("(min-width: 640px")) {
-			tilesPerRow = 8;
-		}
-		else if (window.matchMedia("(max-width: 639px)")) {
-			tilesPerRow = 6;
-		}
-	}
-
-	addTiles(document.querySelector(".row0"), tilesPerRow);
-	addTiles(document.querySelector(".row1"), tilesPerRow);
-	addTiles(document.querySelector(".row2"), tilesPerRow);
-});
-</script>
-
-<header class="nav">
-	<section class="nav__title">
-		<div class="nav__text">
-			<p class="nav__text--name">Patrick Lafferty</p>
-			<p class="nav__text--role">Web Developer</p>
-		</div>
-
-		<div class="nav__tiles row0"> 
-		</div>
-		<div class="nav__tiles row1"> 
-		</div>
-		<div class="nav__tiles row2"> 
-		</div>
-
-		<nav class="links-bar">
-			<ul class="links-bar__list">
-				<li class="link"><a href="/">Home</a></li>
-				<li class="link"><a href="/#projects">Work</a></li>
-				<li class="link"><a href="/blog">Blog</a></li>
-			</ul>
-		</nav>
+<header class="site__header">
+	<section class="header__name">
+		<p class="name__word">Patrick</p>
+		<p class="name__word">Lafferty</p>
 	</section>
+
+	<nav class="header__navbar">
+		<ul class="navbar__links">
+			<li><a class="navbar__link" href="/">Home</a></li>
+			<li><a class="navbar__link" href="/#projects">Work</a></li>
+			<li><a class="navbar__link" href="/blog">Blog</a></li>
+		</ul>
+	</nav>
 
 </header>
