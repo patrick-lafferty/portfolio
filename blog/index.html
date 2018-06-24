@@ -10,15 +10,41 @@ layout: default
 
 {% for post in paginator.posts %}
 
+<a class="post__excerpt--link" href="{{post.url}}">
 <article class="post">
-	<header class="post__header">
-		<p class="post__title">{{post.title}}</p>
-		<p class="post__date">{{post.date | date: "%b %-d, %Y" }}</p>
-	</header>
 
-	<section class="post__content">
+
+		<header class="post__header post__header--preview">
+			<p class="post__title">{{post.title}}</p>
+			<p class="post__date">{{post.date | date: "%b %-d, %Y" }}</p>
+		</header>
+
+		<section class="post__excerpt">
+			{{post.excerpt}}
+		</section>
+
+	<!--
+	<section style="display: none" class="post__content">
 		{{post.content}}
 	</section>
+-->
 </article>	
+</a>
 
 {% endfor %}
+
+{% if paginator.total_pages > 1 %}
+
+<div>
+	{% if paginator.previous_page %}
+	<p>Previous</p>
+	{% else %}
+	{% endif %}
+
+	{% if paginator.next_page %}
+	<p>Next</p>
+	{% else %}
+	{% endif %}
+</div>
+
+{% endif %}

@@ -30,7 +30,7 @@ exclude: [vendor, todo, fonts, Gemfile, Gemfile.lock, site.tar.gz, favicons]
 liquid:
     error_mode: strict
 
-paginate: 10
+paginate: 5 
 paginate_path: "/blog/page:num/"
 
 defaults:

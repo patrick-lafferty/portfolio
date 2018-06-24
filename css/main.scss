@@ -251,6 +251,29 @@ a {
 	font-family: "Raleway";
 }
 
+.post {
+	display: flex;
+	margin-bottom: 2rem;
+	box-shadow: 0px 0px 7px 1px #161A1D;
+}
+
+.single-post {
+	display: block;
+}
+
+.post__excerpt {
+	flex: 1 1 50%;
+	padding: 1rem;
+	background: linear-gradient(30deg, #ffffff, #B7E4FF);
+	font-family: "Raleway";
+	color: #161A1D;
+	font-size: 1.2rem;
+}
+
+.post__excerpt--link {
+	text-decoration: none;
+}
+
 .post__header {
 	font-family: "Nothing you could do";
 	font-size: 3.5em;
@@ -262,7 +285,12 @@ a {
 	text-shadow: 1px 1px 2px rgba(0,0,0, 0.3);
 	line-height: 1.5;
 	background-image: linear-gradient(to right, #399FDB, transparent, #399FDB);
-	box-shadow: 0px 0px 7px 1px #161A1D;
+}
+
+.post__header--preview {
+	font-size: 2.5rem;
+	flex: 1 1 50%;
+	padding: 1rem;
 }
 
 .post__content > h1 {
@@ -294,8 +322,12 @@ a {
 	float: left;
 }
 
-.post__title::first-letter {
+.post__title:first-letter {
 	font-size: 8rem;
+}
+
+.post__header--preview > .post__title:first-letter {
+	font-size: 4rem;
 }
 
 .post__date {
