@@ -352,6 +352,36 @@ a {
 	text-indent: 2em;
 }
 
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin: 1rem;
+}
+
+.page_navigator {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	width: 66%;
+}
+
+.page__link {
+	width: 4rem;
+	height: 4rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #399FDB;
+	color: #161A1D;
+	font-family: "Nothing you could do";
+	font-size: 3rem;
+	text-decoration: none;
+}
+
+.page__link--selected {
+	background: #B7E4FF;
+}
+
 img {
 	max-width: 100%;
 	display: block;

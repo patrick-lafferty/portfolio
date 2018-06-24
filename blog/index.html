@@ -27,18 +27,57 @@ layout: default
 
 {% endfor %}
 
-{% if false && paginator.total_pages > 1 %}
+{% if paginator.total_pages > 1 %}
 
-<div>
-	{% if paginator.previous_page %}
-	<p>Previous</p>
-	{% else %}
+<div class="pagination">
+<section class="page_navigator">
+
+	{% if paginator.page > 1 %}
+		<a class="page__link" href="{{paginator.previous_page_path}}">&lt;-</a>
 	{% endif %}
 
-	{% if paginator.next_page %}
-	<p>Next</p>
-	{% else %}
+	{% assign beforeCurrent = paginator.page | minus: 2 %}
+	{% assign afterCurrent = paginator.page | plus: 2 %}
+
+	{% if beforeCurrent < 1 %}
+		{% assign beforeCurrent = 1 %}
 	{% endif %}
+
+	{% if afterCurrent > paginator.total_pages %}
+		{% assign afterCurrent = paginator.total_pages %}
+	{% endif %}
+
+	{% for i in (beforeCurrent..afterCurrent) %}
+
+		<div class="page__link">
+
+		{% if i == paginator.page %}
+
+			<p class="page__link page__link--selected">{{i}}</p>
+
+		{% else %}
+
+			{% if i == 1 %}
+				<a class="page__link" href="{{'/blog' | prepend: site.url}}">{{i}}</a>
+
+			{% else %}
+
+				<a class="page__link" href="{{site.paginate_path | prepend: site.url | replace: ':num', i}}">{{i}}</a>
+
+			{% endif %}
+
+		{% endif %}
+
+		</div>
+
+	{% endfor %}
+
+
+	{% if paginator.page < paginator.total_pages %}
+		<a class="page__link" href="{{paginator.next_page_path}}">-&gt;</a>
+	{% endif %}
+
+</section>
 </div>
 
 {% endif %}

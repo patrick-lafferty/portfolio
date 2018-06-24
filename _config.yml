@@ -14,7 +14,7 @@ email: patrick_lafferty@outlook.com
 description: > # this means to ignore newlines until "baseurl:"
     My portfolio and blog
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://patricklafferty.ca" # the base hostname & protocol for your site
+url: "https://patricklafferty.ca" # the base hostname & protocol for your site
 github_username:  patrick-lafferty
 
 # Build settings
