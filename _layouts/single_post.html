@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+	{% include head.html %}
+
+	<body>
+
+        {% include header.html %}
+        
+		<main>
+
+            <article class="post single-post">
+                <header class="post__header">
+                    <p class="post__title">{{page.title}}</p>
+                    <p class="post__date">{{page.date | date: "%b %-d, %Y" }}</p>
+                </header>
+            
+                <section class="post__content">
+                    {{page.content}}
+                </section>
+            </article>	
+
+		</main>
+
+		{% include footer.html %}
+
+	</body>
+
+</html>

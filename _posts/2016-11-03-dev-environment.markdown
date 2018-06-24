@@ -1,8 +1,9 @@
 ---
-layout: default
+layout: single_post
 title: "Dev Environment"
 date: 2016-11-3
 tags: dev 
+excerpt: "This post describes my current web dev environment for a friend that was curious about it." 
 ---
 
 This post describes my current web dev environment for a friend that was curious about it. I had these requirements when coming up with it:

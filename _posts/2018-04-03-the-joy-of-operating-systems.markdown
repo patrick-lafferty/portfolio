@@ -1,8 +1,9 @@
 ---
-layout: default
+layout: single_post
 title: "The Joy of Operating Systems"
 date: 2018-04-03
 tags: dev saturn
+excerpt: "It all started with an interesting thought experiment. Starting with just Clang, with no standard C or C++ library, and an empty text file - and no Windows or Linux, what is the minimum amount of code one needs to write to display text on the screen?"
 ---
 
 # The Thought

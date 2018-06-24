@@ -1,8 +1,9 @@
 ---
-layout: default
+layout: single_post
 title: "SpaceYYZ Update"
 date: 2017-08-30
 tags: dev spaceyyz
+excerpt: "SpaceYYZ is a small demo app I wrote a year ago to learn AngularJS. Recently I decided to revisit it and apply what I've learned since then to improve the project."
 ---
 
 [SpaceYYZ](https://patrick-lafferty.github.io/spaceyyz/) is a small demo app I wrote a year ago to learn AngularJS. Recently I decided to revisit it and apply what I've learned since then to improve the project.

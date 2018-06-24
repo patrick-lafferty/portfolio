@@ -1,8 +1,9 @@
 ---
-layout: default
+layout: single_post
 title: "SpaceYYZ is now live"
 date: 2016-10-25
 tags: portfolio 
+excerpt: "SpaceYYZ is a single page application for the fictional company SpaceYYZ that they would use to manage their transportation services. I created it so I could learn about web development and apply concepts I learned."
 ---
 
 [SpaceYYZ](https://patrick-lafferty.github.io/spaceyyz) is now hosted on github. SpaceYYZ is a single page application for the fictional company SpaceYYZ that they would use to manage their transportation services. I created it so I could learn about web development and apply concepts I learned. The sourcecode is hosted on [my github](https://github.com/patrick-lafferty/spaceyyz). Feel free to browse the code and post issues on the public tracker.	 
