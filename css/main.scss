@@ -31,18 +31,19 @@ a {
 @supports (shape-outside: none) {
 	.about__banner {
 		shape-outside: polygon(0 0, 100% 0, 20% 100%, 0 100%);
-		width: 400px;
-		height: 22rem;
+		width: 200px;
+		height: 10rem;
+		padding: 0rem 1rem;
 		float: left;
 		background-color: #399FDB;
 		clip-path: polygon(0 0, 100% 0, 20% 100%, 0 100%);
 		display: flex;
-		padding: 1rem;
 	}
 }
 
 .about__description {
-	padding: 2rem;
+	padding: 1rem 0.5rem;
+	font-size: 1.2rem;
 }
 
 .about__description::first-letter {
@@ -52,9 +53,9 @@ a {
 
 .about__header {
 	text-align: center;
-	font-size: 1.75em;
+	font-size: 2rem;
 	margin: 0;
-	padding: 2rem;
+	padding: 1rem 0rem;
 	font-family: "Nothing you could do";
 }
 
@@ -79,6 +80,7 @@ a {
 
 .experience {
 	display: flex;
+	font-size: 1.5rem;
 }
 
 .experience__side {
@@ -94,6 +96,7 @@ a {
 	clip-path: polygon(0 0, 0 100%, 95% 100%);
 	display: flex;
 	align-items: end;
+	display: none;
 }
 
 .side__shape--right {
@@ -123,7 +126,7 @@ a {
 }
 
 .experience__item:last-child {
-	margin: 0;
+	margin: 1rem;
 }
 
 .experience__separator {
@@ -134,22 +137,22 @@ a {
 .site__header {
 	margin: 0rem 0rem 1rem 0rem;
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
 	box-shadow: 0px 0px 7px 1px #161A1D;
 }
 
 .header__name {
-	font-size: 3rem;
-	flex: 1 1 50%;
+	font-size: 2rem;
+	flex: 0 1 50%;
 	font-family: "Nothing you could do";
 	margin: 0;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 	font-weight: bold;
-	padding: 1rem;
+	padding: 1rem 0rem;
 	height: 5rem;
 	background-image: linear-gradient(to right, #399FDB, transparent, #399FDB);
 	display: flex;
-	justify-content: space-between;
 }
 
 .see-more {
@@ -160,24 +163,33 @@ a {
 	clip-path: polygon(0 0, 80% 0, 95% 60%, 95% 60%, 70% 100%, 40% 100%, 20% 100%, 0 100%);
 	shape-outside: polygon(0 0, 80% 0, 95% 60%, 95% 60%, 70% 100%, 40% 100%, 20% 100%, 0 100%);
 	height: 14rem;
+	width: 80px;
 	padding: 0rem 1rem;
+	font-size: 1.1rem;
 }
 
 .see-more__banner > .about__header {
 	padding: 2rem 2rem 0rem 0rem;
+	font-size: 1.8rem;
+}
+
+.see-more__banner > .about__description {
+	font-size: 1.2rem;
+	padding: 1rem 0rem;
 }
 
 .name__word {
 	margin: 0;
+	flex: 1 1 50%;
 }
 
 .name__word:first-letter {
-	font-size: 5rem;
+	font-size: 4rem;
 	line-height: 1.0;
 }
 
 .header__navbar {
-	flex: 1 1 30%;
+	flex: 1 0 50%;
 	margin: 0;
 	font-family: "Raleway";
 }
@@ -186,7 +198,7 @@ a {
 	display: flex;
 	list-style: none;
 	background: #161A1D;
-	justify-content: space-between;
+	justify-content: space-around;
 	align-items: center;
 	padding: 1rem;
 	height: 5rem;
@@ -204,11 +216,11 @@ a {
 
 .project {
 	margin-bottom: 5rem;
-	height: 22rem;
+	height: 26rem;
 }
 
 .project:last-child {
-	height: 21rem;
+	height: 28rem;
 }
 
 .project__header {
@@ -223,32 +235,37 @@ a {
 }
 
 .project__banner {
-	shape-outside: polygon(0 0, 100% 0, 50% 100%, 0 100%);
-	clip-path: polygon(0 0, 100% 0, 50% 100%, 0 100%);
-	height: 21rem;
+	shape-outside: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+	clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+	height: 14rem;
 	padding: 0rem 1rem;
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 }
 
 .project__name {
 	font-family: "Nothing you could do";
-	font-size: 3.8rem;
+	font-size: 3.0rem;
 	margin: 0;
+}
+
+.project__description {
+	font-size: 1.2rem;
 }
 
 .project__brief {
 	margin: 0;
-	font-size: 1.5rem;
+	font-size: 1.2rem;
+	column-count: 2;
 }
 
 .footer {
-	height: 5rem;
 	font-size: 1.5em;
-	padding: 1em;
 	background-color: #399FDB;
 	color: #161A1D;
 	font-family: "Raleway";
+	padding: 2rem;
 }
 
 .post {
@@ -294,6 +311,7 @@ a {
 	flex: 1 1 50%;
 	padding: 1rem;
 	box-shadow: none;
+	text-align: center;
 }
 
 .post__content > h1 {
@@ -391,126 +409,15 @@ img {
 	justify-content: center;
 }
 
-@supports not (shape-outside: none) {
-
-	.about__intro {
-		display: flex;
-	}
-
-	.about__banner {
-		height: 22rem;
-		padding: 1rem;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: #399FDB;
-	}
-	
-	.about__description {
-		padding: 0.5rem;
-	}
-
-	.about__experience {
-		flex-direction: column;
-	}
-
-	.side__shape {
-		display: none;
-	}
-
-	.experience__item:last-child {
-		margin: 1rem;
-	}
-
-	.about__projects {
-		flex-direction: column;
-	}
-
-	a.project__banner {
-		width: 100%;
-	}
-
-	.about__banner {
-		float: none;
-		width: unset;
-	}
-
-	div.about__banner {
-		flex: 1 0 33%;
-	}
-
-	.project {
-		display: flex;
-		height: 25rem;
-	}
-
-	.project:last-child {
-		height: 23rem;
-	}
-
-	.project__description {
-		padding: 0rem 1rem;
-	}
-
-	.see-more {
-		height: 20rem;
-	}
-
-	.see-more__banner {
-		padding: 0;
-		height: 20rem;
-	}
-
-}
-
-@media (min-width: 360px) {
-	.site__header {
-		flex-direction: column;
-	}
-
-	.about__banner {
-		width: 200px;
-		height: 10rem;
-		padding: 0rem 1rem;
-	}
-
-	.about__description {
-		padding: 0.5rem;
-		font-size: 1.3rem;
-	}
-
-	.about__header {
-		font-size: 2rem;
-		padding: 1rem 0rem;
-	}
-
-	.header__name {
-		font-size: 2rem;
-		flex: 1 1 auto;
-	}
-
-	.name__word:first-letter {
-		font-size: 4rem;
-	}
-
-	.side__shape {
-		display: none;
-	}
-
-	.experience {
-		font-size: 1.5rem;
-	}
-
-	.experience__item:last-child {
-		margin: 1rem;
-	}
-
-}
-
 @media (min-width: 600px) {
 
 	.header__name {
 		font-size: 3rem;
+		justify-content: space-around;
+	}
+
+	.name__word {
+		flex: 0 1 auto;
 	}
 
 	.about__banner {
@@ -545,10 +452,20 @@ img {
 
 	.project__brief {
 		font-size: 1.4rem;
+		column-count: unset;
 	}
 
 	.project__description {
 		font-size: 1.5rem;
+	}
+
+	.project__banner {
+		shape-outside: polygon(0 0, 100% 0, 50% 100%, 0 100%);
+		clip-path: polygon(0 0, 100% 0, 50% 100%, 0 100%);
+		height: 21rem;
+		padding: 0rem 1rem;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.see-more__banner {
@@ -582,7 +499,7 @@ img {
 
 @media (min-width: 800px) {
 	.header__name {
-		flex: 0 1 auto;
+		flex: 1 1 50%;
 	}
 
 	.about__banner {
@@ -623,11 +540,11 @@ img {
 
 @media (min-width: 900px) {
 	.header__name {
-		justify-content: space-evenly;
+		justify-content: space-around;
 	}
 
 	.navbar__links {
-		justify-content: space-evenly;
+		justify-content: space-around;
 	}
 
 	.about__banner {
@@ -706,4 +623,76 @@ img {
 		padding: 2rem 2rem 0rem 0rem;
 		font-size: 3.5rem;
 	}
+}
+
+@supports not (shape-outside: none) {
+
+	.about__intro {
+		display: flex;
+	}
+
+	.about__banner {
+		height: 22rem;
+		padding: 1rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #399FDB;
+	}
+	
+	.about__description {
+		padding: 0.5rem;
+	}
+
+	.about__experience {
+		flex-direction: column;
+	}
+
+	.side__shape {
+		display: none;
+	}
+
+	.experience__item:last-child {
+		margin: 1rem;
+	}
+
+	.about__projects {
+		flex-direction: column;
+	}
+
+	a.project__banner {
+		width: 100%;
+	}
+
+	.about__banner {
+		float: none;
+		width: unset;
+	}
+
+	div.about__banner {
+		flex: 1 0 33%;
+	}
+
+	.project {
+		display: flex;
+		height: 25rem;
+	}
+
+	.project:last-child {
+		height: 23rem;
+	}
+
+	.project__description {
+		padding: 0rem 1rem;
+	}
+
+	.see-more {
+		height: 20rem;
+	}
+
+	.see-more__banner {
+		padding: 0;
+		height: 20rem;
+	}
+
 }
