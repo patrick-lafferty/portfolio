@@ -13,27 +13,21 @@ layout: default
 <a class="post__excerpt--link" href="{{post.url}}">
 <article class="post">
 
+	<header class="post__header post__header--preview">
+		<p class="post__title">{{post.title}}</p>
+		<p class="post__date">{{post.date | date: "%b %-d, %Y" }}</p>
+	</header>
 
-		<header class="post__header post__header--preview">
-			<p class="post__title">{{post.title}}</p>
-			<p class="post__date">{{post.date | date: "%b %-d, %Y" }}</p>
-		</header>
-
-		<section class="post__excerpt">
-			{{post.excerpt}}
-		</section>
-
-	<!--
-	<section style="display: none" class="post__content">
-		{{post.content}}
+	<section class="post__excerpt">
+		{{post.excerpt}}
 	</section>
--->
+
 </article>	
 </a>
 
 {% endfor %}
 
-{% if paginator.total_pages > 1 %}
+{% if false && paginator.total_pages > 1 %}
 
 <div>
 	{% if paginator.previous_page %}
