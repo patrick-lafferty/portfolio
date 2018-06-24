@@ -361,8 +361,6 @@ a {
 .page_navigator {
 	display: flex;
 	align-items: center;
-	justify-content: space-evenly;
-	width: 66%;
 }
 
 .page__link {
@@ -376,6 +374,7 @@ a {
 	font-family: "Nothing you could do";
 	font-size: 3rem;
 	text-decoration: none;
+	margin-right: 2rem;
 }
 
 .page__link--selected {
