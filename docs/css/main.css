@@ -293,9 +293,7 @@ a {
 
 .page_navigator {
   display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 66%; }
+  align-items: center; }
 
 .page__link {
   width: 4rem;
@@ -307,7 +305,8 @@ a {
   color: #161A1D;
   font-family: "Nothing you could do";
   font-size: 3rem;
-  text-decoration: none; }
+  text-decoration: none;
+  margin-right: 2rem; }
 
 .page__link--selected {
   background: #B7E4FF; }

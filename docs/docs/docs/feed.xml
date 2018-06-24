@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Patrick Lafferty's Portfolio</title>
+    <title>Patrick Lafferty&#39;s Portfolio</title>
     <description>My portfolio and blog
 </description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 24 Jun 2018 13:57:18 -0400</pubDate>
-    <lastBuildDate>Sun, 24 Jun 2018 13:57:18 -0400</lastBuildDate>
-    <generator>Jekyll v3.8.3</generator>
+    <link>http://patricklafferty.ca/</link>
+    <atom:link href="http://patricklafferty.ca/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 23 Jun 2018 21:59:25 -0400</pubDate>
+    <lastBuildDate>Sat, 23 Jun 2018 21:59:25 -0400</lastBuildDate>
+    <generator>Jekyll v3.0.1</generator>
     
       <item>
         <title>The Joy of Operating Systems</title>
@@ -25,11 +25,11 @@
 &lt;ul&gt;
     &lt;li&gt;well, then we need to add some filesystem support&lt;/li&gt;
     &lt;li&gt;but, the filesystem needs a driver that handles reading blocks of data from fd/hdd/sdd&lt;/li&gt;
-    &lt;li&gt;and we're going to need a way of measuring time since some low-level ATA commands have specific time requirements&lt;/li&gt;
+    &lt;li&gt;and we&#39;re going to need a way of measuring time since some low-level ATA commands have specific time requirements&lt;/li&gt;
     &lt;li&gt;and we also need dynamic memory aka the heap&lt;/li&gt;
     &lt;li&gt;so, we need some way to query the actual physical memory available&lt;/li&gt;
     &lt;li&gt;and setup a virtual memory manager to handle paging&lt;/li&gt;
-    &lt;li&gt;then write our heap, and operator new and malloc, and might as well add aligned versions since we'll need them later&lt;/li&gt;
+    &lt;li&gt;then write our heap, and operator new and malloc, and might as well add aligned versions since we&#39;ll need them later&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;What about colour? Styles? String handling? It quickly snowballs into a complex project. You reach for familiar functions in the standard library to help, and then realize you need to write them first. Its. All. You.&lt;/p&gt;
@@ -61,7 +61,7 @@
 
     &lt;li&gt;to the text renderer that freads a glyph from the font&lt;/li&gt;
 
-    &lt;li&gt;to the ext2 filesystem that issues a read request for the font's inode&lt;/li&gt;
+    &lt;li&gt;to the ext2 filesystem that issues a read request for the font&#39;s inode&lt;/li&gt;
 
     &lt;li&gt;to the ata driver that processes that request&lt;/li&gt;
 
@@ -76,8 +76,8 @@
 
 </description>
         <pubDate>Tue, 03 Apr 2018 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2018/04/03/the-joy-of-operating-systems/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2018/04/03/the-joy-of-operating-systems/</guid>
+        <link>http://patricklafferty.ca/blog/2018/04/03/the-joy-of-operating-systems/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2018/04/03/the-joy-of-operating-systems/</guid>
         
         <category>dev</category>
         
@@ -101,8 +101,8 @@ the &lt;span style=&quot;text-decoration: underline&quot;&gt;Ra&lt;/span&gt;cket
 &lt;p&gt;To learn more, check out Rain’s &lt;a href=&quot;https://patrick-lafferty.github.io/rain/index.html&quot;&gt;documentation&lt;/a&gt;. You can view its &lt;a href=&quot;https://github.com/patrick-lafferty/rain&quot;&gt;source&lt;/a&gt; and also get the latest release there.&lt;/p&gt;
 </description>
         <pubDate>Mon, 18 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2017/09/18/lush-is-now-rain/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/09/18/lush-is-now-rain/</guid>
+        <link>http://patricklafferty.ca/blog/2017/09/18/lush-is-now-rain/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2017/09/18/lush-is-now-rain/</guid>
         
         <category>dev</category>
         
@@ -144,8 +144,8 @@ the &lt;span style=&quot;text-decoration: underline&quot;&gt;Ra&lt;/span&gt;cket
 &lt;p&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout&quot;&gt;Grid&lt;/a&gt; and &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes&quot;&gt;Flexbox&lt;/a&gt; made it very easy to have a responsive layout. With media queries you can easily adapt your grids to have more or less columns, add or remove gaps in between columns, and switch flexboxs to arrange items vertically instead of horizontally. All this with just CSS, without needing to change the structure of the HTML files. I like Grid so much I made a &lt;a href=&quot;https://patrick-lafferty.github.io/labs/#Grid&quot;&gt;lab&lt;/a&gt; dedicated to it. From there it was a matter of setting proper font sizes, margins, paddings etc as appropriate for the media breakpoints.&lt;/p&gt;
 </description>
         <pubDate>Wed, 30 Aug 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2017/08/30/spaceyyz-update/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/08/30/spaceyyz-update/</guid>
+        <link>http://patricklafferty.ca/blog/2017/08/30/spaceyyz-update/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2017/08/30/spaceyyz-update/</guid>
         
         <category>dev</category>
         
@@ -187,8 +187,8 @@ I also want to add features that support exploring Racket, like discovering the 
 &lt;p&gt;New releases will be posted on this blog detailing whats new in the release.&lt;/p&gt;
 </description>
         <pubDate>Tue, 11 Jul 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2017/07/11/lush/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/07/11/lush/</guid>
+        <link>http://patricklafferty.ca/blog/2017/07/11/lush/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2017/07/11/lush/</guid>
         
         <category>dev</category>
         
@@ -255,8 +255,8 @@ I also want to add features that support exploring Racket, like discovering the 
 
 </description>
         <pubDate>Thu, 03 Nov 2016 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2016/11/03/dev-environment/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/11/03/dev-environment/</guid>
+        <link>http://patricklafferty.ca/blog/2016/11/03/dev-environment/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2016/11/03/dev-environment/</guid>
         
         <category>dev</category>
         
@@ -275,8 +275,8 @@ I also want to add features that support exploring Racket, like discovering the 
 
 </description>
         <pubDate>Tue, 25 Oct 2016 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2016/10/25/spaceyyz/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/10/25/spaceyyz/</guid>
+        <link>http://patricklafferty.ca/blog/2016/10/25/spaceyyz/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2016/10/25/spaceyyz/</guid>
         
         <category>portfolio</category>
         
@@ -302,8 +302,8 @@ I also want to add features that support exploring Racket, like discovering the 
 &lt;p&gt;So that wraps up the summary for Aitu, feel free to take a look at it on github.&lt;/p&gt;
 </description>
         <pubDate>Wed, 07 Sep 2016 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2016/09/07/aitu/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/09/07/aitu/</guid>
+        <link>http://patricklafferty.ca/blog/2016/09/07/aitu/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2016/09/07/aitu/</guid>
         
         <category>portfolio</category>
         
