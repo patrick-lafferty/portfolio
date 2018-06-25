@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Patrick Lafferty&#39;s Portfolio</title>
+    <description>My portfolio and blog
+</description>
+    <link>http://patricklafferty.ca/</link>
+    <atom:link href="http://patricklafferty.ca/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 23 Jun 2018 21:59:25 -0400</pubDate>
+    <lastBuildDate>Sat, 23 Jun 2018 21:59:25 -0400</lastBuildDate>
+    <generator>Jekyll v3.0.1</generator>
+    
+      <item>
+        <title>The Joy of Operating Systems</title>
+        <description>&lt;h1 id=&quot;the-thought&quot;&gt;The Thought&lt;/h1&gt;
+
+&lt;p&gt;It all started with an interesting thought experiment. Starting with just Clang, with no standard C or C++ library, and an empty text file - and no Windows or Linux, what is the minimum amount of code one needs to write to display text on the screen? Assuming text mode with a colour monitor, you just write values to video memory (0xB8000), and voila. Alright that’s easy enough, how about user input? Well that introduces interrupt handling, but if you just want a bootable program that echoes the keys the user presses and that’s it, that’s essentially a few dozen extra lines of code.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-rabbit-hole&quot;&gt;The Rabbit Hole&lt;/h1&gt;
+
+&lt;p&gt;What about nice TTF fonts? Now things get fun. Let’s say you want to use FreeType to handle all your TrueType font rendering needs. Nice, simple, portable library that only depends on LibC - the C Standard Library, which is non-portable and depends heavily on the host operating system. Which means you need to write it now. So, you try to compile a small demo to see what it is FreeType really depends on. Here’s how the process goes:&lt;/p&gt;
+
+&lt;p&gt;Okay, we need fread() (and fseek and friends), to read the font.ttf file&lt;/p&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;well, then we need to add some filesystem support&lt;/li&gt;
+    &lt;li&gt;but, the filesystem needs a driver that handles reading blocks of data from fd/hdd/sdd&lt;/li&gt;
+    &lt;li&gt;and we&#39;re going to need a way of measuring time since some low-level ATA commands have specific time requirements&lt;/li&gt;
+    &lt;li&gt;and we also need dynamic memory aka the heap&lt;/li&gt;
+    &lt;li&gt;so, we need some way to query the actual physical memory available&lt;/li&gt;
+    &lt;li&gt;and setup a virtual memory manager to handle paging&lt;/li&gt;
+    &lt;li&gt;then write our heap, and operator new and malloc, and might as well add aligned versions since we&#39;ll need them later&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;What about colour? Styles? String handling? It quickly snowballs into a complex project. You reach for familiar functions in the standard library to help, and then realize you need to write them first. Its. All. You.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-red-pill&quot;&gt;The Red Pill&lt;/h1&gt;
+
+&lt;p&gt;Our hero journeys on to see how deep the rabbit hole goes. In your quest you seek out resources; first among them is the OSDev Wiki. You start absorbing reading material at a blistering rate – several volumes of Intel Software Developer Manuals, ATA spec sheets, Ext2 design docs, the Multiboot specification, PCI, VGA, VBE. Tens of thousands of pages of dry documentation, strict specification, and plenty of historical anecdotes about why things are the way they are.&lt;/p&gt;
+
+&lt;p&gt;You start writing the barebones of your kernel. But once you get past the minimum point everyone else gets to, you step out of the forest into a wide-open field, and you realize just how much of an artform there is to the project. I don’t mean the visual design. There are so, so many design decisions you must make when coming up with your OS’s architecture, that the potential state-space is immense. If you don’t decide to follow in Unix’s (or other mainstream OS) footsteps, you really get a chance to explore your creative side. Technological creativity, let the source code be your canvas. By embracing it, your OS will take on and express its own personality and provide a window to show others how you think.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-project&quot;&gt;The Project&lt;/h1&gt;
+
+&lt;p&gt;My operating system is called &lt;a href=&quot;https://github.com/patrick-lafferty/saturn&quot;&gt;Saturn&lt;/a&gt;. Its source code is under the BSD-3 clause license. The name comes from the Saturn V rocket, and a lot of other names are similarly space themed. I’ve been working on it for 5 months now, with currently 701 commits, 274 files, and roughly 22,000 lines of code in C++ and x86 Assembly. Currently working on version 0.3.0, I’m focusing on my own GUI framework, but I’ll write more about that when the milestone’s reached.&lt;/p&gt;
+
+&lt;p&gt;Saturn essentially brings together every important project I’ve ever written. Over the years I’ve worked on a diverse array of hobby projects, and when I encounter a big design choice with Saturn, I can take advantage of my past experiences. I needed to write a shell in C++ - well luckily, I made a shell before using Racket – &lt;a href=&quot;http://github.com/patrick-lafferty/rain&quot;&gt;Rain&lt;/a&gt;. I needed to design a GUI framework – well fortunately, I have a few years’ experience with WPF from my &lt;a href=&quot;https://github.com/patrick-lafferty/AssetManager&quot;&gt;Asset Manager&lt;/a&gt;. I need to design a graphics stack – well auspiciously, I wrote a 3D renderer for my game engine &lt;a href=&quot;https://patrick-lafferty.github.io/projects/projectstacks/&quot;&gt;Project Stacks&lt;/a&gt; – as well as a small GUI framework for the engine, which helps with the previous point. I needed to design a messaging system – well swimmingly, I designed another game engine based around Actors and asynchronous message passing called &lt;a href=&quot;https://patrick-lafferty.github.io/projects/chengine/&quot;&gt;Chengine&lt;/a&gt;. Lexers, parsers, type checkers, messaging systems: check, check, check, check.&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/Transcript.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;People question why I don’t typically finish hobby projects, and they have a good reason to. Its an important skill to see a project all the way to release and ship it, and its obvious why this would be important for prospective employers. But I contend that the breadth of topics, the diverse background of problems and solutions I’ve encountered holds value. When I encountered all those design breakpoints mentioned above, instead of having to pause for days or weeks to research, prototype, explore the status quo, I can just hit the ground running and be productive.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-joy&quot;&gt;The Joy&lt;/h1&gt;
+
+&lt;p&gt;The joy of making your own operating system is that you own the entire stack. All of it. Memory, CPU scheduler, drivers, system calls, GUIs. From top to bottom, you are in control of &lt;em&gt;everything&lt;/em&gt;. When you write an app for your OS and debug it, you can step through every single line of code between the function that draws a string to the screen…&lt;/p&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;to the text layout that parses ANSI escape colour codes&lt;/li&gt;
+
+    &lt;li&gt;to the text renderer that freads a glyph from the font&lt;/li&gt;
+
+    &lt;li&gt;to the ext2 filesystem that issues a read request for the font&#39;s inode&lt;/li&gt;
+
+    &lt;li&gt;to the ata driver that processes that request&lt;/li&gt;
+
+    &lt;li&gt;to the context switching assembly code&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And realize that register EBX has the value 9 when it should clearly be a 32-bit memory address like 0xA0123450. Then you can walk allllll the way back up to see exactly where things went wrong. Ohh, at step 3 a pointer was passed but physical memory wasn’t committed to the virtual address so reading that memory actually gave you the flags (the 9) for that virtual page, instead of its contents.&lt;/p&gt;
+
+&lt;p&gt;No longer do you run into situations where it’s out of your hands - wait for a OS service patch, wait for a new release of some third-party library that fixes the bug. The only limit is you.&lt;/p&gt;
+
+&lt;p&gt;Being in complete control of the entire software stack is a liberating feeling.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 03 Apr 2018 00:00:00 -0400</pubDate>
+        <link>http://patricklafferty.ca/blog/2018/04/03/the-joy-of-operating-systems/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2018/04/03/the-joy-of-operating-systems/</guid>
+        
+        <category>dev</category>
+        
+        <category>saturn</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Lush is now Rain</title>
+        <description>&lt;p&gt;Lush was an interactive Racket shell I started working on this summer to learn Racket. As it turns out there
+is already a shell called Lush, the Lisp Universal Shell. So I decided on renaming the project to Rain: 
+the &lt;span style=&quot;text-decoration: underline&quot;&gt;Ra&lt;/span&gt;cket &lt;span style=&quot;text-decoration: underline&quot;&gt;In&lt;/span&gt;teractive Shell.&lt;/p&gt;
+
+&lt;p&gt;Along with the renaming I decided to make the latest feature public. The first version of code completion just picked one completion for you and filled in the remaining characters in a light grey text next to the characters you were typing. I started working on an ncurses-like interface, and the first feature is a dropdown listbox that shows all the possible completions similar to completion widgets in other IDEs.&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/fizzbuzz-with-dropdown.png&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To learn more, check out Rain’s &lt;a href=&quot;https://patrick-lafferty.github.io/rain/index.html&quot;&gt;documentation&lt;/a&gt;. You can view its &lt;a href=&quot;https://github.com/patrick-lafferty/rain&quot;&gt;source&lt;/a&gt; and also get the latest release there.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 18 Sep 2017 00:00:00 -0400</pubDate>
+        <link>http://patricklafferty.ca/blog/2017/09/18/lush-is-now-rain/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2017/09/18/lush-is-now-rain/</guid>
+        
+        <category>dev</category>
+        
+        <category>lush</category>
+        
+        <category>rain</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>SpaceYYZ Update</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://patrick-lafferty.github.io/spaceyyz/&quot;&gt;SpaceYYZ&lt;/a&gt; is a small demo app I wrote a year ago to learn AngularJS. Recently I decided to revisit it and apply what I’ve learned since then to improve the project.&lt;/p&gt;
+
+&lt;h1 id=&quot;starting-out---proper-foundation&quot;&gt;Starting out - Proper Foundation&lt;/h1&gt;
+
+&lt;p&gt;Before modifying the actual app, I needed to setup a stable foundation to build upon. This involved two key areas: a proper build system/task runner, and a standardized file layout. Originally I just used the scripts section in package.json to run the builds, tests and misc tools. This however proved to be fragile, both because said scripts can only be one liners chained with &amp;amp;&amp;amp; or ;, and because occasionally builds would silently fail and the previous output would remain, leading to an inconsistent mental state of the app.&lt;/p&gt;
+
+&lt;p&gt;I looked at various task runners and weighed the pros and cons, before settling on plain old makefiles. Why makefiles? I know make and its already installed so theres one less thing to configure. To enforce consistent and up to date builds I made sure the make targets removed all existing output files before running webpack. With that in place, I made sure to add targets for linting and testing so I could make large changes to the app and be confident that I wasn’t breaking anything. Then I focused on cleaning up the directory layout so that files could be found in their expected places.&lt;/p&gt;
+
+&lt;h1 id=&quot;modernizing&quot;&gt;Modernizing&lt;/h1&gt;
+
+&lt;p&gt;Once the foundation was in place, I started work on converting the app to use ES6. This allowed me to make use of great new features such as modules, block scoped variables, classes, arrow functions, and new library features like Array.find. The end result was a leaner, more declarative codebase. A similar effort was spent bringing the HTML/CSS side up to date to make use of modern layout using Grids and Flexboxes, semantic elements (article, section, nav, main), as well as using &lt;a href=&quot;http://lesscss.org/&quot;&gt;Less&lt;/a&gt; and &lt;a href=&quot;http://getbem.com/&quot;&gt;BEM&lt;/a&gt;. Finally minor defects like inline styles were replaced with classes.&lt;/p&gt;
+
+&lt;p&gt;One big issue SpaceYYZ had was that it wasn’t responsive -  It was designed solely for desktop use. The design in general was unappealing.&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;blockquote class=&quot;imgur-embed-pub&quot; lang=&quot;en&quot; data-id=&quot;a/K9kAO&quot;&gt;&lt;a href=&quot;//imgur.com/K9kAO&quot;&gt;SpaceYYZ 1.0&lt;/a&gt;&lt;/blockquote&gt;&lt;script async=&quot;&quot; src=&quot;//s.imgur.com/min/embed.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I wanted to make the app responsive so it would work well on any device. I decided to overhaul the entire app’s UI to make it responsive while having a minimal, elegant sort of futuristic look. In doing so I cut out as many unnecessary or incomplete UI elements as possible to make the layout as minimal and clean as possible.&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;blockquote class=&quot;imgur-embed-pub&quot; lang=&quot;en&quot; data-id=&quot;a/MsQaU&quot;&gt;&lt;a href=&quot;//imgur.com/MsQaU&quot;&gt;SpaceYYZ 2.0&lt;/a&gt;&lt;/blockquote&gt;&lt;script async=&quot;&quot; src=&quot;//s.imgur.com/min/embed.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;on-becoming-responsive&quot;&gt;On becoming Responsive&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout&quot;&gt;Grid&lt;/a&gt; and &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes&quot;&gt;Flexbox&lt;/a&gt; made it very easy to have a responsive layout. With media queries you can easily adapt your grids to have more or less columns, add or remove gaps in between columns, and switch flexboxs to arrange items vertically instead of horizontally. All this with just CSS, without needing to change the structure of the HTML files. I like Grid so much I made a &lt;a href=&quot;https://patrick-lafferty.github.io/labs/#Grid&quot;&gt;lab&lt;/a&gt; dedicated to it. From there it was a matter of setting proper font sizes, margins, paddings etc as appropriate for the media breakpoints.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 30 Aug 2017 00:00:00 -0400</pubDate>
+        <link>http://patricklafferty.ca/blog/2017/08/30/spaceyyz-update/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2017/08/30/spaceyyz-update/</guid>
+        
+        <category>dev</category>
+        
+        <category>spaceyyz</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Lush</title>
+        <description>&lt;p&gt;&lt;img src=&quot;/images/blogposts/fizzbuzz.png&quot; alt=&quot;Fizzbuzz screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Lush is a new Unix shell I’ve been working on. It is based off using Racket as its scripting language. Currently it is basically a minimal Racket REPL with basic shell features like running and piping programs and redirecting streams. It is mostly written in Racket with a little bit of C. You can view the &lt;a href=&quot;https://github.com/patrick-lafferty/lush&quot;&gt;source code&lt;/a&gt; and the &lt;a href=&quot;https://patrick-lafferty.github.io/lush&quot;&gt;documentation here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;why-lush&quot;&gt;Why Lush?&lt;/h1&gt;
+
+&lt;p&gt;Some time ago I read a post mentioning &lt;a href=&quot;http://racket-lang.org&quot;&gt;Racket&lt;/a&gt;, a language which describes itself as “a general-purpose programming language as well as the world’s first ecosystem for developing and deploying new languages” . I’m interested in programming languages and the theory behind them, and am a strong believer in polygot programming - use the right language for the job, instead of using one for everything. One of my favourite projects, a game engine prototype I designed, took this to the extreme and used F#, C#, C++, C++/CLI, and IronPython all together working in harmony. So reading about a language expressly suited towards language development got me hooked.&lt;/p&gt;
+
+&lt;p&gt;I wanted to start learning Racket and needed something to work on. At the same time I also had the desire to spend more time in the shell. The Windows 10 Creator’s Update had recently come out and I wanted to make use of the improvements to the WSL. Ideally I wanted to be able to drop into Racket and write out an idea or try something at any time. So I decided to kill two birds with one stone and create a Racket environment that would also be a shell.&lt;/p&gt;
+
+&lt;h1 id=&quot;goals&quot;&gt;Goals&lt;/h1&gt;
+
+&lt;p&gt;I intend to make Lush a full Racket environment with some of the bells and whistles you’d expect of an IDE. I plan to make an ncurses-like interface where you can have dropdowns listing possible completions.
+I also want to add features that support exploring Racket, like discovering the types and expected arguments of procedures, with some sort of help system that can explain forms or link to documentation, and debugging.&lt;/p&gt;
+
+&lt;p&gt;On the shell side I want get to the point where one can comfortably replace their current shell with Lush. An object based piping system similar to PowerShell, possibly with an interface that allows for transitioning between text -&amp;gt; objects and objects -&amp;gt; text (eg &lt;code class=&quot;highlighter-rouge&quot;&gt;ls |&amp;gt; file-info |&amp;gt; (map (lambda (f) (list f-name f-date))) |&amp;gt; grep&lt;/code&gt;). Full support for running/suspending/sequencing commands.&lt;/p&gt;
+
+&lt;h1 id=&quot;whats-next&quot;&gt;Whats next?&lt;/h1&gt;
+
+&lt;p&gt;The next items on the agenda are:&lt;/p&gt;
+
+&lt;ul style=&quot;margin-left: 4rem&quot;&gt;
+    &lt;li&gt;the ncurses-style interface&lt;/li&gt;
+    &lt;li&gt;expanding the interpreter to support structs, classes, other missing forms &lt;/li&gt;
+    &lt;li&gt;modify the autocompleter to support class method names&lt;/li&gt;
+    &lt;li&gt;job control (fg, bg, jobs)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;New releases will be posted on this blog detailing whats new in the release.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 11 Jul 2017 00:00:00 -0400</pubDate>
+        <link>http://patricklafferty.ca/blog/2017/07/11/lush/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2017/07/11/lush/</guid>
+        
+        <category>dev</category>
+        
+        <category>lush</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Dev Environment</title>
+        <description>&lt;p&gt;This post describes my current web dev environment for a friend that was curious about it. I had these requirements when coming up with it:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;it had to be fast and light on memory &lt;em&gt;and&lt;/em&gt; disk space - my box has a 1.33Ghz quad-core Atom, 2GB of ram and 32GB of space of which Windows and friends take up a big chunk&lt;/li&gt;
+  &lt;li&gt;it had to be fully featured and $EDITOR must be or have Vim bindings&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I based the environment on running Arch Linux inside VirtualBox. I prefer Arch because I love pacman, out of all the distro package managers its the only one I feel that just.always.works, I’ve never got it into a critically broken state (hello aptitude, yum), and allows me to stay on the bleeding edge with new updates. Arch is also minimalistic, you pay for what you get allowing me to keep the virtual image small. A nice bonus about running a VM is that you can save the exact state of the machine before you shutdown your real one. So at night you just stop the VM and in the morning when you start up you are right back where you left off, no need to startup your editor and open the files you left off at.&lt;/p&gt;
+
+&lt;h1 id=&quot;editor&quot;&gt;Editor&lt;/h1&gt;
+
+&lt;p&gt;For my editor I use Vim currently with powerline and vim-surround. I can’t &lt;strong&gt;not&lt;/strong&gt; use Vim anymore, I keep learning new things to improve my experience. For example: sometime after starting some HTML5 practice, I learned about the tag blocks &lt;code class=&quot;highlighter-rouge&quot;&gt;at&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;it&lt;/code&gt;. Adding &lt;code class=&quot;highlighter-rouge&quot;&gt;at&lt;/code&gt; to a command selects the entire element from the beginning tag to the ending, while &lt;code class=&quot;highlighter-rouge&quot;&gt;it&lt;/code&gt; selects everything except the starting/closing tags. So with the following html:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;...&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;form&amp;gt;&lt;/span&gt;...&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;...&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;and the cursor is on the beginning div line,&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;at&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;at&lt;/code&gt; increases/decreases the indent respectively of the entire div&lt;/li&gt;
+  &lt;li&gt;plus the standard &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt;ank, &lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;ut, &lt;code class=&quot;highlighter-rouge&quot;&gt;d&lt;/code&gt;elete and &lt;code class=&quot;highlighter-rouge&quot;&gt;c&lt;/code&gt;hange operators (and all the rest) give you a lot of control, say you wanted to change everything in the div: just type cit in normal mode and the inner contents are deleted and you are put in insert mode inside the div&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;With vim-surround you can do things like surrounding/changing/removing things around things. So if we wanted the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;p&amp;gt;&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;form&amp;gt;&lt;/code&gt; to be inside a div we could do &lt;code class=&quot;highlighter-rouge&quot;&gt;ysj&amp;lt;div&amp;gt;&lt;/code&gt;, or if we wanted to switch the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;p&amp;gt;&lt;/code&gt; to a &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div&amp;gt;&lt;/code&gt; we could do &lt;code class=&quot;highlighter-rouge&quot;&gt;cst&amp;lt;div&amp;gt;&lt;/code&gt; with the cursor inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;p&amp;gt;&lt;/code&gt;. For the yank/put/delete/change ops I originally wrote them as (y)/(p) etc but then decided to switch to use highlighting so with a simple &lt;code class=&quot;highlighter-rouge&quot;&gt;cs) `&lt;/code&gt; they changed to &lt;code class=&quot;highlighter-rouge&quot;&gt;`y`&lt;/code&gt; /&lt;code class=&quot;highlighter-rouge&quot;&gt;`p`&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;shell&quot;&gt;Shell&lt;/h1&gt;
+
+&lt;p&gt;I’ve been using bash for years, so I picked zsh to learn something new. Zsh has some cool features, like:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;extended globbing (&lt;code class=&quot;highlighter-rouge&quot;&gt;grep &quot;foo&quot; **/*.js&lt;/code&gt; will recursively search all .js files in subdirs)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://zshwiki.org/home/builtin/functions/zmv&quot;&gt;zmv&lt;/a&gt;, zcp are replacements for mv/cp that you can define patterns to rename many files at once&lt;/li&gt;
+  &lt;li&gt;autocompletion (of arguments (git st&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;TAB&amp;gt;&lt;/code&gt; will show you all args that start with st), paths (ls /h/p/d&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;TAB&amp;gt;&lt;/code&gt; could expand to /home/patrick/downloads), commands)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Searching “why zsh” will bring up a number of good sites with examples. Along with zsh I use &lt;a href=&quot;http://powerline.readthedocs.io/en/master/index.html&quot;&gt;powerline&lt;/a&gt;. It basically makes the prompt look cool and configures it to show useful information, along with a second prompt to the right of the screen. Finishing up the trifecta comes &lt;a href=&quot;https://tmux.github.io&quot;&gt;Tmux&lt;/a&gt;, a terminal multiplexer. Basically it allows you to split up the screen to have multiple shells running in splitscreen mode, among other features. In the screenshot below I split the screen vertically once then split the right side horizontally. The large left pane hosts Vim, the top right is running a jekyll server that rebuilds this blogpost as I change it, the bottom right is for misc things, &lt;code class=&quot;highlighter-rouge&quot;&gt;wc -l *&lt;/code&gt; in this example.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/blogposts/dev_environment.png&quot; alt=&quot;Dev environment screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;runners-up&quot;&gt;Runners up&lt;/h1&gt;
+
+&lt;p&gt;Choices that didn’t quite make the final cut but are still very nice are listed below.&lt;/p&gt;
+
+&lt;h3 id=&quot;visual-studio-code--msys2&quot;&gt;Visual Studio Code + MSYS2&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://code.visualstudio.com&quot;&gt;VS Code&lt;/a&gt; is &lt;em&gt;really cool&lt;/em&gt;. It runs on Windows/Linux/Mac. Its &lt;a href=&quot;https://github.com/Microsoft/vscode&quot;&gt;open source&lt;/a&gt; using the MIT license. Intellisense and debugging and extensions everywhere! Stop reading this and go check it out!… &lt;em&gt;But&lt;/em&gt;, when using the vim extension (which we know is essential) on my mighty tablet, I could type out a line of code, take a sip of coffee, look out the window, look back and the line might just finish showing up. Maybe someday.&lt;/p&gt;
+
+&lt;h3 id=&quot;windows-subsystem-for-linux&quot;&gt;Windows Subsystem for Linux&lt;/h3&gt;
+
+&lt;p&gt;Special mention goes to &lt;a href=&quot;https://msdn.microsoft.com/commandline/wsl/about&quot;&gt;WSL&lt;/a&gt; or informally Bash on Ubuntu on Windows. With it you have the entire Ubuntu user space natively accessible on Windows. Once WSL is setup you can go to bash and apt-get something, it will get the native binary from Ubuntu’s servers. So you could in theory run an old 16-bit Win/Dos program inside wine inside bash on windows - Windows on Linux on Windows… &lt;em&gt;we need to go deeper&lt;/em&gt;. Caveat: it only works on 64-bit editions of Windows. Who cares, its $CURRENT_YEAR! Well this cheapo tablet I work on is limited to 32-bit Windows, even though it has a 64-bit cpu. Which is why I opted for the above VirtualBox config. WSL has some teething issues (still limited to 16 colours, and support for inotify hasn’t been released yet but is coming soon) but its something I am very much looking forwards to using when I can.&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 03 Nov 2016 00:00:00 -0400</pubDate>
+        <link>http://patricklafferty.ca/blog/2016/11/03/dev-environment/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2016/11/03/dev-environment/</guid>
+        
+        <category>dev</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>SpaceYYZ is now live</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://patrick-lafferty.github.io/spaceyyz&quot;&gt;SpaceYYZ&lt;/a&gt; is now hosted on github. SpaceYYZ is a single page application for the fictional company SpaceYYZ that they would use to manage their transportation services. I created it so I could learn about web development and apply concepts I learned. The sourcecode is hosted on &lt;a href=&quot;https://github.com/patrick-lafferty/spaceyyz&quot;&gt;my github&lt;/a&gt;. Feel free to browse the code and post issues on the public tracker.&lt;/p&gt;
+
+&lt;p&gt;I am interested in a career in web development, so I was looking for an interesting project I could continually work on to develop my skills. I also wanted something that I could apply my existing skills from different development fields. SpaceYYZ uses AngularJS along with Angular UI and Angular UI Router, with some Bootstrap to taste, and Firebase for the database and authentication. My background in WPF turned out to be useful in quickly learning Angular since I already had experience structuring apps using MVVM and using databinding.&lt;/p&gt;
+
+&lt;p&gt;I’m currently using vanilla ECMAScript 5, with an eye on either using ES 6 via Babel, or Typescript in the future. Coming from a purely statically typed background, learning Typescript is appealing as I’ve noticed on a few occasions that I’ve made type errors where variables were assumed to be one type but were actually another. One case in particular was sneaky, where I assumed a vehicle’s capacity was a number but was actually a string, and due to the numbers I used for testing they just happened to sort the same way lexicographically as they did numerically, so I didn’t notice the error until later. Being used to compilers pointing out dumb mistakes spoiled me, thats something I’ll have to pay attention to now.&lt;/p&gt;
+
+&lt;p&gt;I’ll be continually working on SpaceYYZ for the near future and may post some updates on the status or what I’ve learned on my blog here.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 25 Oct 2016 00:00:00 -0400</pubDate>
+        <link>http://patricklafferty.ca/blog/2016/10/25/spaceyyz/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2016/10/25/spaceyyz/</guid>
+        
+        <category>portfolio</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Aitu is now on github</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://github.com/patrick-lafferty/aitu&quot;&gt;Aitu&lt;/a&gt; is now hosted on github. Aitu is an extract of the AI portion of Wooden Sphere. It uses a combination of &lt;a href=&quot;wikipedia.org/wiki/Hierarchical_task_network&quot;&gt;Hierarchical Task Networks&lt;/a&gt; and a Utility system to allow AI characters to decide on a goal and create a plan to achieve their goal.&lt;/p&gt;
+
+&lt;h1 id=&quot;tasks-and-plans&quot;&gt;Tasks and plans&lt;/h1&gt;
+
+&lt;p&gt;Tasks are the building blocks of this system. A Task is something that an AI character can do. They can have an Action enum which your code can switch on and perform some action. They can also have three std::function objects which get run at different times and can manipulate a WorldState object belonging to some character. Tasks have pre and post conditions which look at some WorldState property to determine their truthiness.&lt;/p&gt;
+
+&lt;p&gt;Plans are a list of tasks to be completed in sequential order. When creating a plan for some goal task, the planner looks at the preconditions for that task and see if any other tasks can satisfy those conditions. That is, for a goal task G it looks for any task T where T’s postconditions match G’s preconditions. Then if T has preconditions it looks for tasks that can satisfy those, etc. A plan then is a chain of tasks starting with something that has no other preconditions/can be started right away, and each successive task does something that allows the next task to be run, until finally reaching the goal task.&lt;/p&gt;
+
+&lt;p&gt;I chose this design because I wanted a flexible AI with the possibility of emergent gameplay. Since I never explicitly define dependencies between tasks but instead just expose their requirements, its easy to add in a new independent task which the planner can then pick up and use so long as it meets their requirements. No need to modify other tasks to make use of the new one, just define the task and the planner figures it out. And because of that you can get scenarios where the planner chose something unexpectely, since it just looks for &lt;em&gt;anything&lt;/em&gt; that satisfies some condition. So some task that you added for one reason might find itself being used in a way you (or the player) didn’t predict.&lt;/p&gt;
+
+&lt;h1 id=&quot;utility-and-considerations&quot;&gt;Utility and considerations&lt;/h1&gt;
+
+&lt;p&gt;So that covers what plans are and how they get created, but how does the AI choose a goal in the first place? Enter considerations. A Consideration is something that looks at some aspect of the character’s WorldState and gives it a score. Tasks can have multiple considerations associated with them, each one looking at one particular aspect of the world state. The task with the highest score becomes the goal. To calculate a consideration’s score you pick some function (linear, exponential, log etc), define the constants for that function (the ABC’s in ax^2 + bx + c) and select the input source that gets evaluated by that function. Currently you can pick any value in WorldState, as well as other sources such as the number of tasks run since some target task (to limit repeats). To make it simple to edit considerations I made the &lt;a href=&quot;/projects/woodensphere#considerationEditor&quot;&gt;ConsiderationEditor&lt;/a&gt; for Unreal Editor.&lt;/p&gt;
+
+&lt;p&gt;So that wraps up the summary for Aitu, feel free to take a look at it on github.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 07 Sep 2016 00:00:00 -0400</pubDate>
+        <link>http://patricklafferty.ca/blog/2016/09/07/aitu/</link>
+        <guid isPermaLink="true">http://patricklafferty.ca/blog/2016/09/07/aitu/</guid>
+        
+        <category>portfolio</category>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

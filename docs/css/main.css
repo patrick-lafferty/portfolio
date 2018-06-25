@@ -302,6 +302,39 @@ a {
 .post__content > p:not(:first-of-type) {
   text-indent: 2em; }
 
+.comment {
+  display: grid;
+  grid-template-areas: "avatar name date" "avatar body body";
+  margin-bottom: 3rem; }
+
+.comment__intro {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 3rem; }
+
+.comment__post {
+  font-size: 1.5rem;
+  font-family: "Raleway"; }
+
+.comment__avatar {
+  grid-area: avatar;
+  margin: 2rem 0rem;
+  width: 100px; }
+
+.comment__name {
+  grid-area: name; }
+
+.comment__date {
+  grid-area: date; }
+
+.post__content.comment p:first-of-type:first-letter,
+.post__content.comment__intro p:first-of-type:first-letter {
+  font-size: unset;
+  padding: unset;
+  margin-left: unset;
+  float: unset; }
+
 .pagination {
   display: flex;
   justify-content: center;

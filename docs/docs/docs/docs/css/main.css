@@ -1,0 +1,530 @@
+body {
+  margin: 0px;
+  background-color: #6EC7FC; }
+
+@media only screen and (min-width: 960px) {
+  body {
+    max-width: 960px;
+    margin: auto; } }
+* {
+  line-height: 1.8; }
+
+a {
+  color: #399FDB; }
+
+.about {
+  font-size: 2rem;
+  color: #161A1D; }
+
+@supports (shape-outside: none) {
+  .about__banner {
+    shape-outside: polygon(0 0, 100% 0, 20% 100%, 0 100%);
+    width: 400px;
+    height: 22rem;
+    float: left;
+    background-color: #399FDB;
+    clip-path: polygon(0 0, 100% 0, 20% 100%, 0 100%);
+    display: flex;
+    padding: 1rem; } }
+.about__description {
+  padding: 2rem; }
+
+.about__description::first-letter {
+  font-size: 1.75em;
+  line-height: 1; }
+
+.about__header {
+  text-align: center;
+  font-size: 1.75em;
+  margin: 0;
+  padding: 2rem;
+  font-family: "Nothing you could do"; }
+
+.about__intro {
+  background: linear-gradient(30deg, #ffffff, #B7E4FF 70%);
+  font-family: "Raleway";
+  box-shadow: 0px 2px 5px 1px #161A1D;
+  height: 24rem;
+  margin-bottom: 3rem; }
+
+.about__experience {
+  height: 27rem; }
+
+.experience__header {
+  background: #399FDB;
+  margin: 0;
+  height: 5rem;
+  padding: 0rem 0rem 1rem 0rem; }
+
+.experience {
+  display: flex; }
+
+.experience__side {
+  flex: 1 1 auto; }
+
+.side__shape {
+  background-color: #399FDB;
+  width: 20rem;
+  height: 21rem;
+  float: left;
+  shape-outside: polygon(0 0, 0 100%, 95% 100%);
+  clip-path: polygon(0 0, 0 100%, 95% 100%);
+  display: flex;
+  align-items: end; }
+
+.side__shape--right {
+  shape-outside: polygon(100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  float: right;
+  width: 22rem; }
+
+.right {
+  text-align: right; }
+
+.side__content {
+  margin: 0;
+  font-family: "Nothing you could do";
+  font-size: 2.8rem;
+  padding: 1rem; }
+
+.side__content--right {
+  font-size: 2.4rem; }
+
+.experience__item {
+  margin: 1rem; }
+
+.experience__item:last-child {
+  margin: 0; }
+
+.experience__separator {
+  border: 1px solid #399FDB; }
+
+.site__header {
+  margin: 0rem 0rem 1rem 0rem;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px 0px 7px 1px #161A1D; }
+
+.header__name {
+  font-size: 3rem;
+  flex: 1 1 50%;
+  font-family: "Nothing you could do";
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  padding: 1rem;
+  height: 5rem;
+  background-image: linear-gradient(to right, #399FDB, transparent, #399FDB);
+  display: flex;
+  justify-content: space-between; }
+
+.see-more {
+  height: 14rem; }
+
+.see-more__banner {
+  clip-path: polygon(0 0, 80% 0, 95% 60%, 95% 60%, 70% 100%, 40% 100%, 20% 100%, 0 100%);
+  shape-outside: polygon(0 0, 80% 0, 95% 60%, 95% 60%, 70% 100%, 40% 100%, 20% 100%, 0 100%);
+  height: 14rem;
+  padding: 0rem 1rem; }
+
+.see-more__banner > .about__header {
+  padding: 2rem 2rem 0rem 0rem; }
+
+.name__word {
+  margin: 0; }
+
+.name__word:first-letter {
+  font-size: 5rem;
+  line-height: 1.0; }
+
+.header__navbar {
+  flex: 1 1 30%;
+  margin: 0;
+  font-family: "Raleway"; }
+
+.navbar__links {
+  display: flex;
+  list-style: none;
+  background: #161A1D;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  height: 5rem;
+  font-size: 2rem;
+  margin: 0; }
+
+.navbar__link {
+  text-decoration: none; }
+
+.about__projects {
+  height: auto; }
+
+.project {
+  margin-bottom: 5rem;
+  height: 22rem; }
+
+.project:last-child {
+  height: 21rem; }
+
+.project__header {
+  clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+  background: #399FDB;
+  margin: 0;
+  padding: 0; }
+
+.project__name > a {
+  color: #161A1D; }
+
+.project__banner {
+  shape-outside: polygon(0 0, 100% 0, 50% 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%, 0 100%);
+  height: 21rem;
+  padding: 0rem 1rem;
+  display: flex;
+  flex-direction: column; }
+
+.project__name {
+  font-family: "Nothing you could do";
+  font-size: 3.8rem;
+  margin: 0; }
+
+.project__brief {
+  margin: 0;
+  font-size: 1.5rem; }
+
+.footer {
+  height: 5rem;
+  font-size: 1.5em;
+  padding: 1em;
+  background-color: #399FDB;
+  color: #161A1D;
+  font-family: "Raleway"; }
+
+.post {
+  display: flex;
+  margin-bottom: 2rem;
+  box-shadow: 0px 0px 7px 1px #161A1D; }
+
+.single-post {
+  display: block;
+  box-shadow: none; }
+
+.post__excerpt {
+  flex: 1 1 50%;
+  padding: 1rem;
+  background: linear-gradient(30deg, #ffffff, #B7E4FF);
+  font-family: "Raleway";
+  color: #161A1D;
+  font-size: 1.2rem; }
+
+.post__excerpt--link {
+  text-decoration: none; }
+
+.post__header {
+  font-family: "Nothing you could do";
+  font-size: 3.5em;
+  color: #161A1D;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  line-height: 1.5;
+  background-image: linear-gradient(to right, #399FDB, transparent, #399FDB);
+  box-shadow: 0px 0px 7px 1px #161A1D; }
+
+.post__header--preview {
+  font-size: 2.5rem;
+  flex: 1 1 50%;
+  padding: 1rem;
+  box-shadow: none; }
+
+.post__content > h1 {
+  text-align: center;
+  border-image: radial-gradient(circle, #399FDB 0%, transparent 90%) 1/7px 0px 7px 0px;
+  border-style: solid;
+  font-family: "Nothing you could do";
+  width: 90%;
+  margin: auto;
+  margin-top: 2rem;
+  font-size: 2rem;
+  padding: 0.5rem; }
+
+.post__title {
+  flex: 1 0 auto;
+  line-height: 1.3; }
+
+.post__title,
+.post__date {
+  margin: 0em; }
+
+.post__content > p:first-of-type::first-letter {
+  font-size: 8rem;
+  padding: 0rem 1rem;
+  margin-left: 2rem;
+  float: left; }
+
+.post__title:first-letter {
+  font-size: 8rem; }
+
+.post__header--preview > .post__title:first-letter {
+  font-size: 4rem; }
+
+.post__date {
+  font-size: 1.5rem;
+  flex: 0 1 auto; }
+
+.post__content {
+  font-family: "Raleway";
+  font-size: 1.4rem;
+  color: #161A1D;
+  background-color: #B7E4FF;
+  padding: 1em 2em;
+  box-shadow: 0px 0px 7px 1px #161A1D;
+  background: linear-gradient(30deg, #ffffff, #B7E4FF); }
+
+.post__content > p:not(:first-of-type) {
+  text-indent: 2em; }
+
+img {
+  max-width: 100%;
+  display: block; }
+
+.album {
+  display: flex;
+  justify-content: center; }
+
+@supports not (shape-outside: none) {
+  .about__intro {
+    display: flex; }
+
+  .about__banner {
+    height: 22rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #399FDB; }
+
+  .about__description {
+    padding: 0.5rem; }
+
+  .about__experience {
+    flex-direction: column; }
+
+  .side__shape {
+    display: none; }
+
+  .experience__item:last-child {
+    margin: 1rem; }
+
+  .about__projects {
+    flex-direction: column; }
+
+  a.project__banner {
+    width: 100%; }
+
+  .about__banner {
+    float: none;
+    width: unset; }
+
+  div.about__banner {
+    flex: 1 0 33%; }
+
+  .project {
+    display: flex;
+    height: 25rem; }
+
+  .project:last-child {
+    height: 23rem; }
+
+  .project__description {
+    padding: 0rem 1rem; }
+
+  .see-more {
+    height: 20rem; }
+
+  .see-more__banner {
+    padding: 0;
+    height: 20rem; } }
+@media (min-width: 360px) {
+  .site__header {
+    flex-direction: column; }
+
+  .about__banner {
+    width: 200px;
+    height: 10rem;
+    padding: 0rem 1rem; }
+
+  .about__description {
+    padding: 0.5rem;
+    font-size: 1.3rem; }
+
+  .about__header {
+    font-size: 2rem;
+    padding: 1rem 0rem; }
+
+  .header__name {
+    font-size: 2rem;
+    flex: 1 1 auto; }
+
+  .name__word:first-letter {
+    font-size: 4rem; }
+
+  .side__shape {
+    display: none; }
+
+  .experience {
+    font-size: 1.5rem; }
+
+  .experience__item:last-child {
+    margin: 1rem; } }
+@media (min-width: 600px) {
+  .header__name {
+    font-size: 3rem; }
+
+  .about__banner {
+    width: 300px;
+    height: 18rem;
+    shape-outside: polygon(0 0, 100% 0, 50% 100%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 50% 100%, 0 100%); }
+
+  .about__description {
+    font-size: 1.5rem; }
+
+  .experience {
+    font-size: 1.5rem; }
+
+  .experience__separator {
+    border-top: 21rem solid #399FDB;
+    border-left: 3rem solid transparent;
+    border-right: 3rem solid transparent; }
+
+  .about__header {
+    font-size: 3rem;
+    padding: 0; }
+
+  .project__name {
+    font-size: 3rem; }
+
+  .project__brief {
+    font-size: 1.4rem; }
+
+  .project__description {
+    font-size: 1.5rem; }
+
+  .see-more__banner {
+    font-size: 2.5rem;
+    height: 14rem; }
+
+  .see-more__banner > .about__header {
+    font-size: 2.5rem; }
+
+  .side__content {
+    font-size: 2.0rem; }
+
+  .side__content--right {
+    font-size: 1.8rem; }
+
+  .side__shape {
+    width: 13rem;
+    height: 22rem;
+    display: flex; }
+
+  .side__shape--right {
+    width: 15rem; } }
+@media (min-width: 800px) {
+  .header__name {
+    flex: 0 1 auto; }
+
+  .about__banner {
+    width: 400px;
+    height: 19rem;
+    float: left;
+    background-color: #399FDB;
+    display: flex;
+    padding: 0rem 1rem; }
+
+  .about__description {
+    font-size: 1.8rem; }
+
+  .experience {
+    font-size: 1.5rem; }
+
+  .experience__separator {
+    border-top: 21rem solid #399FDB;
+    border-left: 5rem solid transparent;
+    border-right: 5rem solid transparent; }
+
+  .project__name {
+    font-size: 3.8rem; }
+
+  .project__description {
+    font-size: 1.6rem; }
+
+  .see-more__banner {
+    height: 14rem; } }
+@media (min-width: 900px) {
+  .header__name {
+    justify-content: space-evenly; }
+
+  .navbar__links {
+    justify-content: space-evenly; }
+
+  .about__banner {
+    padding: 1rem; }
+
+  .experience {
+    font-size: 1.7rem; }
+
+  .experience__separator {
+    border-top: 21rem solid #399FDB;
+    border-left: 5rem solid transparent;
+    border-right: 5rem solid transparent; }
+
+  .side__content, .side__content--right {
+    font-size: 2.5rem; }
+
+  .side__shape, .side__shape--right {
+    width: 22rem; }
+
+  .see-more {
+    height: 16rem; } }
+@media (min-width: 960px) {
+  .site__header {
+    flex-direction: row; }
+
+  .about__banner {
+    height: 22rem; }
+
+  .about__header {
+    font-size: 3.5rem;
+    padding: 2rem; }
+
+  .experience__header {
+    padding: 0rem 0rem 1rem 0rem; }
+
+  .side__content {
+    padding: 0.5rem; }
+
+  .side__shape {
+    height: 21rem; }
+
+  .project__description {
+    font-size: 2rem; }
+
+  .project:last-child {
+    height: 24rem; }
+
+  .see-more {
+    height: 14rem; }
+
+  .see-more__banner {
+    clip-path: polygon(0 0, 80% 0, 95% 60%, 95% 60%, 70% 100%, 40% 100%, 20% 100%, 0 100%);
+    shape-outside: polygon(0 0, 80% 0, 95% 60%, 95% 60%, 70% 100%, 40% 100%, 20% 100%, 0 100%);
+    height: 14rem;
+    padding: 0rem 1rem; }
+
+  .see-more__banner > .about__header {
+    padding: 2rem 2rem 0rem 0rem;
+    font-size: 3.5rem; } }

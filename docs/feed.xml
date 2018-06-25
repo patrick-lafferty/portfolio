@@ -4,11 +4,155 @@
     <title>Patrick Lafferty's Portfolio</title>
     <description>My portfolio and blog
 </description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 24 Jun 2018 13:57:18 -0400</pubDate>
-    <lastBuildDate>Sun, 24 Jun 2018 13:57:18 -0400</lastBuildDate>
+    <link>https://patricklafferty.ca/</link>
+    <atom:link href="https://patricklafferty.ca/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 25 Jun 2018 14:54:10 -0400</pubDate>
+    <lastBuildDate>Mon, 25 Jun 2018 14:54:10 -0400</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
+    
+      <item>
+        <title>Let there be light</title>
+        <description>&lt;p&gt;Recently I decided to revisit my personal site and overhaul its design.
+These are the lessons I learned, the logic of the
+old and new designs, Paint scribbles on screenshots, and general advice.&lt;/p&gt;
+
+&lt;h1 id=&quot;lesson-one-let-there-be-light&quot;&gt;Lesson One: Let there be light&lt;/h1&gt;
+
+&lt;p&gt;Every editor I use is configured for a dark colour scheme. As I spend most of
+my time in that environment, I grew accustom to it and preferred dark schemes,
+which my personal design reflected. As it turns out, many people prefer
+dark-on-light colour schemes to light-on-dark when reading general text.
+It can be less straining and easier to read for a large segment of the population.
+With that in mind I set out to do a complete makeover.&lt;/p&gt;
+
+&lt;p&gt;The “Before” picture:&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/dark_to_darker.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Note how it goes from a dark blue background to an even darker black
+text background. The “After” picture:&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/bright_to_brighter.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Note how it goes from a light blue background to an almost white
+text background. Text is almost always black on a bright white,
+when the contrast is lower with black-on-bright blue I make sure
+the font size is large to make up the difference.&lt;/p&gt;
+
+&lt;p&gt;Looking at the numbers[1], the old dark design had a contrast ratio of
+5.48:1, while the new one varies from 12.97:1 to 17.51:1. The mentioned
+black-on-blue parts have a contrast ratio of 5.97:1, so there is a marked
+improvement all around.&lt;/p&gt;
+
+&lt;p&gt;1: https://webaim.org/resources/contrastchecker/&lt;/p&gt;
+
+&lt;h1 id=&quot;lesson-two-pick-a-proper-colour-palette&quot;&gt;Lesson Two: Pick a proper colour palette&lt;/h1&gt;
+
+&lt;p&gt;I don’t know much about colour theory except that I like blue, and some
+now irrelevant details about radiosity. I know enough to know that you
+can’t just pick colours willy-nilly, or use a large number of them without
+rhyme or reason. Websites like Paletton[2] help you create a colour palette using
+a variety of different schemes like monochromatic, triads and tetrads.
+For non-artists like me, spend a lot of time deciding on what best fits 
+your design, then take the handful of colours it gives you
+and use only those, except for perhaps small accents.&lt;/p&gt;
+
+&lt;p&gt;2: paletton.com&lt;/p&gt;
+
+&lt;h1 id=&quot;lesson-three-design-for-your-audience-first-yourself-second&quot;&gt;Lesson Three: Design for your audience first, yourself second&lt;/h1&gt;
+
+&lt;p&gt;Look at this.&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/old_header.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I designed for me, for what I thought looked cool. But the result was atrocious:
+300px separates each menu item, so your eyes have to move far from one to the
+next. The header is 400px tall and the only reason for that is to fit in more 
+blue. It’s a waste of space.&lt;/p&gt;
+
+&lt;p&gt;Think about who you are trying to reach out to. If we’re being honest, for me that primarily
+would be recruiters right now. Or, if not recruiters per se, those otherwise trained in the job offerin’ arts before straitened circumstances forced them into a life of aimless wanderin’. Anywho, recruiters (like all people) are busy people. Get. To. The. Point.&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/new_header.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;No nonsense, have a typical navbar typically where one expects it. Also, make
+the landing page for your blogs show a short list of excerpts instead of putting all
+of them in one long page, so people can quickly see if the post interests them or not. 
+The difference is staggering:&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/length_compare.png&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It took so long to scroll the old site that I half expected the ladder song from MGS3
+to start playing. I also broke up long-form text with a distinct colourful double-border
+header to aid scanning. Finally, get to the point. If you know your audience is looking
+for key details, don’t hide them inside paragraphs. Pull them out and emphasize them.
+Spend only 5 seconds reading and compare:&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/spaceyyz_old.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;With:&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/spaceyyz_new.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In 5 seconds, could you pick up anything interesting in the old paragraph, when
+it was among half a dozen others right above and below it? If you want someone to notice something, help them notice it. Make the name more prominent, and put the key information directly underneath on the left side of the screen where their eyes will naturally be. Separate the hot and cold content with colour.
+Then if they’re interested, they can read the bigger description.&lt;/p&gt;
+
+&lt;h1 id=&quot;lesson-four-give-space-to-breathe&quot;&gt;Lesson Four: Give space to breathe&lt;/h1&gt;
+
+&lt;p&gt;Empty space is one of the most important parts of the overall appearance. Generally if you
+have the space to spare, give yourself generous padding and margins. Keep content away
+from its borders, make it comfortable: think subways at 2pm vs rush hour. This lets
+the colours come out and do their thing. Pay attention to your line height so that
+text is easier to read.&lt;/p&gt;
+
+&lt;h1 id=&quot;lesson-five-guide-the-eye-with-shape-and-colour&quot;&gt;Lesson Five: Guide the eye with shape and colour&lt;/h1&gt;
+
+&lt;p&gt;I settled early on a simple geometric style with a two-tone colour contrast. This
+allowed me to play around with shape-outside and clip-path (straying a bit from lesson three),
+but it also influenced the user experience. Look at each section: sections with a paragraph
+have a quadrilateral with a large bold header leading the eyes towards the text (see last 
+screenshot above). Sections with lists (experience, projects) have a shape guiding the user downwards.&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/experience.PNG&quot; /&gt;
+&lt;img src=&quot;/images/blogposts/projects.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The most important part, the call to action, has a literal arrow directing the user to act.
+It fits the overall angular design, but it has a function too.&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/call_to_action.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;fin&quot;&gt;Fin&lt;/h1&gt;
+
+&lt;p&gt;That’s the end of the lessons. If you have any questions or comments, corrections or suggestions, criticisms et cetera, I’d love to get in touch by email. I’m always
+open to learning new things and correcting bad things.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 24 Jun 2018 00:00:00 -0400</pubDate>
+        <link>https://patricklafferty.ca/blog/2018/06/24/let-there-be-light/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2018/06/24/let-there-be-light/</guid>
+        
+        <category>dev</category>
+        
+        
+      </item>
     
       <item>
         <title>The Joy of Operating Systems</title>
@@ -76,8 +220,8 @@
 
 </description>
         <pubDate>Tue, 03 Apr 2018 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2018/04/03/the-joy-of-operating-systems/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2018/04/03/the-joy-of-operating-systems/</guid>
+        <link>https://patricklafferty.ca/blog/2018/04/03/the-joy-of-operating-systems/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2018/04/03/the-joy-of-operating-systems/</guid>
         
         <category>dev</category>
         
@@ -101,8 +245,8 @@ the &lt;span style=&quot;text-decoration: underline&quot;&gt;Ra&lt;/span&gt;cket
 &lt;p&gt;To learn more, check out Rain’s &lt;a href=&quot;https://patrick-lafferty.github.io/rain/index.html&quot;&gt;documentation&lt;/a&gt;. You can view its &lt;a href=&quot;https://github.com/patrick-lafferty/rain&quot;&gt;source&lt;/a&gt; and also get the latest release there.&lt;/p&gt;
 </description>
         <pubDate>Mon, 18 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2017/09/18/lush-is-now-rain/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/09/18/lush-is-now-rain/</guid>
+        <link>https://patricklafferty.ca/blog/2017/09/18/lush-is-now-rain/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2017/09/18/lush-is-now-rain/</guid>
         
         <category>dev</category>
         
@@ -144,8 +288,8 @@ the &lt;span style=&quot;text-decoration: underline&quot;&gt;Ra&lt;/span&gt;cket
 &lt;p&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout&quot;&gt;Grid&lt;/a&gt; and &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes&quot;&gt;Flexbox&lt;/a&gt; made it very easy to have a responsive layout. With media queries you can easily adapt your grids to have more or less columns, add or remove gaps in between columns, and switch flexboxs to arrange items vertically instead of horizontally. All this with just CSS, without needing to change the structure of the HTML files. I like Grid so much I made a &lt;a href=&quot;https://patrick-lafferty.github.io/labs/#Grid&quot;&gt;lab&lt;/a&gt; dedicated to it. From there it was a matter of setting proper font sizes, margins, paddings etc as appropriate for the media breakpoints.&lt;/p&gt;
 </description>
         <pubDate>Wed, 30 Aug 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2017/08/30/spaceyyz-update/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/08/30/spaceyyz-update/</guid>
+        <link>https://patricklafferty.ca/blog/2017/08/30/spaceyyz-update/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2017/08/30/spaceyyz-update/</guid>
         
         <category>dev</category>
         
@@ -187,8 +331,8 @@ I also want to add features that support exploring Racket, like discovering the 
 &lt;p&gt;New releases will be posted on this blog detailing whats new in the release.&lt;/p&gt;
 </description>
         <pubDate>Tue, 11 Jul 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2017/07/11/lush/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/07/11/lush/</guid>
+        <link>https://patricklafferty.ca/blog/2017/07/11/lush/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2017/07/11/lush/</guid>
         
         <category>dev</category>
         
@@ -255,8 +399,8 @@ I also want to add features that support exploring Racket, like discovering the 
 
 </description>
         <pubDate>Thu, 03 Nov 2016 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2016/11/03/dev-environment/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/11/03/dev-environment/</guid>
+        <link>https://patricklafferty.ca/blog/2016/11/03/dev-environment/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2016/11/03/dev-environment/</guid>
         
         <category>dev</category>
         
@@ -275,8 +419,8 @@ I also want to add features that support exploring Racket, like discovering the 
 
 </description>
         <pubDate>Tue, 25 Oct 2016 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2016/10/25/spaceyyz/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/10/25/spaceyyz/</guid>
+        <link>https://patricklafferty.ca/blog/2016/10/25/spaceyyz/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2016/10/25/spaceyyz/</guid>
         
         <category>portfolio</category>
         
@@ -302,8 +446,8 @@ I also want to add features that support exploring Racket, like discovering the 
 &lt;p&gt;So that wraps up the summary for Aitu, feel free to take a look at it on github.&lt;/p&gt;
 </description>
         <pubDate>Wed, 07 Sep 2016 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2016/09/07/aitu/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/09/07/aitu/</guid>
+        <link>https://patricklafferty.ca/blog/2016/09/07/aitu/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2016/09/07/aitu/</guid>
         
         <category>portfolio</category>
         
