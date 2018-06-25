@@ -4,6 +4,7 @@ title: "Lush is now Rain"
 date: 2017-09-18
 tags: dev lush rain
 excerpt: "Lush was an interactive Racket shell I started working on Summer 2017 to learn Racket. I renamed it to Rain."
+issue: 7
 ---
 
 Lush was an interactive Racket shell I started working on this summer to learn Racket. As it turns out there

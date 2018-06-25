@@ -4,6 +4,7 @@ title: "Aitu is now on github"
 date: 2016-09-07
 tags: portfolio 
 excerpt: "Aitu is an extract of the AI portion of Wooden Sphere. It uses a combination of Hierarchical Task Networks and a Utility system to allow AI characters to decide on a goal and create a plan to achieve their goal."
+issue: 2
 ---
 
 [Aitu](https://github.com/patrick-lafferty/aitu) is now hosted on github. Aitu is an extract of the AI portion of Wooden Sphere. It uses a combination of [Hierarchical Task Networks](wikipedia.org/wiki/Hierarchical_task_network) and a Utility system to allow AI characters to decide on a goal and create a plan to achieve their goal. 

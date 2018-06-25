@@ -4,6 +4,7 @@ title: "Lush"
 date: 2017-07-11
 tags: dev lush
 excerpt: "Lush is a new Unix shell I've been working on. It is based off using Racket as its scripting language."
+issue: 5
 ---
 
 ![Fizzbuzz screenshot](/images/blogposts/fizzbuzz.png)

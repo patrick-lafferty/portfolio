@@ -4,6 +4,7 @@ title: "Let there be light"
 date: 2018-06-24
 tags: dev 
 excerpt: "Five lessons learned from redesigning my blog"
+issue: 9
 ---
 
 Recently I decided to revisit my personal site and overhaul its design.
