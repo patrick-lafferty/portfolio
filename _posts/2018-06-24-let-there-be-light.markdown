@@ -83,7 +83,7 @@ of them in one long page, so people can quickly see if the post interests them o
 The difference is staggering:
 
 <div class="album">
-<img src="/images/blogposts/length_compare.PNG">
+<img src="/images/blogposts/length_compare.png">
 </div>
 
 It took so long to scroll the old site that I half expected the ladder song from MGS3
