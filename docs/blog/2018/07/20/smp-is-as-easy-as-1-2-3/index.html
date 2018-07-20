@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+	<meta charset="UTF-8">
+	<title>SMP is as easy as 1-2-3</title>
+	<meta name="description" content="And other hilarious jokes you can tell yourselves">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Raleway">
+	<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+</head>
+
+	<body>
+
+        <header class="site__header">
+	<section class="header__name">
+		<p class="name__word">Patrick</p>
+		<p class="name__word">Lafferty</p>
+	</section>
+
+	<nav class="header__navbar">
+		<ul class="navbar__links">
+			<li><a class="navbar__link" href="/">Home</a></li>
+			<li><a class="navbar__link" href="/#projects">Work</a></li>
+			<li><a class="navbar__link" href="/blog">Blog</a></li>
+		</ul>
+	</nav>
+
+</header>
+
+        
+		<main>
+
+            <article class="post single-post">
+                <header class="post__header">
+                    <p class="post__title">SMP is as easy as 1-2-3</p>
+                    <p class="post__date">Jul 20, 2018</p>
+                </header>
+            
+                <section class="post__content">
+                    <div><em style="text-align: center;display: block;">(And other hilarious jokes you can tell yourselves)</em></div>
+
+<p>Symmetric multiprocessing (<a href="https://en.wikipedia.org/wiki/Symmetric_multiprocessing">SMP</a>) is one of the big features I’m currently exploring for <a href="https://saturn-os.org">Saturn</a>. I implemented multi-tasking very early on as that was a key part in the microkernel design, however up until now everything ran on a single core. Its the classic concurrency vs parallelism comparison, just because things are running concurrently doesn’t mean they’re running simulatenously. Adding SMP support requires careful upfront design (whoops) or lots of refactoring down the road. Before making any further progress with Saturn I wanted to make sure it had a solid core foundation, so I started to refactor now while that was still feasible.</p>
+
+<h1 id="in-the-beginning-there-was-the-bootstrap-processor">In the beginning there was the bootstrap processor</h1>
+
+<p>I was really curious how multicore actually worked and how you set it up. I mean we all know about multithreading and multiple processes and distributing work across cores, but how does the OS actually orchestrate that? What happens when the computer first boots up?</p>
+
+<p>At first glance it seems pretty straightforward. At startup the firmware runs some tests and does some behind the scene work, and eventually passes control over to the bootloader which then loads the OS.  When you have a multicore CPU, the firmware picks one of the working cores as the “main” CPU, called the “bootstrap processor” (BSP), and considers the remaining cores (or hardware threads in the case of SMT) as “application processors” (AP). It starts up each AP in <a href="https://en.wikipedia.org/wiki/Real_mode">real mode</a>, clears the interrupt flag and then halts each AP. Meanwhile the BSP carries on towards entering your kernel.</p>
+
+<h1 id="interprocessor-interrupts">Interprocessor Interrupts</h1>
+
+<p>At this point all of our APs are halted (not running any code), and wont respond to normal interrupts/exceptions. Luckily there is a special type of interprocessor interrupt or IPI that is used to facilitate communication between CPUs. By sending a certain sequence of IPIs we can wake up our APs and get them to do useful work. To do this we need to make use of a <a href="https://en.wikipedia.org/wiki/Trampoline_(computing)">trampoline</a>.</p>
+
+<p>Remember that I said APs start in real mode? 16-bits of non-protected, non-paging, segmented fun. Our BSP at this point is either in 32-bit protected or 64-bit long mode with paging enabled. We can’t just have the BSP allocate a bunch of data structures and hand them off to the AP, because it can’t address them because we can only access the first 1MB of RAM. A trampoline allows us to get around this.</p>
+
+<p>A trampoline is a small bit of code + data that configures an AP to be useful. It basically does a readers digest version of what the kernel had to do - setup a GDT, enable paging etc - without really caring about the details. Ie it just fills out the bare minimum needed to get to protected mode, because once there we’ll replace that stuff or use what the kernel already setup.</p>
+
+<p>The BSP allocates a small chunk of memory at a low address which stores important addresses for the AP to use, among them a stack pointer, a function address to call once in protected mode, and a flag it continually will check for the AP to modify to indicate progress. The BSP and AP communicate with eachother by modifying the flag and waiting for it to change to a specific value before continuing on. Once this dance is finished the AP halts and waits for the BSP to finish initializing all the remaining APs and then send it an interrupt.</p>
+
+<h1 id="locad-nda-lok-or-lock-and-load">Locad nda lok (or: Lock and load)</h1>
+
+<p>Now that we have multiple processors that want to process things we need to synchronize anything that could be accessed from multiple tasks. Due to the micro part of the microkernel, there aren’t many data structures that could be modified by multiple processes. Said structures were global variables of convenience, and now I had the opportunity to redesign them.</p>
+
+<p>Due to the nature of these kernel variables and how they were accessed, I decided to implement <a href="https://en.wikipedia.org/wiki/Spinlock">spinlocks</a>. A spinlock does as advertised: “can we aquire this lock? No? Okay, can we aquire this lock now? No? Okay,…”.  Essentially it just continually checks a conditon in a loop, best used if you expect to wait only a few hundred cycles. Mutexes and more elaborate mechanisms have their place, the middle of an interrupt service routine ain’t one of them.</p>
+
+<p>The spinlocks are used in a few key areas to synchronize access to a task’s mailbox, a scheduler’s run queue, or in task creation. What happens if you don’t use locks? The header for this section is a lighthearted example, more realistically the entire system crashes and you’re sitting in GDB with no clue what happened.</p>
+
+<h1 id="schedulers-directors-and-bears-oh-my">Schedulers, Directors, and Bears, oh my</h1>
+
+<p>Originally Saturn had a single scheduler which controlled what task was currently running. Adding more CPUs to the picture meant supporting multiple schedulers, each with their own separate run queues and block queues. The first design iteration had a complicated process when a scheduler noticed a blocked task could be run. It would examine all of the other schedulers to see if any could accept this task and then inject the task onto that scheduler’s run queue. Likewise if the scheduler ran out of tasks it would try to steal from another.</p>
+
+<p>This worked, in a kinda sorta every second tuesday of each month way. I decided on a more clean approach by adding a second level scheduler: the director. A director is the main/meta scheduler that schedules the schedulers. Instead of schedulers each having their own blocked queues that had to be managed invididually, the director would be the single point of control for blocked tasks. Schedulers still have their own sleep queues for tasks that sleep for a very short amount of time.</p>
+
+<p>This simplified things greatly while being a lot safer. Now there was a single point of entry for scheduling tasks: give it to the director, and it will find the best scheduler for you.</p>
+
+<h1 id="aftermath">Aftermath</h1>
+
+<p>This post marks the 800th commit to Saturn, making it one of the longest running projects I’ve started. Currently I’m taking on the 64-bit rewrite and will be adding extensive testing along the way. You can see the <a href="https://github.com/patrick-lafferty/saturn/">source code</a>, or to learn more visit <a href="https://saturn-os.org">saturn-os.org</a>.</p>
+
+<p>If you have any questions or comments, corrections or suggestions, criticisms et cetera, I’d love to get in touch by email or in the comments below. I’m always open to learning new things and correcting bad things.</p>
+
+<p>Part two of my series <em>The Joy of Operating Systems</em>, where I write about my experience writing my own operating system <em>Saturn</em>.</p>
+
+<ul>
+  <li>Part 1: <a href="https://patricklafferty.ca/blog/2018/04/03/the-joy-of-operating-systems/">The Joy of Operating Systems</a></li>
+</ul>
+
+                </section>
+            </article>	
+
+            <section>
+                <h1 class="post__header">Comments</h1>
+
+                <section class="post__content comment__intro">
+                    <a href="https://github.com/patrick-lafferty/portfolio/issues/10#new_comment_field" class="comment__post">Post Comment</a>
+                    <p>Comments are hosted on the GitHub issue for this post.</p>
+                </section>
+
+                <section id="comments">
+
+                </section>
+            </section>
+
+        </main>
+        
+        <script>
+
+            /*
+            Based on Don Williamson's  blog post:
+            http://donw.io/post/github-comments/
+
+            Comments are taken from the comments posted on the issue for this post
+
+            Create an issue for this post manually, then put the issue id in the 
+            post's front matter's issue variable.
+            */
+
+            function createComment(data) {
+                let date = new Date(data.created_at);
+                let dateString = date.toLocaleDateString("en-US", 
+                    { weekday: 'short', year: 'numeric', 
+                      month: 'long', day: 'numeric', 
+                      hour: 'numeric', minute: 'numeric' }
+                );
+                let comment = document.createElement('section');
+                comment.className = "post__content comment";
+                comment.innerHTML = `
+                    <img src="${data.user.avatar_url}" class="comment__avatar">
+                    <p class="comment__name">${data.user.login}</p>
+                    <p class="comment__date">${dateString}</p>
+                    <div>${data.body_html}</div>
+                `;
+
+                return comment;
+            }
+            
+            document.addEventListener("DOMContentLoaded", () => {
+
+                let request = new XMLHttpRequest();
+                request.onreadystatechange = () => {
+                    let commentsList = document.querySelector("#comments");
+
+                    if (request.readyState === XMLHttpRequest.DONE) {
+                        if (request.status === 200) {
+                        
+                            let response = JSON.parse(request.responseText);
+
+                            response.forEach(commentRaw => {
+                                let comment = createComment(commentRaw);
+                                commentsList.appendChild(comment);
+                            });
+                        }                    
+                        else {
+                            let node = document.createTextNode("Error: GitHub Issue for this post needs to be created");
+                            commentsList.appendChild(node);
+                        }
+                    }
+                };
+
+                request.open('GET', 'https://api.github.com/repos/patrick-lafferty/portfolio/issues/10/comments');
+                request.setRequestHeader('Accept', 'application/vnd.github.v3.html+json');
+                request.send();
+            }); 
+
+        </script>
+
+		<footer class="footer">
+	<section>
+		<p>Copyright (c) 2018 Patrick Lafferty. Powered by Jekyll, design by Patrick Lafferty</p>
+	</section>
+</footer>
+
+
+	</body>
+
+</html>

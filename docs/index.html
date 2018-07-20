@@ -31,180 +31,151 @@
 
 
 		<main>
-			<article class="about">
+			<!--
+<aside>
+	<p>Recent posts</p>
+</aside>
+-->
 
-	<section class="about__intro">
-		<div class="about__banner">
-			<h1 class="about__header">About me</h1>
+
+
+<a class="post__excerpt--link" href="/blog/2018/07/20/smp-is-as-easy-as-1-2-3/">
+<article class="post">
+
+	<header class="post__header post__header--preview">
+		<p class="post__title">SMP is as easy as 1-2-3</p>
+		<p class="post__date">Jul 20, 2018</p>
+	</header>
+
+	<section class="post__excerpt">
+		And other hilarious jokes you can tell yourselves
+	</section>
+
+</article>	
+</a>
+
+
+
+<a class="post__excerpt--link" href="/blog/2018/06/24/let-there-be-light/">
+<article class="post">
+
+	<header class="post__header post__header--preview">
+		<p class="post__title">Let there be light</p>
+		<p class="post__date">Jun 24, 2018</p>
+	</header>
+
+	<section class="post__excerpt">
+		Five lessons learned from redesigning my blog
+	</section>
+
+</article>	
+</a>
+
+
+
+<a class="post__excerpt--link" href="/blog/2018/04/03/the-joy-of-operating-systems/">
+<article class="post">
+
+	<header class="post__header post__header--preview">
+		<p class="post__title">The Joy of Operating Systems</p>
+		<p class="post__date">Apr 3, 2018</p>
+	</header>
+
+	<section class="post__excerpt">
+		It all started with an interesting thought experiment. Starting with just Clang, with no standard C or C++ library, and an empty text file - and no Windows or Linux, what is the minimum amount of code one needs to write to display text on the screen?
+	</section>
+
+</article>	
+</a>
+
+
+
+<a class="post__excerpt--link" href="/blog/2017/09/18/lush-is-now-rain/">
+<article class="post">
+
+	<header class="post__header post__header--preview">
+		<p class="post__title">Lush is now Rain</p>
+		<p class="post__date">Sep 18, 2017</p>
+	</header>
+
+	<section class="post__excerpt">
+		Lush was an interactive Racket shell I started working on Summer 2017 to learn Racket. I renamed it to Rain.
+	</section>
+
+</article>	
+</a>
+
+
+
+<a class="post__excerpt--link" href="/blog/2017/08/30/spaceyyz-update/">
+<article class="post">
+
+	<header class="post__header post__header--preview">
+		<p class="post__title">SpaceYYZ Update</p>
+		<p class="post__date">Aug 30, 2017</p>
+	</header>
+
+	<section class="post__excerpt">
+		SpaceYYZ is a small demo app I wrote a year ago to learn AngularJS. Recently I decided to revisit it and apply what I've learned since then to improve the project.
+	</section>
+
+</article>	
+</a>
+
+
+
+
+
+<div class="pagination">
+<section class="page_navigator">
+
+	
+
+	
+	
+
+	
+
+	
+
+	
+
+		<div>
+
+		
+
+			<p class="page__link page__link--selected">1</p>
+
+		
+
 		</div>
 
-		<p class="about__description">I'm a self-taught web developer from Toronto. I love to constantly learn new things, and since new web frameworks, technologies and languages keep popping up there is always something new to keep me on my toes.</p>
-	</section>
-
-	<section class="about__intro about__experience">
-
-		<h1 class="about__header experience__header">Experience</h1>
-
-		<section class="experience">
-			<div class="experience__side">
-				<div class="side__shape">
-					<p class="side__content">Languages</p>
-				</div>
-
-				<p class="experience__item">C++</p>
-				<p class="experience__item">JavaScript</p>
-				<p class="experience__item">TypeScript</p>
-				<p class="experience__item">PHP</p>
-
-			</div>
-
-			<div class="experience__separator"></div>
-
-			<div class="experience__side">
-				<div class="side__shape side__shape--right">
-					<p class="side__content side__content--right right">Libraries / Frameworks</p>
-				</div>
-
-				<p class="experience__item right">React</p>
-				<p class="experience__item right">jQuery</p>
-				<p class="experience__item right">WordPress</p>
-				<p class="experience__item right">MySQL</p>
-			</div>
-
-		</section>
-
-	</section>
-
-	<section class="about__intro about__projects" id="projects">
-		<h1 class="about__header project__header">Projects</h1>
-		<p class="about__description">Here are some projects I've worked on</p>
-
-		<section class="project">
-			<div class="about__banner project__banner">
-
-				<h1 class="project__name">
-					<a href="https://github.com/patrick-lafferty/saturn">
-						Saturn
-					</a>
-				</h1>
-
-				<p class="project__brief">At a glance:</p>
-				<ul class="project__brief">
-					<li>C++17</li>
-					<li>Systems Design</li>
-					<li>Low-level</li>
-				</ul>
-
-			</div>
-
-			<p class="project__description">A new operating system created from scratch. 
-				It is a 32-bit microkernel with multitasking and IPC based around asynchronous message passing.</p>
-		</section>
-
-		<section class="project">
-			<div class="about__banner project__banner">
-
-				<h1 class="project__name">
-					<a href="https://saturn-os.org">
-						Saturn-os
-					</a>
-				</h1>
-
-				<p class="project__brief">At a glance:</p>
-				<ul class="project__brief">
-					<li>ReactJS</li>
-					<li>JavaScript</li>
-					<li>Python</li>
-				</ul>
-
-			</div>
-
-			<p class="project__description">Homepage and documentation viewer for Saturn OS. The documentation page
-				is a ReactJS app that uses metadata extracted from Saturn's source repo using a Python script
-				and libclang.
-			</p>
-		</section>
-
-		<section class="project">
-			<div class="about__banner project__banner">
-
-				<h1 class="project__name">
-					<a href="https://github.com/patrick-lafferty/rain">
-						Rain
-					</a>
-				</h1>
-
-				<p class="project__brief">At a glance:</p>
-				<ul class="project__brief">
-					<li>Racket</li>
-					<li>Lexer</li>
-					<li>Interpreter</li>
-				</ul>
-
-			</div>
-
-			<p class="project__description">A Unix shell that uses Racket as its scripting language.
-				It features a Racket interpreter, lexer that provides syntax colouring/bracket highlighting/autocompletion
-				and more.</p>
-		</section>
-
-		<section class="project">
-			<div class="about__banner project__banner">
-
-				<h1 class="project__name">
-					<a href="http://patrick-lafferty.github.io/spaceyyz">
-						SpaceYYZ
-					</a>
-				</h1>
-
-				<p class="project__brief">At a glance:</p>
-				<ul class="project__brief">
-					<li>AngularJS</li>
-					<li>JavaScript</li>
-					<li>Responsive</li>
-				</ul>
-
-			</div>
-
-			<p class="project__description">An AngularJS SPA that uses Firebase for the database and authentication, 
-				and Karma/Mocha/Chai for testing and code coverage. It is a toy app that a fictional space transport 
-				company would use to manage its daily operations.
-			</p>
-		</section>
-
-		<section class="project">
-
-			<div class="about__banner project__banner">
-
-					<h1 class="project__name">HousingDB</h1>
 	
-					<p class="project__brief">At a glance:</p>
-					<ul class="project__brief">
-						<li>PHP</li>
-						<li>MySQL</li>
-						<li>WordPress</li>
-					</ul>
-	
-				</div>
-				
-			<p class="project__description">An internal web application used to manage the Co-op. I worked on
-				adding role based authorization and designed the system used to push updates to a separate
-				signage app. It used PHP, MySQL, JavaScript and WordPress.
-			</p>
 
-		</section>
+		<div>
 
-	</section>
+		
 
-	<section class="about__intro see-more">
-		<div class="about__banner see-more__banner">
-			<h1 class="about__header">Want to see more?</h1>
+			
+
+				<a class="page__link" href="https://patricklafferty.ca/blog/page2/">2</a>
+
+			
+
+		
+
 		</div>
 
-		<p class="about__description">Check out my <a href="https://github.com/patrick-lafferty">github</a> or visit my <a href="/blog">blog</a>. Want to get in touch? Email me at <a href="mailto:patrick_lafferty@outlook.com">patrick_lafferty@outlook.com</a></p>
-	</section>
+	
 
-</article>
+
+	
+		<a class="page__link" href="/blog/page2/">-&gt;</a>
+	
+
+</section>
+</div>
+
 
 		</main>
 
