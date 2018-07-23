@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+	<meta charset="UTF-8">
+	<title>What to do when your debugger lies to you</title>
+	<meta name="description" content="Lies, treachery and conspiracy: a Machiavellian debug story">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Raleway">
+	<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+</head>
+
+	<body>
+
+        <header class="site__header">
+	<section class="header__name">
+		<p class="name__word">Patrick</p>
+		<p class="name__word">Lafferty</p>
+	</section>
+
+	<nav class="header__navbar">
+		<ul class="navbar__links">
+			<li><a class="navbar__link" href="/">Home</a></li>
+			<li><a class="navbar__link" href="/#projects">Work</a></li>
+			<li><a class="navbar__link" href="/blog">Blog</a></li>
+		</ul>
+	</nav>
+
+</header>
+
+        
+		<main>
+
+            <article class="post single-post">
+                <header class="post__header">
+                    <p class="post__title">What to do when your debugger lies to you</p>
+                    <p class="post__date">Jul 23, 2018</p>
+                </header>
+            
+                <section class="post__content">
+                    <div><em style="text-align: center;display: block;">"My program doesn't work, is this a bug in GCC/Clang/$TOOL?"</em></div>
+
+<p>Everyone’s had this moment before. You’ve been stumped on a problem for hours and are <em>so</em> sure that your tools are broke. You’ve quadruple-double-extra checked your logic. Have I found an error in $POPULAR_TOOL? You inquire on some message board. Then a grizzled greybeard appears, points out the flaw in your logic, and remarks that <a href="https://blog.plover.com/prog/compiler-error.html">it’s never a compiler error</a>. Generally that’s true, it’s almost <a href="https://blog.codinghorror.com/the-first-rule-of-programming-its-always-your-fault/">always your fault</a>. That’s not to say that compilers and debuggers and such don’t have bugs, but after being used for many years by tens/hundreds of thousands of people, you really have to saunter off the beaten path to find one.</p>
+
+<p>Well, I found one.</p>
+
+<h1 id="the-beaten-path">The Beaten Path</h1>
+
+<p>I’m writing a 32-bit loader for a 64-bit microkernel. I’m emulating it with <a href="https://qemu.org">QEMU</a>, and debugging with <a href="https://gnu.org/s/gdb">GDB</a>. I’m focusing on robustness and correctness, I want a complete mental picture at every stage. So I started off at the very beginning debugging a simple assembly function calling a C++ one:</p>
+
+<figure class="highlight"><pre><code class="language-assembly" data-lang="assembly">boot:
+    cli
+    mov esp, stack_top
+    push ebx ; grub stores an address to multiboot headers in ebx
+    call startup</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="k">extern</span> <span class="s">"C"</span>
+<span class="kt">void</span> <span class="n">startup</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">foo</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">doStuffWithFoo</span><span class="p">(</span><span class="n">foo</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Let’s stop at the call to startup and examine the registers.</p>
+
+<p><img src="/images/blogposts/boot_s_before.PNG" /></p>
+
+<p>EBX (but it’s called RBX… hint for later) is 0x3087b0, and we can see it at the top of the stack as well. Now let’s step inside startup…</p>
+
+<p><img src="/images/blogposts/startup_before.PNG" /></p>
+
+<p>Ooh… yeah, uhm <a href="https://www.youtube.com/watch?v=J34UzHo4G5w">I’m gonna have to go ahead and sort of disagree with you there</a>.</p>
+
+<p>Something’s very wrong here, a few instructions (four to be exact) ago we had one value, a few instructions later we have a completely different value. The four instructions aren’t the culprit, its just the standard function prologue. And why was GDB showing us x86_64 registers?</p>
+
+<h1 id="use-the-other-force-luke">Use the (other) force, Luke!</h1>
+
+<p>With GDB acting weird I decided to try the classic printf debugging. Well, print-to-VGA-buffer-f, since printf itself hasn’t been built yet. At any rate, the function has been tested and been known to be correct; whatever it prints on the screen is the real value of foo. Survey says…</p>
+
+<pre>3087B0</pre>
+
+<p>Well now, that’s what I was expecting. While we’re here, let’s ask what GDB thinks of <strong>foo</strong> after printing it to the screen for fun:</p>
+
+<p><img src="/images/blogposts/startup_after.PNG" /></p>
+
+<p>GDB, how can I put it nicely…</p>
+
+<p><img src="/images/blogposts/doubt.PNG" /></p>
+
+<h1 id="unearthing-the-conspiracy">Unearthing the conspiracy</h1>
+
+<p>The story gets worse my friends. Through countless minutes of googling and some friends in #osdev, I’ve found that both QEMU and GDB have conspired to make mixed-mode debugging infeasible. Some time between versions 2.8 and 2.9 QEMU added a certain patch so that no matter what mode the cpu is currently running (real, protected, long), it will always send the full x86_64 register file through the GDB stub. GDB was patched to never change its register file size after startup. So when first connecting gdb to a x86_64 QEMU instance GDB sees that QEMU sends a full x86_64 register file and just goes with it, even though CPUs don’t start in long mode (but to be fair it doesn’t know it’s debugging an OS at bootup).</p>
+
+<p>Meanwhile GDB thinks since we’re using the 64-bit RF that it should use x86_64 bit calling convention. At least that’s what I’m assuming based on my observations. System V i386 ABI says that we pass parameters by pushing them on the stack, which I did right before calling the startup function. But SYS-V <em>x86_64</em> ABI says that the first couple of parameters are passed in registers rdi, rsi, rdx, rcx, r8, r9 and <em>then</em> any extras are pushed on the stack. So when asking GDB for <strong>foo</strong>’s value its looking in the wrong place, hence the junk value.</p>
+
+<p>We can make a test for this. Inside boot.s right before the call instruction, we can set EDI to some value like 0xcafebabe. Guess what value GDB now says <strong>foo</strong> is?</p>
+
+<p><img src="/images/blogposts/cafebabe.PNG" /></p>
+
+<p>The <em>value</em> is 0, the <em>address</em> is Cafebac6. I have no explanation for why it’s offset by 8, if you do please let me know. The final nail in the coffin is to try with qemu-system-i386 instead of system-x86_64, without making a single code change. To no one’s surprise, GDB prints the correct value for <strong>foo</strong>.</p>
+
+<p>Now its important to note here that QEMU is still emulating the program correctly. Even though we can’t see it in GDB, the program gets the correct value and can display it. The problem is just how GDB views the state of the program. And it’s only a problem for people that want to debug the startup code of an operating system which you would rarely do even if making your own OS, and only when the startup code isn’t 64-bit and your emulator’s CPU is.</p>
+
+<p>This affects dozens of us. DOZENS!</p>
+
+<h1 id="summary">Summary</h1>
+
+<p>When something doesn’t look right and your debugger appears to give you incorrect results, fall back on the other tools in your debugging toolbox. Good old reliable printf or logging, rendering an image of an intermediary or data buffer to the screen for GPU problems. Or create some test that modifies the environment in a unique way that demonstrate whether something did or did not happen. Examples include sleeping a thread for X seconds to determine whether X is small or big, blinking a light, emitting morse code through the speakers etc.</p>
+
+                </section>
+            </article>	
+
+            <section>
+                <h1 class="post__header">Comments</h1>
+
+                <section class="post__content comment__intro">
+                    <a href="https://github.com/patrick-lafferty/portfolio/issues/11#new_comment_field" class="comment__post">Post Comment</a>
+                    <p>Comments are hosted on the GitHub issue for this post.</p>
+                </section>
+
+                <section id="comments">
+
+                </section>
+            </section>
+
+        </main>
+        
+        <script>
+
+            /*
+            Based on Don Williamson's  blog post:
+            http://donw.io/post/github-comments/
+
+            Comments are taken from the comments posted on the issue for this post
+
+            Create an issue for this post manually, then put the issue id in the 
+            post's front matter's issue variable.
+            */
+
+            function createComment(data) {
+                let date = new Date(data.created_at);
+                let dateString = date.toLocaleDateString("en-US", 
+                    { weekday: 'short', year: 'numeric', 
+                      month: 'long', day: 'numeric', 
+                      hour: 'numeric', minute: 'numeric' }
+                );
+                let comment = document.createElement('section');
+                comment.className = "post__content comment";
+                comment.innerHTML = `
+                    <img src="${data.user.avatar_url}" class="comment__avatar">
+                    <p class="comment__name">${data.user.login}</p>
+                    <p class="comment__date">${dateString}</p>
+                    <div>${data.body_html}</div>
+                `;
+
+                return comment;
+            }
+            
+            document.addEventListener("DOMContentLoaded", () => {
+
+                let request = new XMLHttpRequest();
+                request.onreadystatechange = () => {
+                    let commentsList = document.querySelector("#comments");
+
+                    if (request.readyState === XMLHttpRequest.DONE) {
+                        if (request.status === 200) {
+                        
+                            let response = JSON.parse(request.responseText);
+
+                            response.forEach(commentRaw => {
+                                let comment = createComment(commentRaw);
+                                commentsList.appendChild(comment);
+                            });
+                        }                    
+                        else {
+                            let node = document.createTextNode("Error: GitHub Issue for this post needs to be created");
+                            commentsList.appendChild(node);
+                        }
+                    }
+                };
+
+                request.open('GET', 'https://api.github.com/repos/patrick-lafferty/portfolio/issues/11/comments');
+                request.setRequestHeader('Accept', 'application/vnd.github.v3.html+json');
+                request.send();
+            }); 
+
+        </script>
+
+		<footer class="footer">
+	<section>
+		<p>Copyright (c) 2018 Patrick Lafferty. Powered by Jekyll, design by Patrick Lafferty</p>
+	</section>
+</footer>
+
+
+	</body>
+
+</html>
