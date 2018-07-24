@@ -81,6 +81,17 @@ a {
   float: right;
   width: 22rem; }
 
+.subscribe {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 60%;
+  height: 1rem; }
+
+.centered {
+  display: flex;
+  justify-content: center; }
+
 .right {
   text-align: right; }
 
