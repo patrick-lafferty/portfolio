@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+	<meta charset="UTF-8">
+	<title>Dev Environment</title>
+	<meta name="description" content="This post describes my current web dev environment for a friend that was curious about it.">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Raleway">
+	<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+</head>
+
+	<body>
+
+        <header class="site__header">
+	<section class="header__name">
+		<p class="name__word">Patrick</p>
+		<p class="name__word">Lafferty</p>
+	</section>
+
+	<nav class="header__navbar">
+		<ul class="navbar__links">
+			<li><a class="navbar__link" href="/">Home</a></li>
+			<li><a class="navbar__link" href="/#projects">Work</a></li>
+			<li><a class="navbar__link" href="/blog">Blog</a></li>
+		</ul>
+	</nav>
+
+</header>
+
+        
+		<main>
+
+            <article class="post single-post">
+                <header class="post__header">
+                    <p class="post__title">Dev Environment</p>
+                    <p class="post__date">Nov 3, 2016</p>
+                </header>
+            
+                <section class="post__content">
+                    <p>This post describes my current web dev environment for a friend that was curious about it. I had these requirements when coming up with it:</p>
+
+<ul>
+  <li>it had to be fast and light on memory <em>and</em> disk space - my box has a 1.33Ghz quad-core Atom, 2GB of ram and 32GB of space of which Windows and friends take up a big chunk</li>
+  <li>it had to be fully featured and $EDITOR must be or have Vim bindings</li>
+</ul>
+
+<p>I based the environment on running Arch Linux inside VirtualBox. I prefer Arch because I love pacman, out of all the distro package managers its the only one I feel that just.always.works, I’ve never got it into a critically broken state (hello aptitude, yum), and allows me to stay on the bleeding edge with new updates. Arch is also minimalistic, you pay for what you get allowing me to keep the virtual image small. A nice bonus about running a VM is that you can save the exact state of the machine before you shutdown your real one. So at night you just stop the VM and in the morning when you start up you are right back where you left off, no need to startup your editor and open the files you left off at.</p>
+
+<h1 id="editor">Editor</h1>
+
+<p>For my editor I use Vim currently with powerline and vim-surround. I can’t <strong>not</strong> use Vim anymore, I keep learning new things to improve my experience. For example: sometime after starting some HTML5 practice, I learned about the tag blocks <code class="highlighter-rouge">at</code> and <code class="highlighter-rouge">it</code>. Adding <code class="highlighter-rouge">at</code> to a command selects the entire element from the beginning tag to the ending, while <code class="highlighter-rouge">it</code> selects everything except the starting/closing tags. So with the following html:</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div&gt;</span>
+    <span class="nt">&lt;p&gt;</span>...<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;form&gt;</span>...<span class="nt">&lt;/form&gt;</span>
+    <span class="nt">&lt;section&gt;</span>...<span class="nt">&lt;section&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></figure>
+
+<p>and the cursor is on the beginning div line,</p>
+
+<ul>
+  <li><code class="highlighter-rouge">&gt;at</code> and <code class="highlighter-rouge">&lt;at</code> increases/decreases the indent respectively of the entire div</li>
+  <li>plus the standard <code class="highlighter-rouge">y</code>ank, <code class="highlighter-rouge">p</code>ut, <code class="highlighter-rouge">d</code>elete and <code class="highlighter-rouge">c</code>hange operators (and all the rest) give you a lot of control, say you wanted to change everything in the div: just type cit in normal mode and the inner contents are deleted and you are put in insert mode inside the div</li>
+</ul>
+
+<p>With vim-surround you can do things like surrounding/changing/removing things around things. So if we wanted the <code class="highlighter-rouge">&lt;p&gt;</code> and <code class="highlighter-rouge">&lt;form&gt;</code> to be inside a div we could do <code class="highlighter-rouge">ysj&lt;div&gt;</code>, or if we wanted to switch the <code class="highlighter-rouge">&lt;p&gt;</code> to a <code class="highlighter-rouge">&lt;div&gt;</code> we could do <code class="highlighter-rouge">cst&lt;div&gt;</code> with the cursor inside the <code class="highlighter-rouge">&lt;p&gt;</code>. For the yank/put/delete/change ops I originally wrote them as (y)/(p) etc but then decided to switch to use highlighting so with a simple <code class="highlighter-rouge">cs) `</code> they changed to <code class="highlighter-rouge">`y`</code> /<code class="highlighter-rouge">`p`</code>.</p>
+
+<h1 id="shell">Shell</h1>
+
+<p>I’ve been using bash for years, so I picked zsh to learn something new. Zsh has some cool features, like:</p>
+
+<ul>
+  <li>extended globbing (<code class="highlighter-rouge">grep "foo" **/*.js</code> will recursively search all .js files in subdirs)</li>
+  <li><a href="http://zshwiki.org/home/builtin/functions/zmv">zmv</a>, zcp are replacements for mv/cp that you can define patterns to rename many files at once</li>
+  <li>autocompletion (of arguments (git st<code class="highlighter-rouge">&lt;TAB&gt;</code> will show you all args that start with st), paths (ls /h/p/d<code class="highlighter-rouge">&lt;TAB&gt;</code> could expand to /home/patrick/downloads), commands)</li>
+</ul>
+
+<p>Searching “why zsh” will bring up a number of good sites with examples. Along with zsh I use <a href="http://powerline.readthedocs.io/en/master/index.html">powerline</a>. It basically makes the prompt look cool and configures it to show useful information, along with a second prompt to the right of the screen. Finishing up the trifecta comes <a href="https://tmux.github.io">Tmux</a>, a terminal multiplexer. Basically it allows you to split up the screen to have multiple shells running in splitscreen mode, among other features. In the screenshot below I split the screen vertically once then split the right side horizontally. The large left pane hosts Vim, the top right is running a jekyll server that rebuilds this blogpost as I change it, the bottom right is for misc things, <code class="highlighter-rouge">wc -l *</code> in this example.</p>
+
+<p><img src="/images/blogposts/dev_environment.png" alt="Dev environment screenshot" /></p>
+
+<h1 id="runners-up">Runners up</h1>
+
+<p>Choices that didn’t quite make the final cut but are still very nice are listed below.</p>
+
+<h3 id="visual-studio-code--msys2">Visual Studio Code + MSYS2</h3>
+
+<p><a href="https://code.visualstudio.com">VS Code</a> is <em>really cool</em>. It runs on Windows/Linux/Mac. Its <a href="https://github.com/Microsoft/vscode">open source</a> using the MIT license. Intellisense and debugging and extensions everywhere! Stop reading this and go check it out!… <em>But</em>, when using the vim extension (which we know is essential) on my mighty tablet, I could type out a line of code, take a sip of coffee, look out the window, look back and the line might just finish showing up. Maybe someday.</p>
+
+<h3 id="windows-subsystem-for-linux">Windows Subsystem for Linux</h3>
+
+<p>Special mention goes to <a href="https://msdn.microsoft.com/commandline/wsl/about">WSL</a> or informally Bash on Ubuntu on Windows. With it you have the entire Ubuntu user space natively accessible on Windows. Once WSL is setup you can go to bash and apt-get something, it will get the native binary from Ubuntu’s servers. So you could in theory run an old 16-bit Win/Dos program inside wine inside bash on windows - Windows on Linux on Windows… <em>we need to go deeper</em>. Caveat: it only works on 64-bit editions of Windows. Who cares, its $CURRENT_YEAR! Well this cheapo tablet I work on is limited to 32-bit Windows, even though it has a 64-bit cpu. Which is why I opted for the above VirtualBox config. WSL has some teething issues (still limited to 16 colours, and support for inotify hasn’t been released yet but is coming soon) but its something I am very much looking forwards to using when I can.</p>
+
+
+                </section>
+            </article>	
+
+		</main>
+
+		<footer class="footer">
+	<section>
+		<p>Copyright (c) 2018 Patrick Lafferty. Powered by Jekyll, design by Patrick Lafferty</p>
+	</section>
+</footer>
+
+
+	</body>
+
+</html>

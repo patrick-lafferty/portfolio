@@ -4,11 +4,56 @@
     <title>Patrick Lafferty's Portfolio</title>
     <description>My portfolio and blog
 </description>
-    <link>https://patricklafferty.ca/</link>
-    <atom:link href="https://patricklafferty.ca/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 24 Jul 2018 13:24:03 -0400</pubDate>
-    <lastBuildDate>Tue, 24 Jul 2018 13:24:03 -0400</lastBuildDate>
-    <generator>Jekyll v3.8.3</generator>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 08 Nov 2018 20:09:13 -0500</pubDate>
+    <lastBuildDate>Thu, 08 Nov 2018 20:09:13 -0500</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>Saturn: One Year Later</title>
+        <description>&lt;div&gt;&lt;em style=&quot;text-align: center;display: block;&quot;&gt;&quot;He mentioned something interesting. Patrick is pursuing new research. He claims that what they're doing in Canada is the missing piece: &lt;br /&gt;A system to surpass MS-DOS&quot;&lt;/em&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/blogposts/saturn_logo_cropped.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Its been one year since I started work on my operating system &lt;a href=&quot;https://github.com/patrick-lafferty/saturn/&quot;&gt;Saturn&lt;/a&gt;. This is a reflection on work achieved so far, stats, and a look towards the future.&lt;/p&gt;
+
+&lt;h1 id=&quot;by-the-numbers&quot;&gt;By the numbers&lt;/h1&gt;
+
+&lt;p&gt;Since Oct 2017, there have been 870 commits, averaging two commits per day over the past 382 days. According to GitHub I’ve made 67,391 additions and 22,244 deletions, across 335 files. The codebase is 92% C++, 2.9% Assembly, 0.7% [c]makefiles/shell scripts, and the rest GitHub wrongly attributes to other languages. There have been 33 issues created with 27 being closed and 6 still outstanding. One developer, and a partridge in a pear tree.&lt;/p&gt;
+
+&lt;h1 id=&quot;what-was-achieved&quot;&gt;What was achieved&lt;/h1&gt;
+
+&lt;p&gt;My greatest achievement with Saturn was the start of the UI framework with Apollo. Having a &lt;a href=&quot;https://github.com/patrick-lafferty/saturn/blob/master/src/applications/transcript/layout.h&quot;&gt;convenient language&lt;/a&gt; for declaring UI layouts proved to be a great asset in rapid prototyping. If nothing else I think Apollo is the point where Saturn left the OSDEV introductory cradle and started becoming serious, creating its own identity. &lt;a href=&quot;https://github.com/patrick-lafferty/saturn/blob/master/src/services/virtualFileSystem/vostok.h&quot;&gt;Vostok&lt;/a&gt; was another interesting achievement, exposing complex nested objects in the virtual file system. It allowed programs to interact with eachother through the filesystem, invoking eachother’s functions.&lt;/p&gt;
+
+&lt;p&gt;Saturn supports multi-tasking with both ring0 and ring3 (user) tasks, separate address spaces per task. It provides inter-process communication via asynchronous message passing. The scheduler supports multiple priority groups, so latency-critical tasks like IRQ handlers can pre-empt any running task, input and UI services can respond to user input quickly.&lt;/p&gt;
+
+&lt;h1 id=&quot;whats-happening-now&quot;&gt;What’s happening now&lt;/h1&gt;
+
+&lt;p&gt;Versions 0.1 to 0.3 were an exploratory dive into the world of operating systems. I essentially did a depth-first design, at each step implementing a minimal feature set in order to proceed to the next higher level, to see how far I could go and understand roughly how long it would take to reach my goals. At each step of the journey I made notes about future considerations and things I’d like to add/explore. So at each fork in the road even though I picked the shortest path, there’s notes taped to the signposts indicating what should be done when I return.&lt;/p&gt;
+
+&lt;p&gt;Having successfully reached a far enough goal, I made the decision to go back to the beginning, and revisit each note. Where quick fixes, hacks and TODOs sufficed for a speed-run to the end zone, now there are proper complete implementations. Saturn is undergoing a major overhaul, not just to x86-64 but to a cleaner design. From the beginning I focused on correctness and sustainability, which led me to create a testing framework called &lt;a href=&quot;https://github.com/patrick-lafferty/saturn/blob/master/src/kernel/arch/x86_64/misc/testing.h&quot;&gt;Preflight&lt;/a&gt; (&lt;a href=&quot;https://github.com/patrick-lafferty/saturn/blob/master/test/kernel/arch/x86_64/misc/avl.cpp&quot;&gt;examples&lt;/a&gt;). Each feature that gets rewritten (or ported over with minimal changes) is getting its own suite of tests.&lt;/p&gt;
+
+&lt;p&gt;The kernel now has a two stage loader. The loader separates startup concerns from the kernel, creating a clean separation. The loader ensures that the kernel is either delivered a valid working environment, or the boot sequence is stopped. Loadable ELF programs are supported from the very beginning (because the kernel is an ELF program, as are services and drivers it requires). The infrastructure of IDT/GDT/ISRs and physical/virtual memory have been updated for the 64-bit environment.&lt;/p&gt;
+
+&lt;h1 id=&quot;whats-the-future-hold&quot;&gt;What’s the future hold&lt;/h1&gt;
+
+&lt;p&gt;The virtual filesystem will be upgraded to support task namespaces. Using Vostok will be easier with interface definitions that encapsulate filesystem calls. The majority of my effort will be with Apollo and the graphical interface. I aim to develop a rich, dynamic environment like Pharo or Oberon where the lines between shell, UI and programs are blended, and the system is openly modifiable and examinable.&lt;/p&gt;
+
+&lt;p&gt;Check out &lt;a href=&quot;https://saturn-os.org&quot;&gt;Saturn&lt;/a&gt;’s website which includes an online documentation browser. Visit Saturn’s &lt;a href=&quot;https://github.com/patrick-lafferty/saturn&quot;&gt;repository&lt;/a&gt; to see all of the code.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 08 Nov 2018 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/blog/2018/11/08/metal-gear/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2018/11/08/metal-gear/</guid>
+        
+        <category>dev</category>
+        
+        <category>saturn</category>
+        
+        <category>osdev</category>
+        
+        
+      </item>
     
       <item>
         <title>What to do when your debugger lies to you</title>
@@ -80,8 +125,8 @@
 &lt;p&gt;When something doesn’t look right and your debugger appears to give you incorrect results, fall back on the other tools in your debugging toolbox. Good old reliable printf or logging, rendering an image of an intermediary or data buffer to the screen for GPU problems. Or create some test that modifies the environment in a unique way that demonstrate whether something did or did not happen. Examples include sleeping a thread for X seconds to determine whether X is small or big, blinking a light, emitting morse code through the speakers etc.&lt;/p&gt;
 </description>
         <pubDate>Mon, 23 Jul 2018 00:00:00 -0400</pubDate>
-        <link>https://patricklafferty.ca/blog/2018/07/23/debugger-lies/</link>
-        <guid isPermaLink="true">https://patricklafferty.ca/blog/2018/07/23/debugger-lies/</guid>
+        <link>http://localhost:4000/blog/2018/07/23/debugger-lies/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2018/07/23/debugger-lies/</guid>
         
         <category>dev</category>
         
@@ -143,8 +188,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 20 Jul 2018 00:00:00 -0400</pubDate>
-        <link>https://patricklafferty.ca/blog/2018/07/20/smp-is-as-easy-as-1-2-3/</link>
-        <guid isPermaLink="true">https://patricklafferty.ca/blog/2018/07/20/smp-is-as-easy-as-1-2-3/</guid>
+        <link>http://localhost:4000/blog/2018/07/20/smp-is-as-easy-as-1-2-3/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2018/07/20/smp-is-as-easy-as-1-2-3/</guid>
         
         <category>dev</category>
         
@@ -291,8 +336,8 @@ It fits the overall angular design, but it has a function too.&lt;/p&gt;
 open to learning new things and correcting bad things.&lt;/p&gt;
 </description>
         <pubDate>Sun, 24 Jun 2018 00:00:00 -0400</pubDate>
-        <link>https://patricklafferty.ca/blog/2018/06/24/let-there-be-light/</link>
-        <guid isPermaLink="true">https://patricklafferty.ca/blog/2018/06/24/let-there-be-light/</guid>
+        <link>http://localhost:4000/blog/2018/06/24/let-there-be-light/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2018/06/24/let-there-be-light/</guid>
         
         <category>dev</category>
         
@@ -365,8 +410,8 @@ open to learning new things and correcting bad things.&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 03 Apr 2018 00:00:00 -0400</pubDate>
-        <link>https://patricklafferty.ca/blog/2018/04/03/the-joy-of-operating-systems/</link>
-        <guid isPermaLink="true">https://patricklafferty.ca/blog/2018/04/03/the-joy-of-operating-systems/</guid>
+        <link>http://localhost:4000/blog/2018/04/03/the-joy-of-operating-systems/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2018/04/03/the-joy-of-operating-systems/</guid>
         
         <category>dev</category>
         
@@ -390,8 +435,8 @@ the &lt;span style=&quot;text-decoration: underline&quot;&gt;Ra&lt;/span&gt;cket
 &lt;p&gt;To learn more, check out Rain’s &lt;a href=&quot;https://patrick-lafferty.github.io/rain/index.html&quot;&gt;documentation&lt;/a&gt;. You can view its &lt;a href=&quot;https://github.com/patrick-lafferty/rain&quot;&gt;source&lt;/a&gt; and also get the latest release there.&lt;/p&gt;
 </description>
         <pubDate>Mon, 18 Sep 2017 00:00:00 -0400</pubDate>
-        <link>https://patricklafferty.ca/blog/2017/09/18/lush-is-now-rain/</link>
-        <guid isPermaLink="true">https://patricklafferty.ca/blog/2017/09/18/lush-is-now-rain/</guid>
+        <link>http://localhost:4000/blog/2017/09/18/lush-is-now-rain/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/09/18/lush-is-now-rain/</guid>
         
         <category>dev</category>
         
@@ -433,8 +478,8 @@ the &lt;span style=&quot;text-decoration: underline&quot;&gt;Ra&lt;/span&gt;cket
 &lt;p&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout&quot;&gt;Grid&lt;/a&gt; and &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes&quot;&gt;Flexbox&lt;/a&gt; made it very easy to have a responsive layout. With media queries you can easily adapt your grids to have more or less columns, add or remove gaps in between columns, and switch flexboxs to arrange items vertically instead of horizontally. All this with just CSS, without needing to change the structure of the HTML files. I like Grid so much I made a &lt;a href=&quot;https://patrick-lafferty.github.io/labs/#Grid&quot;&gt;lab&lt;/a&gt; dedicated to it. From there it was a matter of setting proper font sizes, margins, paddings etc as appropriate for the media breakpoints.&lt;/p&gt;
 </description>
         <pubDate>Wed, 30 Aug 2017 00:00:00 -0400</pubDate>
-        <link>https://patricklafferty.ca/blog/2017/08/30/spaceyyz-update/</link>
-        <guid isPermaLink="true">https://patricklafferty.ca/blog/2017/08/30/spaceyyz-update/</guid>
+        <link>http://localhost:4000/blog/2017/08/30/spaceyyz-update/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/08/30/spaceyyz-update/</guid>
         
         <category>dev</category>
         
@@ -476,8 +521,8 @@ I also want to add features that support exploring Racket, like discovering the 
 &lt;p&gt;New releases will be posted on this blog detailing whats new in the release.&lt;/p&gt;
 </description>
         <pubDate>Tue, 11 Jul 2017 00:00:00 -0400</pubDate>
-        <link>https://patricklafferty.ca/blog/2017/07/11/lush/</link>
-        <guid isPermaLink="true">https://patricklafferty.ca/blog/2017/07/11/lush/</guid>
+        <link>http://localhost:4000/blog/2017/07/11/lush/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/07/11/lush/</guid>
         
         <category>dev</category>
         
@@ -544,8 +589,8 @@ I also want to add features that support exploring Racket, like discovering the 
 
 </description>
         <pubDate>Thu, 03 Nov 2016 00:00:00 -0400</pubDate>
-        <link>https://patricklafferty.ca/blog/2016/11/03/dev-environment/</link>
-        <guid isPermaLink="true">https://patricklafferty.ca/blog/2016/11/03/dev-environment/</guid>
+        <link>http://localhost:4000/blog/2016/11/03/dev-environment/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/11/03/dev-environment/</guid>
         
         <category>dev</category>
         
@@ -564,35 +609,8 @@ I also want to add features that support exploring Racket, like discovering the 
 
 </description>
         <pubDate>Tue, 25 Oct 2016 00:00:00 -0400</pubDate>
-        <link>https://patricklafferty.ca/blog/2016/10/25/spaceyyz/</link>
-        <guid isPermaLink="true">https://patricklafferty.ca/blog/2016/10/25/spaceyyz/</guid>
-        
-        <category>portfolio</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Aitu is now on github</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://github.com/patrick-lafferty/aitu&quot;&gt;Aitu&lt;/a&gt; is now hosted on github. Aitu is an extract of the AI portion of Wooden Sphere. It uses a combination of &lt;a href=&quot;wikipedia.org/wiki/Hierarchical_task_network&quot;&gt;Hierarchical Task Networks&lt;/a&gt; and a Utility system to allow AI characters to decide on a goal and create a plan to achieve their goal.&lt;/p&gt;
-
-&lt;h1 id=&quot;tasks-and-plans&quot;&gt;Tasks and plans&lt;/h1&gt;
-
-&lt;p&gt;Tasks are the building blocks of this system. A Task is something that an AI character can do. They can have an Action enum which your code can switch on and perform some action. They can also have three std::function objects which get run at different times and can manipulate a WorldState object belonging to some character. Tasks have pre and post conditions which look at some WorldState property to determine their truthiness.&lt;/p&gt;
-
-&lt;p&gt;Plans are a list of tasks to be completed in sequential order. When creating a plan for some goal task, the planner looks at the preconditions for that task and see if any other tasks can satisfy those conditions. That is, for a goal task G it looks for any task T where T’s postconditions match G’s preconditions. Then if T has preconditions it looks for tasks that can satisfy those, etc. A plan then is a chain of tasks starting with something that has no other preconditions/can be started right away, and each successive task does something that allows the next task to be run, until finally reaching the goal task.&lt;/p&gt;
-
-&lt;p&gt;I chose this design because I wanted a flexible AI with the possibility of emergent gameplay. Since I never explicitly define dependencies between tasks but instead just expose their requirements, its easy to add in a new independent task which the planner can then pick up and use so long as it meets their requirements. No need to modify other tasks to make use of the new one, just define the task and the planner figures it out. And because of that you can get scenarios where the planner chose something unexpectely, since it just looks for &lt;em&gt;anything&lt;/em&gt; that satisfies some condition. So some task that you added for one reason might find itself being used in a way you (or the player) didn’t predict.&lt;/p&gt;
-
-&lt;h1 id=&quot;utility-and-considerations&quot;&gt;Utility and considerations&lt;/h1&gt;
-
-&lt;p&gt;So that covers what plans are and how they get created, but how does the AI choose a goal in the first place? Enter considerations. A Consideration is something that looks at some aspect of the character’s WorldState and gives it a score. Tasks can have multiple considerations associated with them, each one looking at one particular aspect of the world state. The task with the highest score becomes the goal. To calculate a consideration’s score you pick some function (linear, exponential, log etc), define the constants for that function (the ABC’s in ax^2 + bx + c) and select the input source that gets evaluated by that function. Currently you can pick any value in WorldState, as well as other sources such as the number of tasks run since some target task (to limit repeats). To make it simple to edit considerations I made the &lt;a href=&quot;/projects/woodensphere#considerationEditor&quot;&gt;ConsiderationEditor&lt;/a&gt; for Unreal Editor.&lt;/p&gt;
-
-&lt;p&gt;So that wraps up the summary for Aitu, feel free to take a look at it on github.&lt;/p&gt;
-</description>
-        <pubDate>Wed, 07 Sep 2016 00:00:00 -0400</pubDate>
-        <link>https://patricklafferty.ca/blog/2016/09/07/aitu/</link>
-        <guid isPermaLink="true">https://patricklafferty.ca/blog/2016/09/07/aitu/</guid>
+        <link>http://localhost:4000/blog/2016/10/25/spaceyyz/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/10/25/spaceyyz/</guid>
         
         <category>portfolio</category>
         

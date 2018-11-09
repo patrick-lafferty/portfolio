@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Raleway">
 	<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+	<link rel="alternate" type="application/rss+xml" href="https://patricklafferty.ca/feed.xml">
 </head>
 
 	<body>
@@ -69,7 +70,88 @@
                 </section>
             </article>	
 
-		</main>
+            <section class="post__content centered">
+                <div class="subscribe">
+                    <span>Subscribe with RSS</span>
+                    <a href="https://patricklafferty.ca/feed.xml"><img src="/images/feed-icon-28x28.png"></a>
+                </div>
+            </section>
+
+            <section>
+                <h1 class="post__header">Comments</h1>
+
+                <section class="post__content comment__intro">
+                    <a href="https://github.com/patrick-lafferty/portfolio/issues/6#new_comment_field" class="comment__post">Post Comment</a>
+                    <p>Comments are hosted on the GitHub issue for this post.</p>
+                </section>
+
+                <section id="comments">
+
+                </section>
+            </section>
+
+        </main>
+        
+        <script>
+
+            /*
+            Based on Don Williamson's  blog post:
+            http://donw.io/post/github-comments/
+
+            Comments are taken from the comments posted on the issue for this post
+
+            Create an issue for this post manually, then put the issue id in the 
+            post's front matter's issue variable.
+            */
+
+            function createComment(data) {
+                let date = new Date(data.created_at);
+                let dateString = date.toLocaleDateString("en-US", 
+                    { weekday: 'short', year: 'numeric', 
+                      month: 'long', day: 'numeric', 
+                      hour: 'numeric', minute: 'numeric' }
+                );
+                let comment = document.createElement('section');
+                comment.className = "post__content comment";
+                comment.innerHTML = `
+                    <img src="${data.user.avatar_url}" class="comment__avatar">
+                    <p class="comment__name">${data.user.login}</p>
+                    <p class="comment__date">${dateString}</p>
+                    <div>${data.body_html}</div>
+                `;
+
+                return comment;
+            }
+            
+            document.addEventListener("DOMContentLoaded", () => {
+
+                let request = new XMLHttpRequest();
+                request.onreadystatechange = () => {
+                    let commentsList = document.querySelector("#comments");
+
+                    if (request.readyState === XMLHttpRequest.DONE) {
+                        if (request.status === 200) {
+                        
+                            let response = JSON.parse(request.responseText);
+
+                            response.forEach(commentRaw => {
+                                let comment = createComment(commentRaw);
+                                commentsList.appendChild(comment);
+                            });
+                        }                    
+                        else {
+                            let node = document.createTextNode("Error: GitHub Issue for this post needs to be created");
+                            commentsList.appendChild(node);
+                        }
+                    }
+                };
+
+                request.open('GET', 'https://api.github.com/repos/patrick-lafferty/portfolio/issues/6/comments');
+                request.setRequestHeader('Accept', 'application/vnd.github.v3.html+json');
+                request.send();
+            }); 
+
+        </script>
 
 		<footer class="footer">
 	<section>

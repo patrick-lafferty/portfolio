@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+	<meta charset="UTF-8">
+	<title>Saturn: One Year Later</title>
+	<meta name="description" content="Reflections on a year of developing my own operating system">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Raleway">
+	<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+	<link rel="alternate" type="application/rss+xml" href="https://patricklafferty.ca/feed.xml">
+</head>
+
+	<body>
+
+        <header class="site__header">
+	<section class="header__name">
+		<p class="name__word">Patrick</p>
+		<p class="name__word">Lafferty</p>
+	</section>
+
+	<nav class="header__navbar">
+		<ul class="navbar__links">
+			<li><a class="navbar__link" href="/">Home</a></li>
+			<li><a class="navbar__link" href="/#projects">Work</a></li>
+			<li><a class="navbar__link" href="/blog">Blog</a></li>
+		</ul>
+	</nav>
+
+</header>
+
+        
+		<main>
+
+            <article class="post single-post">
+                <header class="post__header">
+                    <p class="post__title">Saturn: One Year Later</p>
+                    <p class="post__date">Nov 8, 2018</p>
+                </header>
+            
+                <section class="post__content">
+                    <div><em style="text-align: center;display: block;">"He mentioned something interesting. Patrick is pursuing new research. He claims that what they're doing in Canada is the missing piece: <br />A system to surpass MS-DOS"</em></div>
+
+<p><img src="/images/blogposts/saturn_logo_cropped.png" /></p>
+
+<p>Its been one year since I started work on my operating system <a href="https://github.com/patrick-lafferty/saturn/">Saturn</a>. This is a reflection on work achieved so far, stats, and a look towards the future.</p>
+
+<h1 id="by-the-numbers">By the numbers</h1>
+
+<p>Since Oct 2017, there have been 870 commits, averaging two commits per day over the past 382 days. According to GitHub I’ve made 67,391 additions and 22,244 deletions, across 335 files. The codebase is 92% C++, 2.9% Assembly, 0.7% [c]makefiles/shell scripts, and the rest GitHub wrongly attributes to other languages. There have been 33 issues created with 27 being closed and 6 still outstanding. One developer, and a partridge in a pear tree.</p>
+
+<h1 id="what-was-achieved">What was achieved</h1>
+
+<p>My greatest achievement with Saturn was the start of the UI framework with Apollo. Having a <a href="https://github.com/patrick-lafferty/saturn/blob/master/src/applications/transcript/layout.h">convenient language</a> for declaring UI layouts proved to be a great asset in rapid prototyping. If nothing else I think Apollo is the point where Saturn left the OSDEV introductory cradle and started becoming serious, creating its own identity. <a href="https://github.com/patrick-lafferty/saturn/blob/master/src/services/virtualFileSystem/vostok.h">Vostok</a> was another interesting achievement, exposing complex nested objects in the virtual file system. It allowed programs to interact with eachother through the filesystem, invoking eachother’s functions.</p>
+
+<p>Saturn supports multi-tasking with both ring0 and ring3 (user) tasks, separate address spaces per task. It provides inter-process communication via asynchronous message passing. The scheduler supports multiple priority groups, so latency-critical tasks like IRQ handlers can pre-empt any running task, input and UI services can respond to user input quickly.</p>
+
+<h1 id="whats-happening-now">What’s happening now</h1>
+
+<p>Versions 0.1 to 0.3 were an exploratory dive into the world of operating systems. I essentially did a depth-first design, at each step implementing a minimal feature set in order to proceed to the next higher level, to see how far I could go and understand roughly how long it would take to reach my goals. At each step of the journey I made notes about future considerations and things I’d like to add/explore. So at each fork in the road even though I picked the shortest path, there’s notes taped to the signposts indicating what should be done when I return.</p>
+
+<p>Having successfully reached a far enough goal, I made the decision to go back to the beginning, and revisit each note. Where quick fixes, hacks and TODOs sufficed for a speed-run to the end zone, now there are proper complete implementations. Saturn is undergoing a major overhaul, not just to x86-64 but to a cleaner design. From the beginning I focused on correctness and sustainability, which led me to create a testing framework called <a href="https://github.com/patrick-lafferty/saturn/blob/master/src/kernel/arch/x86_64/misc/testing.h">Preflight</a> (<a href="https://github.com/patrick-lafferty/saturn/blob/master/test/kernel/arch/x86_64/misc/avl.cpp">examples</a>). Each feature that gets rewritten (or ported over with minimal changes) is getting its own suite of tests.</p>
+
+<p>The kernel now has a two stage loader. The loader separates startup concerns from the kernel, creating a clean separation. The loader ensures that the kernel is either delivered a valid working environment, or the boot sequence is stopped. Loadable ELF programs are supported from the very beginning (because the kernel is an ELF program, as are services and drivers it requires). The infrastructure of IDT/GDT/ISRs and physical/virtual memory have been updated for the 64-bit environment.</p>
+
+<h1 id="whats-the-future-hold">What’s the future hold</h1>
+
+<p>The virtual filesystem will be upgraded to support task namespaces. Using Vostok will be easier with interface definitions that encapsulate filesystem calls. The majority of my effort will be with Apollo and the graphical interface. I aim to develop a rich, dynamic environment like Pharo or Oberon where the lines between shell, UI and programs are blended, and the system is openly modifiable and examinable.</p>
+
+<p>Check out <a href="https://saturn-os.org">Saturn</a>’s website which includes an online documentation browser. Visit Saturn’s <a href="https://github.com/patrick-lafferty/saturn">repository</a> to see all of the code.</p>
+
+                </section>
+            </article>	
+
+            <section class="post__content centered">
+                <div class="subscribe">
+                    <span>Subscribe with RSS</span>
+                    <a href="https://patricklafferty.ca/feed.xml"><img src="/images/feed-icon-28x28.png"></a>
+                </div>
+            </section>
+
+            <section>
+                <h1 class="post__header">Comments</h1>
+
+                <section class="post__content comment__intro">
+                    <a href="https://github.com/patrick-lafferty/portfolio/issues/12#new_comment_field" class="comment__post">Post Comment</a>
+                    <p>Comments are hosted on the GitHub issue for this post.</p>
+                </section>
+
+                <section id="comments">
+
+                </section>
+            </section>
+
+        </main>
+        
+        <script>
+
+            /*
+            Based on Don Williamson's  blog post:
+            http://donw.io/post/github-comments/
+
+            Comments are taken from the comments posted on the issue for this post
+
+            Create an issue for this post manually, then put the issue id in the 
+            post's front matter's issue variable.
+            */
+
+            function createComment(data) {
+                let date = new Date(data.created_at);
+                let dateString = date.toLocaleDateString("en-US", 
+                    { weekday: 'short', year: 'numeric', 
+                      month: 'long', day: 'numeric', 
+                      hour: 'numeric', minute: 'numeric' }
+                );
+                let comment = document.createElement('section');
+                comment.className = "post__content comment";
+                comment.innerHTML = `
+                    <img src="${data.user.avatar_url}" class="comment__avatar">
+                    <p class="comment__name">${data.user.login}</p>
+                    <p class="comment__date">${dateString}</p>
+                    <div>${data.body_html}</div>
+                `;
+
+                return comment;
+            }
+            
+            document.addEventListener("DOMContentLoaded", () => {
+
+                let request = new XMLHttpRequest();
+                request.onreadystatechange = () => {
+                    let commentsList = document.querySelector("#comments");
+
+                    if (request.readyState === XMLHttpRequest.DONE) {
+                        if (request.status === 200) {
+                        
+                            let response = JSON.parse(request.responseText);
+
+                            response.forEach(commentRaw => {
+                                let comment = createComment(commentRaw);
+                                commentsList.appendChild(comment);
+                            });
+                        }                    
+                        else {
+                            let node = document.createTextNode("Error: GitHub Issue for this post needs to be created");
+                            commentsList.appendChild(node);
+                        }
+                    }
+                };
+
+                request.open('GET', 'https://api.github.com/repos/patrick-lafferty/portfolio/issues/12/comments');
+                request.setRequestHeader('Accept', 'application/vnd.github.v3.html+json');
+                request.send();
+            }); 
+
+        </script>
+
+		<footer class="footer">
+	<section>
+		<p>Copyright (c) 2018 Patrick Lafferty. Powered by Jekyll, design by Patrick Lafferty</p>
+	</section>
+</footer>
+
+
+	</body>
+
+</html>

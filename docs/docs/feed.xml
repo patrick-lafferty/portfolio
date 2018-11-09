@@ -4,11 +4,300 @@
     <title>Patrick Lafferty's Portfolio</title>
     <description>My portfolio and blog
 </description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 24 Jun 2018 13:57:18 -0400</pubDate>
-    <lastBuildDate>Sun, 24 Jun 2018 13:57:18 -0400</lastBuildDate>
+    <link>https://patricklafferty.ca/</link>
+    <atom:link href="https://patricklafferty.ca/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 24 Jul 2018 13:24:03 -0400</pubDate>
+    <lastBuildDate>Tue, 24 Jul 2018 13:24:03 -0400</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
+    
+      <item>
+        <title>What to do when your debugger lies to you</title>
+        <description>&lt;div&gt;&lt;em style=&quot;text-align: center;display: block;&quot;&gt;&quot;My program doesn't work, is this a bug in GCC/Clang/$TOOL?&quot;&lt;/em&gt;&lt;/div&gt;
+
+&lt;p&gt;Everyone’s had this moment before. You’ve been stumped on a problem for hours and are &lt;em&gt;so&lt;/em&gt; sure that your tools are broke. You’ve quadruple-double-extra checked your logic. Have I found an error in $POPULAR_TOOL? You inquire on some message board. Then a grizzled greybeard appears, points out the flaw in your logic, and remarks that &lt;a href=&quot;https://blog.plover.com/prog/compiler-error.html&quot;&gt;it’s never a compiler error&lt;/a&gt;. Generally that’s true, it’s almost &lt;a href=&quot;https://blog.codinghorror.com/the-first-rule-of-programming-its-always-your-fault/&quot;&gt;always your fault&lt;/a&gt;. That’s not to say that compilers and debuggers and such don’t have bugs, but after being used for many years by tens/hundreds of thousands of people, you really have to saunter off the beaten path to find one.&lt;/p&gt;
+
+&lt;p&gt;Well, I found one.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-beaten-path&quot;&gt;The Beaten Path&lt;/h1&gt;
+
+&lt;p&gt;I’m writing a 32-bit loader for a 64-bit microkernel. I’m emulating it with &lt;a href=&quot;https://qemu.org&quot;&gt;QEMU&lt;/a&gt;, and debugging with &lt;a href=&quot;https://gnu.org/s/gdb&quot;&gt;GDB&lt;/a&gt;. I’m focusing on robustness and correctness, I want a complete mental picture at every stage. So I started off at the very beginning debugging a simple assembly function calling a C++ one:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-assembly&quot; data-lang=&quot;assembly&quot;&gt;boot:
+    cli
+    mov esp, stack_top
+    push ebx ; grub stores an address to multiboot headers in ebx
+    call startup&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;C&quot;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;startup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint32_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;doStuffWithFoo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Let’s stop at the call to startup and examine the registers.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/blogposts/boot_s_before.PNG&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;EBX (but it’s called RBX… hint for later) is 0x3087b0, and we can see it at the top of the stack as well. Now let’s step inside startup…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/blogposts/startup_before.PNG&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Ooh… yeah, uhm &lt;a href=&quot;https://www.youtube.com/watch?v=J34UzHo4G5w&quot;&gt;I’m gonna have to go ahead and sort of disagree with you there&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Something’s very wrong here, a few instructions (four to be exact) ago we had one value, a few instructions later we have a completely different value. The four instructions aren’t the culprit, its just the standard function prologue. And why was GDB showing us x86_64 registers?&lt;/p&gt;
+
+&lt;h1 id=&quot;use-the-other-force-luke&quot;&gt;Use the (other) force, Luke!&lt;/h1&gt;
+
+&lt;p&gt;With GDB acting weird I decided to try the classic printf debugging. Well, print-to-VGA-buffer-f, since printf itself hasn’t been built yet. At any rate, the function has been tested and been known to be correct; whatever it prints on the screen is the real value of foo. Survey says…&lt;/p&gt;
+
+&lt;pre&gt;3087B0&lt;/pre&gt;
+
+&lt;p&gt;Well now, that’s what I was expecting. While we’re here, let’s ask what GDB thinks of &lt;strong&gt;foo&lt;/strong&gt; after printing it to the screen for fun:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/blogposts/startup_after.PNG&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;GDB, how can I put it nicely…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/blogposts/doubt.PNG&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;unearthing-the-conspiracy&quot;&gt;Unearthing the conspiracy&lt;/h1&gt;
+
+&lt;p&gt;The story gets worse my friends. Through countless minutes of googling and some friends in #osdev, I’ve found that both QEMU and GDB have conspired to make mixed-mode debugging infeasible. Some time between versions 2.8 and 2.9 QEMU added a certain patch so that no matter what mode the cpu is currently running (real, protected, long), it will always send the full x86_64 register file through the GDB stub. GDB was patched to never change its register file size after startup. So when first connecting gdb to a x86_64 QEMU instance GDB sees that QEMU sends a full x86_64 register file and just goes with it, even though CPUs don’t start in long mode (but to be fair it doesn’t know it’s debugging an OS at bootup).&lt;/p&gt;
+
+&lt;p&gt;Meanwhile GDB thinks since we’re using the 64-bit RF that it should use x86_64 bit calling convention. At least that’s what I’m assuming based on my observations. System V i386 ABI says that we pass parameters by pushing them on the stack, which I did right before calling the startup function. But SYS-V &lt;em&gt;x86_64&lt;/em&gt; ABI says that the first couple of parameters are passed in registers rdi, rsi, rdx, rcx, r8, r9 and &lt;em&gt;then&lt;/em&gt; any extras are pushed on the stack. So when asking GDB for &lt;strong&gt;foo&lt;/strong&gt;’s value its looking in the wrong place, hence the junk value.&lt;/p&gt;
+
+&lt;p&gt;We can make a test for this. Inside boot.s right before the call instruction, we can set EDI to some value like 0xcafebabe. Guess what value GDB now says &lt;strong&gt;foo&lt;/strong&gt; is?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/blogposts/cafebabe.PNG&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;em&gt;value&lt;/em&gt; is 0, the &lt;em&gt;address&lt;/em&gt; is Cafebac6. I have no explanation for why it’s offset by 8, if you do please let me know. The final nail in the coffin is to try with qemu-system-i386 instead of system-x86_64, without making a single code change. To no one’s surprise, GDB prints the correct value for &lt;strong&gt;foo&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now its important to note here that QEMU is still emulating the program correctly. Even though we can’t see it in GDB, the program gets the correct value and can display it. The problem is just how GDB views the state of the program. And it’s only a problem for people that want to debug the startup code of an operating system which you would rarely do even if making your own OS, and only when the startup code isn’t 64-bit and your emulator’s CPU is.&lt;/p&gt;
+
+&lt;p&gt;This affects dozens of us. DOZENS!&lt;/p&gt;
+
+&lt;h1 id=&quot;summary&quot;&gt;Summary&lt;/h1&gt;
+
+&lt;p&gt;When something doesn’t look right and your debugger appears to give you incorrect results, fall back on the other tools in your debugging toolbox. Good old reliable printf or logging, rendering an image of an intermediary or data buffer to the screen for GPU problems. Or create some test that modifies the environment in a unique way that demonstrate whether something did or did not happen. Examples include sleeping a thread for X seconds to determine whether X is small or big, blinking a light, emitting morse code through the speakers etc.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 23 Jul 2018 00:00:00 -0400</pubDate>
+        <link>https://patricklafferty.ca/blog/2018/07/23/debugger-lies/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2018/07/23/debugger-lies/</guid>
+        
+        <category>dev</category>
+        
+        <category>saturn</category>
+        
+        <category>osdev</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>SMP is as easy as 1-2-3</title>
+        <description>&lt;div&gt;&lt;em style=&quot;text-align: center;display: block;&quot;&gt;(And other hilarious jokes you can tell yourselves)&lt;/em&gt;&lt;/div&gt;
+
+&lt;p&gt;Symmetric multiprocessing (&lt;a href=&quot;https://en.wikipedia.org/wiki/Symmetric_multiprocessing&quot;&gt;SMP&lt;/a&gt;) is one of the big features I’m currently exploring for &lt;a href=&quot;https://saturn-os.org&quot;&gt;Saturn&lt;/a&gt;. I implemented multi-tasking very early on as that was a key part in the microkernel design, however up until now everything ran on a single core. Its the classic concurrency vs parallelism comparison, just because things are running concurrently doesn’t mean they’re running simulatenously. Adding SMP support requires careful upfront design (whoops) or lots of refactoring down the road. Before making any further progress with Saturn I wanted to make sure it had a solid core foundation, so I started to refactor now while that was still feasible.&lt;/p&gt;
+
+&lt;h1 id=&quot;in-the-beginning-there-was-the-bootstrap-processor&quot;&gt;In the beginning there was the bootstrap processor&lt;/h1&gt;
+
+&lt;p&gt;I was really curious how multicore actually worked and how you set it up. I mean we all know about multithreading and multiple processes and distributing work across cores, but how does the OS actually orchestrate that? What happens when the computer first boots up?&lt;/p&gt;
+
+&lt;p&gt;At first glance it seems pretty straightforward. At startup the firmware runs some tests and does some behind the scene work, and eventually passes control over to the bootloader which then loads the OS.  When you have a multicore CPU, the firmware picks one of the working cores as the “main” CPU, called the “bootstrap processor” (BSP), and considers the remaining cores (or hardware threads in the case of SMT) as “application processors” (AP). It starts up each AP in &lt;a href=&quot;https://en.wikipedia.org/wiki/Real_mode&quot;&gt;real mode&lt;/a&gt;, clears the interrupt flag and then halts each AP. Meanwhile the BSP carries on towards entering your kernel.&lt;/p&gt;
+
+&lt;h1 id=&quot;interprocessor-interrupts&quot;&gt;Interprocessor Interrupts&lt;/h1&gt;
+
+&lt;p&gt;At this point all of our APs are halted (not running any code), and wont respond to normal interrupts/exceptions. Luckily there is a special type of interprocessor interrupt or IPI that is used to facilitate communication between CPUs. By sending a certain sequence of IPIs we can wake up our APs and get them to do useful work. To do this we need to make use of a &lt;a href=&quot;https://en.wikipedia.org/wiki/Trampoline_(computing)&quot;&gt;trampoline&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Remember that I said APs start in real mode? 16-bits of non-protected, non-paging, segmented fun. Our BSP at this point is either in 32-bit protected or 64-bit long mode with paging enabled. We can’t just have the BSP allocate a bunch of data structures and hand them off to the AP, because it can’t address them because we can only access the first 1MB of RAM. A trampoline allows us to get around this.&lt;/p&gt;
+
+&lt;p&gt;A trampoline is a small bit of code + data that configures an AP to be useful. It basically does a readers digest version of what the kernel had to do - setup a GDT, enable paging etc - without really caring about the details. Ie it just fills out the bare minimum needed to get to protected mode, because once there we’ll replace that stuff or use what the kernel already setup.&lt;/p&gt;
+
+&lt;p&gt;The BSP allocates a small chunk of memory at a low address which stores important addresses for the AP to use, among them a stack pointer, a function address to call once in protected mode, and a flag it continually will check for the AP to modify to indicate progress. The BSP and AP communicate with each other by modifying the flag and waiting for it to change to a specific value before continuing on. Once this dance is finished the AP halts and waits for the BSP to finish initializing all the remaining APs and then send it an interrupt.&lt;/p&gt;
+
+&lt;h1 id=&quot;locad-nda-lok-or-lock-and-load&quot;&gt;Locad nda lok (or: Lock and load)&lt;/h1&gt;
+
+&lt;p&gt;Now that we have multiple processors that want to process things we need to synchronize anything that could be accessed from multiple tasks. Due to the micro part of the microkernel, there aren’t many data structures that could be modified by multiple processes. Said structures were global variables of convenience, and now I had the opportunity to redesign them.&lt;/p&gt;
+
+&lt;p&gt;Due to the nature of these kernel variables and how they were accessed, I decided to implement &lt;a href=&quot;https://en.wikipedia.org/wiki/Spinlock&quot;&gt;spinlocks&lt;/a&gt;. A spinlock does as advertised: “can we acquire this lock? No? Okay, can we acquire this lock now? No? Okay,…”.  Essentially it just continually checks a condition in a loop, best used if you expect to wait only a few hundred cycles. Mutexes and more elaborate mechanisms have their place, the middle of an interrupt service routine ain’t one of them.&lt;/p&gt;
+
+&lt;p&gt;The spinlocks are used in a few key areas to synchronize access to a task’s mailbox, a scheduler’s run queue, or in task creation. What happens if you don’t use locks? The header for this section is a lighthearted example, more realistically the entire system crashes and you’re sitting in GDB with no clue what happened.&lt;/p&gt;
+
+&lt;h1 id=&quot;schedulers-directors-and-bears-oh-my&quot;&gt;Schedulers, Directors, and Bears, oh my&lt;/h1&gt;
+
+&lt;p&gt;Originally Saturn had a single scheduler which controlled what task was currently running. Adding more CPUs to the picture meant supporting multiple schedulers, each with their own separate run queues and block queues. The first design iteration had a complicated process when a scheduler noticed a blocked task could be run. It would examine all of the other schedulers to see if any could accept this task and then inject the task onto that scheduler’s run queue. Likewise if the scheduler ran out of tasks it would try to steal from another.&lt;/p&gt;
+
+&lt;p&gt;This worked, in a kinda sorta every second tuesday of each month way. I decided on a more clean approach by adding a second level scheduler: the director. A director is the main/meta scheduler that schedules the schedulers. Instead of schedulers each having their own blocked queues that had to be managed individually, the director would be the single point of control for blocked tasks. Schedulers still have their own sleep queues for tasks that sleep for a very short amount of time.&lt;/p&gt;
+
+&lt;p&gt;This simplified things greatly while being a lot safer. Now there was a single point of entry for scheduling tasks: give it to the director, and it will find the best scheduler for you.&lt;/p&gt;
+
+&lt;h1 id=&quot;aftermath&quot;&gt;Aftermath&lt;/h1&gt;
+
+&lt;p&gt;This post marks the 800th commit to Saturn, making it one of the longest running projects I’ve started. Currently I’m taking on the 64-bit rewrite and will be adding extensive testing along the way. You can see the &lt;a href=&quot;https://github.com/patrick-lafferty/saturn/&quot;&gt;source code&lt;/a&gt;, or to learn more visit &lt;a href=&quot;https://saturn-os.org&quot;&gt;saturn-os.org&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you have any questions or comments, corrections or suggestions, criticisms et cetera, I’d love to get in touch by email or in the comments below. I’m always open to learning new things and correcting bad things.&lt;/p&gt;
+
+&lt;p&gt;Part two of my series &lt;em&gt;The Joy of Operating Systems&lt;/em&gt;, where I write about my experience writing my own operating system &lt;em&gt;Saturn&lt;/em&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Part 1: &lt;a href=&quot;https://patricklafferty.ca/blog/2018/04/03/the-joy-of-operating-systems/&quot;&gt;The Joy of Operating Systems&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 20 Jul 2018 00:00:00 -0400</pubDate>
+        <link>https://patricklafferty.ca/blog/2018/07/20/smp-is-as-easy-as-1-2-3/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2018/07/20/smp-is-as-easy-as-1-2-3/</guid>
+        
+        <category>dev</category>
+        
+        <category>saturn</category>
+        
+        <category>osdev</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Let there be light</title>
+        <description>&lt;p&gt;Recently I decided to revisit my personal site and overhaul its design.
+These are the lessons I learned, the logic of the
+old and new designs, Paint scribbles on screenshots, and general advice.&lt;/p&gt;
+
+&lt;h1 id=&quot;lesson-one-let-there-be-light&quot;&gt;Lesson One: Let there be light&lt;/h1&gt;
+
+&lt;p&gt;Every editor I use is configured for a dark colour scheme. As I spend most of
+my time in that environment, I grew accustom to it and preferred dark schemes,
+which my personal design reflected. As it turns out, many people prefer
+dark-on-light colour schemes to light-on-dark when reading general text.
+It can be less straining and easier to read for a large segment of the population.
+With that in mind I set out to do a complete makeover.&lt;/p&gt;
+
+&lt;p&gt;The “Before” picture:&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/dark_to_darker.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Note how it goes from a dark blue background to an even darker black
+text background. The “After” picture:&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/bright_to_brighter.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Note how it goes from a light blue background to an almost white
+text background. Text is almost always black on a bright white,
+when the contrast is lower with black-on-bright blue I make sure
+the font size is large to make up the difference.&lt;/p&gt;
+
+&lt;p&gt;Looking at the numbers[1], the old dark design had a contrast ratio of
+5.48:1, while the new one varies from 12.97:1 to 17.51:1. The mentioned
+black-on-blue parts have a contrast ratio of 5.97:1, so there is a marked
+improvement all around.&lt;/p&gt;
+
+&lt;p&gt;1: https://webaim.org/resources/contrastchecker/&lt;/p&gt;
+
+&lt;h1 id=&quot;lesson-two-pick-a-proper-colour-palette&quot;&gt;Lesson Two: Pick a proper colour palette&lt;/h1&gt;
+
+&lt;p&gt;I don’t know much about colour theory except that I like blue, and some
+now irrelevant details about radiosity. I know enough to know that you
+can’t just pick colours willy-nilly, or use a large number of them without
+rhyme or reason. Websites like Paletton[2] help you create a colour palette using
+a variety of different schemes like monochromatic, triads and tetrads.
+For non-artists like me, spend a lot of time deciding on what best fits 
+your design, then take the handful of colours it gives you
+and use only those, except for perhaps small accents.&lt;/p&gt;
+
+&lt;p&gt;2: paletton.com&lt;/p&gt;
+
+&lt;h1 id=&quot;lesson-three-design-for-your-audience-first-yourself-second&quot;&gt;Lesson Three: Design for your audience first, yourself second&lt;/h1&gt;
+
+&lt;p&gt;Look at this.&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/old_header.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I designed for me, for what I thought looked cool. But the result was atrocious:
+300px separates each menu item, so your eyes have to move far from one to the
+next. The header is 400px tall and the only reason for that is to fit in more 
+blue. It’s a waste of space.&lt;/p&gt;
+
+&lt;p&gt;Think about who you are trying to reach out to. If we’re being honest, for me that primarily
+would be recruiters right now. Or, if not recruiters per se, those otherwise trained in the job offerin’ arts before straitened circumstances forced them into a life of aimless wanderin’. Anywho, recruiters (like all people) are busy people. Get. To. The. Point.&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/new_header.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;No nonsense, have a typical navbar typically where one expects it. Also, make
+the landing page for your blogs show a short list of excerpts instead of putting all
+of them in one long page, so people can quickly see if the post interests them or not. 
+The difference is staggering:&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/length_compare.png&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It took so long to scroll the old site that I half expected the ladder song from MGS3
+to start playing. I also broke up long-form text with a distinct colourful double-border
+header to aid scanning. Finally, get to the point. If you know your audience is looking
+for key details, don’t hide them inside paragraphs. Pull them out and emphasize them.
+Spend only 5 seconds reading and compare:&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/spaceyyz_old.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;With:&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/spaceyyz_new.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In 5 seconds, could you pick up anything interesting in the old paragraph, when
+it was among half a dozen others right above and below it? If you want someone to notice something, help them notice it. Make the name more prominent, and put the key information directly underneath on the left side of the screen where their eyes will naturally be. Separate the hot and cold content with colour.
+Then if they’re interested, they can read the bigger description.&lt;/p&gt;
+
+&lt;h1 id=&quot;lesson-four-give-space-to-breathe&quot;&gt;Lesson Four: Give space to breathe&lt;/h1&gt;
+
+&lt;p&gt;Empty space is one of the most important parts of the overall appearance. Generally if you
+have the space to spare, give yourself generous padding and margins. Keep content away
+from its borders, make it comfortable: think subways at 2pm vs rush hour. This lets
+the colours come out and do their thing. Pay attention to your line height so that
+text is easier to read.&lt;/p&gt;
+
+&lt;h1 id=&quot;lesson-five-guide-the-eye-with-shape-and-colour&quot;&gt;Lesson Five: Guide the eye with shape and colour&lt;/h1&gt;
+
+&lt;p&gt;I settled early on a simple geometric style with a two-tone colour contrast. This
+allowed me to play around with shape-outside and clip-path (straying a bit from lesson three),
+but it also influenced the user experience. Look at each section: sections with a paragraph
+have a quadrilateral with a large bold header leading the eyes towards the text (see last 
+screenshot above). Sections with lists (experience, projects) have a shape guiding the user downwards.&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/experience.PNG&quot; /&gt;
+&lt;img src=&quot;/images/blogposts/projects.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The most important part, the call to action, has a literal arrow directing the user to act.
+It fits the overall angular design, but it has a function too.&lt;/p&gt;
+
+&lt;div class=&quot;album&quot;&gt;
+&lt;img src=&quot;/images/blogposts/call_to_action.PNG&quot; /&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;fin&quot;&gt;Fin&lt;/h1&gt;
+
+&lt;p&gt;That’s the end of the lessons. If you have any questions or comments, corrections or suggestions, criticisms et cetera, I’d love to get in touch by email. I’m always
+open to learning new things and correcting bad things.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 24 Jun 2018 00:00:00 -0400</pubDate>
+        <link>https://patricklafferty.ca/blog/2018/06/24/let-there-be-light/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2018/06/24/let-there-be-light/</guid>
+        
+        <category>dev</category>
+        
+        
+      </item>
     
       <item>
         <title>The Joy of Operating Systems</title>
@@ -76,8 +365,8 @@
 
 </description>
         <pubDate>Tue, 03 Apr 2018 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2018/04/03/the-joy-of-operating-systems/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2018/04/03/the-joy-of-operating-systems/</guid>
+        <link>https://patricklafferty.ca/blog/2018/04/03/the-joy-of-operating-systems/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2018/04/03/the-joy-of-operating-systems/</guid>
         
         <category>dev</category>
         
@@ -101,8 +390,8 @@ the &lt;span style=&quot;text-decoration: underline&quot;&gt;Ra&lt;/span&gt;cket
 &lt;p&gt;To learn more, check out Rain’s &lt;a href=&quot;https://patrick-lafferty.github.io/rain/index.html&quot;&gt;documentation&lt;/a&gt;. You can view its &lt;a href=&quot;https://github.com/patrick-lafferty/rain&quot;&gt;source&lt;/a&gt; and also get the latest release there.&lt;/p&gt;
 </description>
         <pubDate>Mon, 18 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2017/09/18/lush-is-now-rain/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/09/18/lush-is-now-rain/</guid>
+        <link>https://patricklafferty.ca/blog/2017/09/18/lush-is-now-rain/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2017/09/18/lush-is-now-rain/</guid>
         
         <category>dev</category>
         
@@ -144,8 +433,8 @@ the &lt;span style=&quot;text-decoration: underline&quot;&gt;Ra&lt;/span&gt;cket
 &lt;p&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout&quot;&gt;Grid&lt;/a&gt; and &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes&quot;&gt;Flexbox&lt;/a&gt; made it very easy to have a responsive layout. With media queries you can easily adapt your grids to have more or less columns, add or remove gaps in between columns, and switch flexboxs to arrange items vertically instead of horizontally. All this with just CSS, without needing to change the structure of the HTML files. I like Grid so much I made a &lt;a href=&quot;https://patrick-lafferty.github.io/labs/#Grid&quot;&gt;lab&lt;/a&gt; dedicated to it. From there it was a matter of setting proper font sizes, margins, paddings etc as appropriate for the media breakpoints.&lt;/p&gt;
 </description>
         <pubDate>Wed, 30 Aug 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2017/08/30/spaceyyz-update/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/08/30/spaceyyz-update/</guid>
+        <link>https://patricklafferty.ca/blog/2017/08/30/spaceyyz-update/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2017/08/30/spaceyyz-update/</guid>
         
         <category>dev</category>
         
@@ -187,8 +476,8 @@ I also want to add features that support exploring Racket, like discovering the 
 &lt;p&gt;New releases will be posted on this blog detailing whats new in the release.&lt;/p&gt;
 </description>
         <pubDate>Tue, 11 Jul 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2017/07/11/lush/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/07/11/lush/</guid>
+        <link>https://patricklafferty.ca/blog/2017/07/11/lush/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2017/07/11/lush/</guid>
         
         <category>dev</category>
         
@@ -255,8 +544,8 @@ I also want to add features that support exploring Racket, like discovering the 
 
 </description>
         <pubDate>Thu, 03 Nov 2016 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2016/11/03/dev-environment/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/11/03/dev-environment/</guid>
+        <link>https://patricklafferty.ca/blog/2016/11/03/dev-environment/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2016/11/03/dev-environment/</guid>
         
         <category>dev</category>
         
@@ -275,8 +564,8 @@ I also want to add features that support exploring Racket, like discovering the 
 
 </description>
         <pubDate>Tue, 25 Oct 2016 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2016/10/25/spaceyyz/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/10/25/spaceyyz/</guid>
+        <link>https://patricklafferty.ca/blog/2016/10/25/spaceyyz/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2016/10/25/spaceyyz/</guid>
         
         <category>portfolio</category>
         
@@ -302,8 +591,8 @@ I also want to add features that support exploring Racket, like discovering the 
 &lt;p&gt;So that wraps up the summary for Aitu, feel free to take a look at it on github.&lt;/p&gt;
 </description>
         <pubDate>Wed, 07 Sep 2016 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/blog/2016/09/07/aitu/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/09/07/aitu/</guid>
+        <link>https://patricklafferty.ca/blog/2016/09/07/aitu/</link>
+        <guid isPermaLink="true">https://patricklafferty.ca/blog/2016/09/07/aitu/</guid>
         
         <category>portfolio</category>
         
